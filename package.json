@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/supervanya/d3-obesity-usa/issues"
   },
-  "homepage": "https://github.com/supervanya/d3-obesity-usa#readme"
+  "homepage": "https://github.com/supervanya/d3-obesity-usa#readme",
+  "dependencies": {
+    "d3": "^5.15.0"
+  }
 }
