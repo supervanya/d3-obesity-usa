@@ -1,0 +1,22 @@
+{
+  "name": "obesity-story",
+  "version": "1.0.0",
+  "description": "This is an interactive story explaining the current state of obesity in United States and how it changed over the past 2 decades",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supervanya/d3-obesity-usa.git"
+  },
+  "keywords": [
+    "d3"
+  ],
+  "author": "Vanya Prokopovich, Yashaswini Joshi, Shivika K Bisen, Bhawna Agarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supervanya/d3-obesity-usa/issues"
+  },
+  "homepage": "https://github.com/supervanya/d3-obesity-usa#readme"
+}
