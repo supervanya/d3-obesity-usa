@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>USA Obesity Story</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/d3Style.css">
+    <style src>
+        .chart {
+            width: 1024px;
+            height: 512px;
+            background-color: slategray;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            max-width: 80%;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .chart>p {
+            color: white;
+            font-style: italic;
+        }
+
+        h1 {
+            text-align: center;
+            text-transform: uppercase;
+            background-color: rgb(180, 200, 223);
+            margin: 0;
+            padding: 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+
+        }
+
+        h2 {
+            margin-top: 64px;
+            text-align: center;
+            text-transform: capitalize;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        footer {
+            text-align: center;
+            color: slategray;
+            padding: 15px;
+        }
+
+        .hr {
+            border-top: 1px solid rgb(180, 200, 223);
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 class="chartTitle">USA Obesity Story</h1>
+
+    <h2>Obesity is on the rise</h2>
+    <div class="chart">
+        <p>introduction to the CDC data here (Cartogram)</p>
+    </div>
+
+    <h2>Some factors that can contribute the epidemic</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12  col-md-12">
+                <div id="scatter">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>How can we fight it?</h2>
+    <div class="chart">
+        <p>Correlation of factors (Cartogram / Scatter Plot)</p>
+    </div>
+
+
+    <footer>
+        <hr class="hr">
+        SI 649 Project, GitHub repo <a href="https://github.com/supervanya/d3-obesity-usa">here</a>
+    </footer>
+
+
+
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
+<script type="text/javascript" src="assets/js/functions.js"></script>
+<script type="text/javascript" src="assets/js/app.js"></script>
+
+
+</html>

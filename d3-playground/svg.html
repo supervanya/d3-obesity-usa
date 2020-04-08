@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, initial-scale=1.0">
+    <title>playground</title>
+    <style src>
+        .chart {
+            width: 1024px;
+            height: 512px;
+            background-color: slategray;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            max-width: 80%;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+
+        .chart>p {
+            color: white;
+            font-style: italic;
+        }
+
+        .line {
+            stroke-width: 3px;
+            stroke: white;
+            fill: darkviolet;
+        }
+
+        .line path {
+            stroke: darkorange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chart">
+        <svg width='300' height='500'>
+            <g transform='translate(0,10)'>
+                <circle fill='white' cx='50' cy='50' r='25'></circle>
+                <circle fill="darkviolet" cx='100' cy='50' r='15'></circle>
+                <circle fill='white' cx='130' cy='50' r='5'></circle>
+            </g>
+            <g transform='translate(0,75)' fill='darkviolet'>
+                <circle cx='50' cy='50' r='25'></circle>
+                <circle fill="white" cx='100' cy='50' r='15'></circle>
+                <circle cx='130' cy='50' r='5'></circle>
+            </g>
+            <g transform='translate(0,140)' fill='darkviolet' stroke='black' onclick="()=>alert('Clicked!')">
+                <circle cx='50' cy='50' r='25'></circle>
+                <circle fill="white" cx='100' cy='50' r='15' stroke-width='7.5'>
+                </circle>
+                <circle cx='130' cy='50' r='5'></circle>
+            </g>
+
+            <g class="line" transform='translate(-200,60)'>
+                <line x1='200' y1="200" x2='300' y2='225'></line>
+            </g>
+
+            <g class="line" transform='translate(3,300)'>
+                <path d="M0 0   L80 140   L150 0   L80 20   L0 0   L80 140"></path>
+            </g>
+        </svg>
+        <p>introduction to the CDC data here (Cartogram)</p>
+    </div>
+</body>
+
+</html>
