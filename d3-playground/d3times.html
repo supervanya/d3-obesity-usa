@@ -7,113 +7,147 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/d3Style.css">
-    <style src>
-        .chart {
-            width: 1024px;
-            height: 512px;
-            background-color: slategray;
+    <style>
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-            max-width: 80%;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .chart>p {
-            color: white;
-            font-style: italic;
-        }
-
-        h1 {
-            text-align: center;
-            text-transform: uppercase;
-            background-color: rgb(180, 200, 223);
-            margin: 0;
-            padding: 24px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-
-        }
-
-        h2 {
-            margin-top: 64px;
-            text-align: center;
-            text-transform: capitalize;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-        }
-
-        footer {
-            text-align: center;
-            color: slategray;
-            padding: 15px;
-        }
-
-        .hr {
-            border-top: 1px solid rgb(180, 200, 223);
-        }
     </style>
+
 
 </head>
 
 <body>
     <h1 class="chartTitle">USA Obesity Story</h1>
 
-    <h2>Obesity is on the rise</h2>
-    <div class="chart">
-        <p>introduction to the CDC data here (Cartogram)</p>
-    </div>
+    <main>
+        <p>In this interactive article we would like to introduce results of BRFSS survey conducted by CDC for the past
+            2 decades.
+        </p>
+        <p>Raw data can be found <a href="https://www.cdc.gov/brfss/annual_data/annual_data.htm">here</a></p>
+        <div style="max-width: 820px; margin: auto;">
+            <h2>Obesity is on the rise</h2>
+            <iframe style="width: 100%; height: 610px; border: 0;" src="cartogram/cartogram-custom.html"></iframe>
+        </div>
 
-    <h2>Some factors that can contribute the epidemic</h2>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12  col-md-12">
-                <div id="scatter">
+        <div id="vis-2">
+            <h2>Correlations Discovered between Obesity, Smoking and Healthcare and Poverty, Age and Income</h2>
+            <p>Interactive scatterplot enables to click through multiple variables to see their relationships with each
+                other with respect to U.S. states. Click through each variable in y axis and x axis to see how they
+                relate!
+            </p>
+            <p>Interesting insights:
+                <ul>
+                    <li>
+                        There looks to be a positive correlation between Obesity and Poverty. Southern states tend to
+                        have
+                        the highest rates of obesity, poverty and less healthcare coverage (with Texas being an outlier
+                        as
+                        it has the highest % lack in healthcare).
+                    </li>
+                    <li>
+                        Instances of obesity are most found in the age group of 35 to 40 years across US states.
+                    </li>
+                    <li>
+                        There is a negative correlation between Obesity and Household income, so wealthier states tend
+                        to
+                        have less obesity and more healthcare coverage.
+                    </li>
+                    <li>
+                        Smoking has a positive correlation with poverty, none with age, and a negative correlation with
+                        household income.
+                    </li>
+                </ul>
+            </p>
+            <div id="scatter">
+            </div>
+        </div>
+
+        <div id="vis-3">
+            <h2>Inisghts about obesity in Michigan</h2>
+            <p>
+                Click of the any category to analyse obesity rate in Michigan with respect to that class. Explore!
+            </p>
+            ​
+            <p>
+                Some insights:
+                <ul>
+                    <li>
+                        Age group of 45-54 years are most obese in Michigan while 18-24 years are the least obese.
+                    </li>
+                    <li>
+                        Income group of $15,000-$24,999 is most obese and they are showing increasing trend in the past
+                        3 years. Highest income group category i.e $50,000 is the least obese.
+                    </li>
+                    <li>
+                        Race effects the obesity, Black ethinity group are most obese, while Asians are least obese
+                        group, they are showing decreasing trend in obesity.
+                    </li>
+                    <li>
+                        Guess what!!! College graduates tend to be less obese in Michigan, while post Higher Secondary
+                        educated group are the most obese.
+                    </li>
+                    <li>
+                        Ladies are more obese than gentlemen in Michigan and their obesity rate is in increasing trend.
+                    </li>
+                </ul>
+            </p>
+
+
+            <div style="margin-top: 30px;">
+                <button id='age-button' style="background-color: rgb(190, 241, 241);"
+                    onclick="toggleImage(event)">age</button>
+                <button id='education-button' onclick="toggleImage(event)">education</button>
+                <button id='gender-button' onclick="toggleImage(event)">gender</button>
+                <button id='Income-button' onclick="toggleImage(event)">Income</button>
+                <button id='Race-button' onclick="toggleImage(event)">Race</button>
+
+                <div id="timeSeriesContainer">
+                    <img id='age' style="display: block;" src="images/Age_group.png" />
+                    <img id='education' src="images/education.png" />
+                    <img id='gender' src="images/gender.png" />
+                    <img id='Income' src="images/Income.png" />
+                    <img id='Race' src="images/Race.png" />
                 </div>
             </div>
         </div>
-    </div>
 
-    <h2>How can we fight it?</h2>
-    <div class="chart">
-        <p>Correlation of factors (Cartogram / Scatter Plot)</p>
-    </div>
-
+    </main>
 
     <footer>
         <hr class="hr">
         SI 649 Project, GitHub repo <a href="https://github.com/supervanya/d3-obesity-usa">here</a>
     </footer>
-
-
-
 </body>
 
+<script>
+    const toggleImage = (event) => {
+        const imageId = event.target.innerText
+        const image = document.getElementById(imageId);
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
+        const buttonId = imageId + '-button'
+        const button = document.getElementById(buttonId);
+
+        const imageContainer = document.getElementById('timeSeriesContainer');
+        const children = imageContainer.children;
+
+        // hiding all images and discoloring the buttons
+        for (let i = 0; i < children.length; i++) {
+            const image = children[i];
+            const id = image.id;
+            const buttonId = id + '-button';
+            const button = document.getElementById(buttonId);
+
+            button.style.backgroundColor = 'white'
+            image.style.display = 'none'
+        }
+
+        image.style.display = "block";
+        button.style.backgroundColor = 'rgb(190, 241, 241)';
+    } 
+</script>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js"></script>
 <script type="text/javascript" src="assets/js/functions.js"></script>
 <script type="text/javascript" src="assets/js/app.js"></script>
-
 
 </html>

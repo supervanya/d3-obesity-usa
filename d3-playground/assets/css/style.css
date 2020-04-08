@@ -1,31 +1,61 @@
-.iframeContainer {
-  padding: 20px;
-  border: 1px solid #e3e3e3;
+main {
+    max-width: 960px;
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    margin: auto;
+    padding: 30px;
+    overflow: hidden;
 }
 
-/* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/) */
-html {
-  position: relative;
-  min-height: 100%;
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    background-color: rgb(180, 200, 223);
+    margin: 0;
+    padding: 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+
 }
 
-body {
-  /* Padding bottom by footer height */
-  padding-bottom: 80px;
+h2 {
+    margin-top: 64px;
+    text-align: center;
+    text-transform: capitalize;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
 }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%; /* Set the fixed height of the footer here */
-  height: 10px;
-  padding-top: 20px;
-  padding-bottom: 40px;
-  text-align: center;
-  background-color: #f5f5f5;
+footer {
+    text-align: center;
+    color: slategray;
+    padding: 15px;
 }
 
-#footer p {
-  margin: 0;
-  font-size: 16px;
+.hr {
+    border-top: 1px solid rgb(180, 200, 223);
+}
+
+#timeSeriesContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+img {
+    width: 100%;
+    display: none;
+}
+
+button {
+    outline: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background-color: deepskyblue;
 }
