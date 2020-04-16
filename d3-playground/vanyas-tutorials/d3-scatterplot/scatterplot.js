@@ -3,11 +3,14 @@
 import data from './us_stats.js';
 
 const dataArray = Object.values(data)
+
 const maxObese = d3.max(dataArray, d => d.obese[0])
 const minObesity = d3.min(dataArray, d => d.obese[0])
 const maxLand = d3.max(dataArray, d => d.land)
 const maxPop = d3.max(dataArray, d => d3.max(d.pop))
+
 console.log(maxObese, minObesity)
+
 const height = 400
 const width = 800
 

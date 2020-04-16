@@ -1,0 +1,14 @@
+{
+  "name": "@clhenrick/dorling-cartogram-circle-packs",
+  "main": "c421a57a3d22c60e@409.js",
+  "version": "409.0.0",
+  "homepage": "https://observablehq.com/@clhenrick/dorling-cartogram-circle-packs",
+  "author": {
+    "name": "Chris Henrick",
+    "url": "https://observablehq.com/@clhenrick"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
