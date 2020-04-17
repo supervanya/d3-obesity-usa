@@ -100,21 +100,23 @@ function updateToolTip(circlesGroup, chosenXAxis, chosenYAxis) {
     xpercentsign = "%";
   } else if (chosenXAxis === "age"){
     xlabel = "Age";
-  } else {
+  } else if (chosenXAxis === "healthcare") {
+    xlabel = "Healthcare";
+    xpercentsign = "%";
+  } else if (chosenXAxis === "smokes"){
+    xlabel = "Smokes";
+    xpercentsign = "%";
+  }else {
     xlabel = "Income";
   }
 
   let ypercentsign = "";
   let ylabel = "";
-  if (chosenYAxis === "healthcare") {
-    ylabel = "Healthcare";
-    ypercentsign = "%";
-  } else if (chosenYAxis === "smokes"){
-    ylabel = "Smokes";
-    ypercentsign = "%";
-  } else {
+  if (chosenYAxis === "obesity") {
     ylabel = "Obesity";
     ypercentsign = "%";
+  } else {
+    None
   }
 
   const toolTip = d3.tip()

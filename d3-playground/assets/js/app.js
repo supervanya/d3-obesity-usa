@@ -25,7 +25,7 @@ const chartGroup = svg.append("g")
 
 // Initial Params
 let chosenXAxis = "poverty";
-let chosenYAxis = "healthcare";
+let chosenYAxis = "obesity";
 
 (async function(){
 
@@ -76,7 +76,7 @@ let chosenYAxis = "healthcare";
     .attr("dy", d => yLinearScale(d[chosenYAxis]) + 5)
     .classed("stateText", true);
 
-  // Create group for 3 x-axis labels
+  // Create group for 5 x-axis labels
   const xlabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height})`);
 
@@ -94,39 +94,39 @@ let chosenYAxis = "healthcare";
     .text("Age (Median)")
     .classed("inactive", true);
 
-  const incomeLabel = xlabelsGroup.append("text")
+    const healthcareLabel = xlabelsGroup.append("text")
+    //.attr("transform", "rotate(-90)")
+    .attr("x", 0)
+    .attr("y", 100)
+    .attr("value", "healthcare") // value to grab for event listener
+    .text("Lacks Healthcare (%)")
+    .classed("inactive", true);
+
+    const smokesLabel = xlabelsGroup.append("text")
+    //.attr("transform", "rotate(-90)")
+    .attr("x", 0)
+    .attr("y", 120)
+    .attr("value", "smokes") // value to grab for event listener
+    .text("Smokes (%)")
+    .classed("inactive", true);
+
+    const incomeLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 80)
     .attr("value", "income") // value to grab for event listener
     .text("Household Income (Median)")
     .classed("inactive", true);
 
-  // Create group for 3 y-axis labels
+  // Create y-axis labels
   const ylabelsGroup = chartGroup.append("g");
-
-  const healthcareLabel = ylabelsGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -(height / 2))
-    .attr("y", -40)
-    .attr("value", "healthcare") // value to grab for event listener
-    .text("Lacks Healthcare (%)")
-    .classed("active", true);
-
-  const smokesLabel = ylabelsGroup.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -(height / 2))
-    .attr("y", -60)
-    .attr("value", "smokes") // value to grab for event listener
-    .text("Smokes (%)")
-    .classed("inactive", true);
 
   const obeseLabel = ylabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", -(height / 2))
-    .attr("y", -80)
+    .attr("y", -40)
     .attr("value", "obesity") // value to grab for event listener
     .text("Obese (%)")
-    .classed("inactive", true);
+    .classed("active", true);
 
   // initial tooltips
   circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
@@ -167,6 +167,12 @@ let chosenYAxis = "healthcare";
         incomeLabel
           .classed("active", false)
           .classed("inactive", true);
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
       else if (chosenXAxis === "income") {
         povertyLabel
@@ -178,11 +184,57 @@ let chosenYAxis = "healthcare";
         incomeLabel
           .classed("active", true)
           .classed("inactive", false);
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
       }
-      else {
+      else if (chosenXAxis === "poverty"){
         povertyLabel
           .classed("active", true)
           .classed("inactive", false);
+        ageLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        incomeLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else if (chosenXAxis === "healthcare") {
+        healthcareLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        smokesLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        povertyLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        ageLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        incomeLabel
+          .classed("active", false)
+          .classed("inactive", true);
+      }
+      else {
+        healthcareLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        smokesLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        povertyLabel
+          .classed("active", false)
+          .classed("inactive", true);
         ageLabel
           .classed("active", false)
           .classed("inactive", true);
@@ -219,39 +271,12 @@ let chosenYAxis = "healthcare";
       circlesGroup = updateToolTip(circlesGroup, chosenXAxis, chosenYAxis);
 
       // changes classes to change bold text
-      if (chosenYAxis === "smokes") {
-        healthcareLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        smokesLabel
-          .classed("active", true)
-          .classed("inactive", false);
-        obeseLabel
-          .classed("active", false)
-          .classed("inactive", true);
-      }
-      else if (chosenYAxis === "obesity"){
-        healthcareLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        smokesLabel
-          .classed("active", false)
-          .classed("inactive", true);
+      if (chosenYAxis === "obesity"){
         obeseLabel
           .classed("active", true)
           .classed("inactive", false);
       }
-      else {
-        healthcareLabel
-          .classed("active", true)
-          .classed("inactive", false);
-        smokesLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        obeseLabel
-          .classed("active", false)
-          .classed("inactive", true);
-      }
+      
     }
   });
 
