@@ -96,8 +96,10 @@ const drawCartogram = async () => {
     .classed("centroids", true)
 
 
-  const bubbles_group = bubbles.selectAll("g")
+  let bubbles_group = bubbles.selectAll("g")
     .data(values)
+
+  bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
   // .style('opacity', '50%')
@@ -111,6 +113,13 @@ const drawCartogram = async () => {
     .attr("fill", "rgba(63, 191, 108)")
     .attr("stroke", "black")
     .attr("stroke-width", 1)
+
+  bubbles_group.exit().transition().delay(40)
+    .duration(1000)
+    .attr("r", 0)
+    .remove();
+
+
 
 
   bubbles_group.on('mouseover', function (d, i) {
@@ -154,6 +163,7 @@ const drawCartogram = async () => {
         .text(year)
     })
   console.log(year_slider)
+
 
 };
 
