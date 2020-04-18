@@ -56,7 +56,7 @@ const applySimulation = (nodes) => {
 }
 
 const drawCartogram = async () => {
-  const us = await d3.json("https://unpkg.com/us-atlas@2/us/10m.json");
+  const us = await d3.json("./resources/us-atlas@2.1.0-us-10m.json");
   const combined_data = await d3.json("./scatter_cartogram.json");
   console.log(combined_data);
 
