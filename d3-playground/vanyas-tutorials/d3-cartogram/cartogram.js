@@ -1,14 +1,13 @@
-// import data from './us_stats.js';
 import { parseRow, createStatePacks } from "./helpers.js";
 
-// const csv_data = d3.csv("observable_data_states.csv", parseRow);
 const geoPath = d3.geoPath();
 
+// chart parameters
 const width = 800;
 const height = 600;
-const NODE = { MIN_RADIUS: 10, MAX_RADIUS: 40, PADDING: 2 };
+const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
 
-
+// creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
   const svg = d3
     .select("#d3-cartogram")
@@ -56,7 +55,7 @@ const applySimulation = (nodes) => {
   return simulation.nodes();
 }
 
-(async () => {
+const drawCartogram = async () => {
   const us = await d3.json("https://unpkg.com/us-atlas@2/us/10m.json");
   const combined_data = await d3.json("./scatter_cartogram.json");
   console.log(combined_data);
@@ -66,10 +65,14 @@ const applySimulation = (nodes) => {
   const states = topojson.feature(us, us.objects.states);
 
   const year_selector = (year) => 0
+  const year = year_selector(2008)
+
 
   // creating the general outline of the US with states
   const baseMap = createBaseMap(stateBoundaries, nation);
-  const radius = d3.scaleSqrt()
+
+  // this is a scale for converting obesity % to a radius
+  const obesityToRadius = d3.scaleSqrt()
     .domain(d3.extent(Object.values(combined_data), d => d.obese[year_selector(2008)]))
     .range([NODE.MIN_RADIUS, NODE.MAX_RADIUS])
 
@@ -77,8 +80,7 @@ const applySimulation = (nodes) => {
     const [x, y] = geoPath.centroid(feature);
     const { name } = feature.properties
     const combined = combined_data[name]
-    const year = year_selector(2008)
-    const r = radius(combined.obese[year])
+    const r = obesityToRadius(combined.obese[year])
     feature.properties = { ...feature.properties, ...combined_data[name], x, y, r };
   });
   console.log(states)
@@ -89,29 +91,70 @@ const applySimulation = (nodes) => {
   // let values = [...new Map(statesPacked).values()];
   const values = applySimulation(data)
 
-  d3.select(baseMap)
+  const bubbles = d3.select(baseMap)
     .append("g")
     .classed("centroids", true)
-    .selectAll("circle")
+
+
+  const bubbles_group = bubbles.selectAll("g")
     .data(values)
-    .join("circle")
+    .join("g")
+    .classed('scatterBubbleGroup', true)
+  // .style('opacity', '50%')
+
+
+  bubbles_group.append('circle')
+    // .classed('scatterBubble', true)
     .attr("cx", (d) => d.x)
     .attr("cy", (d) => d.y)
     .attr("r", (d) => d.r)
-    .attr("fill", "rgba(63, 191, 108, 0.3)")
+    .attr("fill", "rgba(63, 191, 108)")
     .attr("stroke", "black")
     .attr("stroke-width", 1)
-    .on('mouseover', function (d, i) {
-      d3.select(this).transition()
-        .duration(250)
-        .style("transform", 'translate(0px, -5px)')
-        .attr('fill', 'rgba(63, 191, 108, 0.9)')
 
+
+  bubbles_group.on('mouseover', function (d, i) {
+    d3.select(this)
+      // .classed('bubbleHover', true)
+      .transition()
+      .duration(250)
+      .style("transform", 'translate(0px, -5px)')
+    // .style('opacity', '100%')
+  })
+
+  bubbles_group.on('mouseout', function (d, i) {
+    d3.select(this)
+      // .classed('bubbleHover', false)
+      .transition()
+      .duration(250)
+      .style("transform", 'translate(0px, 0px)')
+    // .style('opacity', '50%')
+  })
+
+  // adding the State Abbreviation to the bubbles
+  bubbles_group
+    .append('text')
+    .classed('stateText', true)
+    .attr("x", d => d.x)
+    .attr("y", d => d.y - 5)
+    .text(d => d.abbreviation)
+
+  // adding the Value (obesity % at first) annotation to the bubbles
+  bubbles_group
+    .append('text')
+    .classed('stateValue', true)
+    .attr("x", d => d.x)
+    .attr("y", d => d.y + 13)
+    .text(d => `${d.obese[year]}%`)
+
+  const year_slider = d3.select('input[type=range]#cartogram_year')
+    .on('input', function () {
+      const year = this.value
+      d3.select("#cartogram_year_label")
+        .text(year)
     })
-    .on('mouseout', function (d, i) {
-      d3.select(this).transition()
-        .duration(250)
-        .style("transform", 'translate(0px, 0px)')
-        .attr('fill', 'rgba(63, 191, 108, 0.3)')
-    })
-})();
+  console.log(year_slider)
+
+};
+
+drawCartogram()

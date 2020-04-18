@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
+    .scatterBubble {}
+
+    .scatterBubbleGroup {
+        /* opacity: 50%; */
+        cursor: pointer;
+    }
+
+    .bubbleHover {
+        /* opacity: 100%; */
+    }
+
+    .stateText {
+        text-anchor: middle;
+        font-size: 1.5em;
+    }
+
+    .stateValue {
+        text-anchor: middle;
+        font-family: Arial, Helvetica, sans-serif;
+        fill: white;
+        /* font-weight: 800; */
+    }
+
+    #cartogram_year {
+        width: 80%;
+    }
 </style>
 
 <body>
     <h1>Cartogram trying</h1>
+    <input id="cartogram_year" value="2008" type="range" min="2008" max="2018" step="1">
+    <output id="cartogram_year_label">2008</output>
     <!-- load the d3.js library -->
     <svg width=600 hight=400 id="d3-cartogram"></svg>
     <script src="https://d3js.org/d3.v5.min.js"></script>
