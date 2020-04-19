@@ -45,10 +45,10 @@ function drawGraph(state, groupName) {
     var line = d3.svg.line()
         .interpolate("basis")
         .x(function (d) {
-            return x(d.date);
+            return x(d.year);
         })
         .y(function (d) {
-            return y(d.temperature);
+            return y(d.obesity);
         });
 
     const chartId = state + groupName.replace(" ", "_")
@@ -64,23 +64,9 @@ function drawGraph(state, groupName) {
 
 
     d3.csv('./data/obesity_data.csv', _data => {
-        // console.log('our obesity data:', _data)
-        // const state = 'Texas'
-        // const groupName = 'Age Group'
         const stateData = getGraphsForState(state, groupName, _data)
 
         let groupData = {}
-        // groupData = [
-        //     {'18-24':[13, 13, 23, 43]},
-        //     {'24-30':[13, 13, 23, 43]},
-        //         ...
-        // ]
-
-        // groupData = {
-        //     '18-24':[13, 13, 23, 43],
-        //     '24-30':[13, 13, 23, 43],
-        //         ...
-        // }
         stateData.forEach(category => {
             const values = category.values.map(value => value.avg_data_value)
             const key = category.key
@@ -101,14 +87,14 @@ function drawGraph(state, groupName) {
         const yearsInt = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
         const years = yearsInt.map(year => parseDate(year.toString()));
 
-        var cities = color.domain().map(
+        var breakoutGroups = color.domain().map(
             function (name) {
                 return {
                     name: name,
                     values: years.map(function (year, i) {
                         return {
-                            date: year,
-                            temperature: +groupData[name][i]
+                            year: year,
+                            obesity: +groupData[name][i]
                         };
                     })
                 };
@@ -116,14 +102,14 @@ function drawGraph(state, groupName) {
 
         x.domain([years[0], years[years.length - 1]]);
         y.domain([
-            d3.min(cities, function (c) {
+            d3.min(breakoutGroups, function (c) {
                 return d3.min(c.values, function (v) {
-                    return v.temperature;
+                    return v.obesity;
                 });
             }),
-            d3.max(cities, function (c) {
+            d3.max(breakoutGroups, function (c) {
                 return d3.max(c.values, function (v) {
-                    return v.temperature;
+                    return v.obesity;
                 });
             })
         ]);
@@ -148,7 +134,7 @@ function drawGraph(state, groupName) {
 
 
         var legend = svg.selectAll('g.legend')
-            .data(cities)
+            .data(breakoutGroups)
             .enter()
             .append('g')
             .attr('class', 'legend');
@@ -189,7 +175,7 @@ function drawGraph(state, groupName) {
             .text("Obesity Prevalence (%)");
 
         var city = svg.selectAll(".city")
-            .data(cities)
+            .data(breakoutGroups)
             .enter().append("g")
             .attr("class", "city");
 
@@ -212,8 +198,8 @@ function drawGraph(state, groupName) {
                 };
             })
             .attr("transform", function (d) {
-                let xPos = x(d.value.date)
-                let yPos = y(d.value.temperature)
+                let xPos = x(d.value.year)
+                let yPos = y(d.value.obesity)
                 if (isNaN(yPos)) {
                     xPos = (-10000)
                     yPos = (-10000)
@@ -239,7 +225,7 @@ function drawGraph(state, groupName) {
         var lines = document.getElementsByClassName(lineClass);
 
         var mousePerLine = mouseG.selectAll('.mouse-per-line')
-            .data(cities)
+            .data(breakoutGroups)
             .enter()
             .append("g")
             .attr("class", "mouse-per-line");
@@ -290,7 +276,7 @@ function drawGraph(state, groupName) {
                     .attr("transform", function (d, i) {
                         // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
-                            bisect = d3.bisector(function (d) { return d.date; }).right;
+                            bisect = d3.bisector(function (d) { return d.year; }).right;
                         idx = bisect(d.values, xDate);
 
                         var beginning = 0,
