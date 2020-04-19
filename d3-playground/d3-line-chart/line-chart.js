@@ -17,7 +17,7 @@ function groupAllData(data) {
 function drawGraph(state, groupName) {
     var margin = {
         top: 60,
-        right: 200,
+        right: 250,
         bottom: 30,
         left: 50
     },
@@ -154,7 +154,7 @@ function drawGraph(state, groupName) {
             .attr('class', 'legend');
 
         legend.append('rect')
-            .attr('x', width + margin.right - 80 - 20)
+            .attr('x', width + margin.right - 110 - 20)
             .attr('y', function (d, i) {
                 return i * 20;
             })
@@ -165,7 +165,7 @@ function drawGraph(state, groupName) {
             });
 
         legend.append('text')
-            .attr('x', width + margin.right - 80 - 8)
+            .attr('x', width + margin.right - 110 - 8)
             .attr('y', function (d, i) {
                 return (i * 20) + 9;
             })
