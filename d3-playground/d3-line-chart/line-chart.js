@@ -193,8 +193,10 @@ function drawGraph(state, groupName) {
             .enter().append("g")
             .attr("class", "city");
 
+        const lineClass = `${chartId}mouse-line line`
+
         city.append("path")
-            .attr("class", "line")
+            .attr("class", lineClass)
             .attr("d", function (d) {
                 return line(d.values);
             })
@@ -234,7 +236,7 @@ function drawGraph(state, groupName) {
             .style("stroke-width", "1px")
             .style("opacity", "0");
 
-        var lines = document.getElementsByClassName('line');
+        var lines = document.getElementsByClassName(lineClass);
 
         var mousePerLine = mouseG.selectAll('.mouse-per-line')
             .data(cities)
