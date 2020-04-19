@@ -52,9 +52,6 @@ function getGraphForCategory(category, categoryData) {
       visualizeMultiLineChart(categoryData)
 }
 
-
-
-
 function groupAllData(data) {
       var groupedData = d3.nest()
             .key(function (d) { return d.locationdesc; })
