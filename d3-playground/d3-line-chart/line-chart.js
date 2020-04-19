@@ -51,14 +51,19 @@ function drawGraph(state, groupName) {
             return y(d.temperature);
         });
 
-    var svg = d3.select("body").append("svg")
+    const chartId = groupName.replace(" ", "_")
+
+    var svg = d3.select("body")
+        .append('div')
+        .attr('id', chartId)
+        .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // var data = d3.tsv.parse(myData);
-    var data = d3.csv('./data/obesity_data.csv', _data => {
+
+    d3.csv('./data/obesity_data.csv', _data => {
         // console.log('our obesity data:', _data)
         // const state = 'Texas'
         // const groupName = 'Age Group'
@@ -248,31 +253,31 @@ function drawGraph(state, groupName) {
             .attr('fill', 'none')
             .attr('pointer-events', 'all')
             .on('mouseout', function () { // on mouse out hide line, circles and text
-                d3.select(".mouse-line")
-                    .style("opacity", "0");
-                d3.selectAll(".mouse-per-line circle")
-                    .style("opacity", "0");
-                d3.selectAll(".mouse-per-line text")
+                svg.select(`.mouse-line`)
+                    .style(`opacity`, `0`);
+                svg.selectAll(`.mouse-per-line circle`)
+                    .style(`opacity`, `0`);
+                svg.selectAll(`.mouse-per-line text`)
                     .style("opacity", "0");
             })
             .on('mouseover', function () { // on mouse in show line, circles and text
-                d3.select(".mouse-line")
-                    .style("opacity", "1");
-                d3.selectAll(".mouse-per-line circle")
-                    .style("opacity", "1");
-                d3.selectAll(".mouse-per-line text")
+                svg.select(`.mouse-line`)
+                    .style(`opacity`, `1`);
+                svg.selectAll(`.mouse-per-line circle`)
+                    .style(`opacity`, `1`);
+                svg.selectAll(`.mouse-per-line text`)
                     .style("opacity", "1");
             })
             .on('mousemove', function () { // mouse moving over canvas
                 var mouse = d3.mouse(this);
-                d3.select(".mouse-line")
+                svg.select(`.mouse-line`)
                     .attr("d", function () {
                         var d = "M" + mouse[0] + "," + height;
                         d += " " + mouse[0] + "," + 0;
                         return d;
                     });
 
-                d3.selectAll(".mouse-per-line")
+                svg.selectAll(`.mouse-per-line`)
                     .attr("transform", function (d, i) {
                         // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
