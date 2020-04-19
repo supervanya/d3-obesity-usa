@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/supervanya/d3-obesity-usa#readme",
   "dependencies": {
-    "d3": "^5.15.0"
+    "@types/d3": "^5.7.2",
+    "d3": "^5.15.0",
+    "d3-dsv": "^1.2.0"
   }
 }
