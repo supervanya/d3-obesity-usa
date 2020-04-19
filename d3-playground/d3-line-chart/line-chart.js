@@ -16,13 +16,13 @@ function groupAllData(data) {
 
 function drawGraph(state, groupName) {
     var margin = {
-        top: 20,
+        top: 60,
         right: 200,
         bottom: 30,
         left: 50
     },
         width = 600 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        height = 400 - margin.top - margin.bottom;
 
     var parseDate = d3.time.format("%Y").parse;
 
@@ -93,8 +93,8 @@ function drawGraph(state, groupName) {
         color.domain(categories);
 
 
-        let years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
-        years = years.map(year => parseDate(year.toString()));
+        const yearsInt = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+        const years = yearsInt.map(year => parseDate(year.toString()));
 
         var cities = color.domain().map(
             function (name) {
@@ -123,6 +123,23 @@ function drawGraph(state, groupName) {
             })
         ]);
 
+
+        // Draw header.
+        const header = svg
+            .append("g")
+            .attr("class", "bar-header")
+            .attr("transform", `translate(0,${-margin.top * 0.6})`)
+            .append("text");
+
+        header.append("tspan").text(`Obesity Prevalence in ${state}, by ${groupName}`);
+
+        header
+            .append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.5em")
+            .style("font-size", "0.8em")
+            .style("fill", "#555")
+            .text(`United States, ${yearsInt[0]}-${yearsInt[yearsInt.length - 1]}`);
 
 
         var legend = svg.selectAll('g')
