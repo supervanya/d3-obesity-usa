@@ -51,7 +51,7 @@ function drawGraph(state, groupName) {
             return y(d.temperature);
         });
 
-    const chartId = groupName.replace(" ", "_")
+    const chartId = state + groupName.replace(" ", "_")
 
     var svg = d3.select("body")
         .append('div')
@@ -147,7 +147,7 @@ function drawGraph(state, groupName) {
             .text(`United States, ${yearsInt[0]}-${yearsInt[yearsInt.length - 1]}`);
 
 
-        var legend = svg.selectAll('g')
+        var legend = svg.selectAll('g.legend')
             .data(cities)
             .enter()
             .append('g')
