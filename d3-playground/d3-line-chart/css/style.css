@@ -1,0 +1,32 @@
+body{
+    background: #f7f7f7;
+}
+
+h1{
+    color:#0199d3;
+    font-size:40px;
+}
+
+.question {
+    background: white;
+    border: 1px solid #0199d3;
+    min-height:200px;
+    margin-bottom:30px;
+}
+#chart2{
+    padding:10px;
+}
+
+.chartholder{
+    width: 30%;
+    margin-right:3%;
+    float:left;
+    text-align:center;
+    padding-bottom:40px;
+}
+
+.chartholder h6 {
+    font-family: Consolas;
+    text-transform: uppercase;
+    font-weight:bold;
+}
