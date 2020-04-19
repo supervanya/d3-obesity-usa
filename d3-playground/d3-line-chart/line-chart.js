@@ -1,138 +1,115 @@
-<!DOCTYPE html>
-<html>
+function getGraphsForState(state, groupName, data) {
+    const groupedData = groupAllData(data)
+    const stateData = groupedData.find(stateData => stateData.key === state)
+    const stateGroupData = stateData['values'].find(stateData => stateData.key === groupName)
+    return stateGroupData.values
+};
 
-<head>
-    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
-    <style>
-        body {
-            font: 10px sans-serif;
+function groupAllData(data) {
+    var groupedData = d3.nest()
+        .key(function (d) { return d.locationdesc; })
+        .key(function (d) { return d.category; })
+        .key(function (d) { return d.category_value; })
+        .entries(data);
+    return groupedData;
+}
+
+function drawGraph(state, groupName) {
+    var margin = {
+        top: 20,
+        right: 200,
+        bottom: 30,
+        left: 50
+    },
+        width = 600 - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    var parseDate = d3.time.format("%Y").parse;
+
+    var x = d3.time.scale()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function (d) {
+            return x(d.date);
+        })
+        .y(function (d) {
+            return y(d.temperature);
+        });
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // var data = d3.tsv.parse(myData);
+    var data = d3.csv('./data/obesity_data.csv', _data => {
+        // console.log('our obesity data:', _data)
+        // const state = 'Texas'
+        // const groupName = 'Age Group'
+        const stateData = getGraphsForState(state, groupName, _data)
+
+        let groupData = {}
+        // groupData = [
+        //     {'18-24':[13, 13, 23, 43]},
+        //     {'24-30':[13, 13, 23, 43]},
+        //         ...
+        // ]
+
+        // groupData = {
+        //     '18-24':[13, 13, 23, 43],
+        //     '24-30':[13, 13, 23, 43],
+        //         ...
+        // }
+        stateData.forEach(category => {
+            const values = category.values.map(value => value.avg_data_value)
+            const key = category.key
+            groupData[key] = values
+        })
+
+
+
+        let categories = d3.keys(groupData)
+        if (groupName === 'Age Group') {
+            categories = categories.sort((a, b) => b.charAt(0) - a.charAt(0))
+        } else {
+            categories = categories.sort()
         }
+        color.domain(categories);
 
-        .axis path,
-        .axis line {
-            fill: none;
-            stroke: #000;
-            shape-rendering: crispEdges;
-        }
 
-        .x.axis path {
-            display: none;
-        }
+        let years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+        years = years.map(year => parseDate(year.toString()));
 
-        .line {
-            fill: none;
-            stroke: steelblue;
-            stroke-width: 1.5px;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Original Working Code -->
-    <script>
-        var myData = "date	New York	San Francisco	Austin\n\
-20111001	63.4	62.7	72.2\n\
-20111002	58.0	59.9	67.7\n\
-20111003	53.3	59.1	69.4\n\
-20111004	55.7	58.8	68.0\n\
-20111005	64.2	58.7	72.4\n\
-20111006	58.8	57.0	77.0\n\
-20111007	57.9	56.7	82.3\n\
-20111008	61.8	56.8	78.9\n\
-20111009	69.3	56.7	68.8\n\
-20111010	71.2	60.1	68.7\n\
-20111011	68.7	61.1	70.3\n\
-20111012	61.8	61.5	75.3\n\
-20111013	63.0	64.3	76.6\n\
-20111014	66.9	67.1	66.6\n\
-20111015	61.7	64.6	68.0\n\
-20111016	61.8	61.6	70.6\n\
-20111017	62.8	61.1	71.1\n\
-20111018	60.8	59.2	70.0\n\
-20111019	62.1	58.9	61.6\n\
-20111020	65.1	57.2	57.4\n\
-20111021	55.6	56.4	64.3\n\
-20111022	54.4	60.7	72.4\n";
-
-        var margin = {
-            top: 20,
-            right: 80,
-            bottom: 30,
-            left: 50
-        },
-            width = 500 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
-
-        var parseDate = d3.time.format("%Y%m%d").parse;
-
-        var x = d3.time.scale()
-            .range([0, width]);
-
-        var y = d3.scale.linear()
-            .range([height, 0]);
-
-        var color = d3.scale.category10();
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left");
-
-        var line = d3.svg.line()
-            .interpolate("basis")
-            .x(function (d) {
-                return x(d.date);
-            })
-            .y(function (d) {
-                return y(d.temperature);
+        var cities = color.domain().map(
+            function (name) {
+                return {
+                    name: name,
+                    values: years.map(function (year, i) {
+                        return {
+                            date: year,
+                            temperature: +groupData[name][i]
+                        };
+                    })
+                };
             });
 
-        var svg = d3.select("body").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var data = d3.tsv.parse(myData);
-
-        color.domain(d3.keys(data[0]).filter(function (key) {
-            return key !== "date";
-        }));
-
-        const my_x = color.domain()
-        debugger;
-
-        data.forEach(function (d) {
-            d.date = parseDate(d.date);
-        });
-
-
-        var cities = color.domain().map(function (name) {
-            return {
-                name: name,
-                values: data.map(function (d) {
-                    return {
-                        date: d.date,
-                        temperature: +d[name]
-                    };
-                })
-            };
-        });
-        console.log(cities)
-        console.log(JSON.stringify(cities))
-
-        debugger;
-
-        x.domain(d3.extent(data, function (d) {
-            return d.date;
-        }));
-        console.log(x.domain())
-        debugger;
-
+        x.domain([years[0], years[years.length - 1]]);
         y.domain([
             d3.min(cities, function (c) {
                 return d3.min(c.values, function (v) {
@@ -146,6 +123,8 @@
             })
         ]);
 
+
+
         var legend = svg.selectAll('g')
             .data(cities)
             .enter()
@@ -153,7 +132,7 @@
             .attr('class', 'legend');
 
         legend.append('rect')
-            .attr('x', width - 20)
+            .attr('x', width + margin.right - 80 - 20)
             .attr('y', function (d, i) {
                 return i * 20;
             })
@@ -164,7 +143,7 @@
             });
 
         legend.append('text')
-            .attr('x', width - 8)
+            .attr('x', width + margin.right - 80 - 8)
             .attr('y', function (d, i) {
                 return (i * 20) + 9;
             })
@@ -185,7 +164,7 @@
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Temperature (ºF)");
+            .text("Obesity Prevalence (%)");
 
         var city = svg.selectAll(".city")
             .data(cities)
@@ -278,7 +257,7 @@
 
                 d3.selectAll(".mouse-per-line")
                     .attr("transform", function (d, i) {
-                        console.log(width / mouse[0])
+                        // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
                             bisect = d3.bisector(function (d) { return d.date; }).right;
                         idx = bisect(d.values, xDate);
@@ -299,14 +278,10 @@
                         }
 
                         d3.select(this).select('text')
-                            .text(y.invert(pos.y).toFixed(2));
+                            .text(y.invert(pos.y).toFixed(2) + "%");
 
                         return "translate(" + mouse[0] + "," + pos.y + ")";
                     });
             });
-
-    </script>
-
-</body>
-
-</html>
+    });
+}
