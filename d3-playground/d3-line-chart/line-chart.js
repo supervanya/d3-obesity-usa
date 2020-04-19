@@ -183,7 +183,7 @@ function drawGraph(state, groupName) {
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 6)
+            .attr("y", -35)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
             .text("Obesity Prevalence (%)");
