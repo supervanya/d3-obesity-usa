@@ -210,7 +210,14 @@ function drawGraph(state, groupName) {
                 };
             })
             .attr("transform", function (d) {
-                return "translate(" + x(d.value.date) + "," + y(d.value.temperature) + ")";
+                let xPos = x(d.value.date)
+                let yPos = y(d.value.temperature)
+                if (isNaN(yPos)) {
+                    xPos = (-10000)
+                    yPos = (-10000)
+                    debugger;
+                }
+                return "translate(" + xPos + "," + yPos + ")";
             })
             .attr("x", 3)
             .attr("dy", ".35em")
