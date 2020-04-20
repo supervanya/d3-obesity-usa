@@ -58,8 +58,6 @@ const applySimulation = (nodes) => {
 const drawCartogram = async () => {
   const us = await d3.json("./resources/us-atlas@2.1.0-us-10m.json");
   const combined_data = await d3.json("./scatter_cartogram.json");
-  console.log(combined_data);
-
   const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
@@ -83,7 +81,6 @@ const drawCartogram = async () => {
     const r = obesityToRadius(combined.obese[year])
     feature.properties = { ...feature.properties, ...combined_data[name], x, y, r };
   });
-  console.log(states)
 
   const data = states.features.map((d) => d.properties)
   // const dataByState = d3.group(data, d => d.state)
