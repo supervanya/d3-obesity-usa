@@ -22,3 +22,11 @@ body {
     stroke: steelblue;
     stroke-width: 1.5px;
 }
+
+p#chart-description {
+    height: 60px;
+}
+
+h2#chart-description {
+    height: 60px;
+}

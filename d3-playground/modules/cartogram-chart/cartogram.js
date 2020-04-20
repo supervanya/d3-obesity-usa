@@ -3,10 +3,19 @@ import drawLineChart from '../../modules/line-chart/line-chart.js'
 const geoPath = d3.geoPath();
 let combined_data;
 
+
+const chartsInfo = {
+  income: "Interesting insight: Wealthier states tend to have less obesity.",
+  smokes: "Interesting insight: Smoking has a positive correlation obesity.",
+  age: "Interesting insight: Obesity rate is mostly found in the age group of 35 to 40 years.",
+  poverty: "Interesting insight: Positive correlation between Obesity and Poverty. Southern states tend to have the highest rates of obesity, poverty.",
+  healthcare: "Interesting insight: States with lack of health coverage tend to have more obesity.Texas being an outlier as it has the highest % lack in healthcare.",
+}
+
 // chart parameters
 // const width = 800;
 // const height = 600;
-const NODE = { MIN_RADIUS: 20, MAX_RADIUS: 50, PADDING: 2 };
+const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
 
 // Dimensions.
 const margin = { top: 80, right: 40, bottom: 40, left: 60 };
@@ -15,13 +24,24 @@ const height = 750 - margin.top - margin.bottom;
 
 let svg;
 
+const MIN_YEAR = 2008;
+const MAX_YEAR = 2018
+let obesityToRadius;
+const year_selector = (year) => MAX_YEAR - year
+const colorScale = d3.scaleSequential(d3.interpolateReds)
+  // .range()
+  .domain([20, 40]);
+
+
+let cartogramControls;
+
 // creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
   const svg_width = width + margin.right + margin.left
   const svg_height = height + margin.top + margin.bottom
   svg = d3
     .select("#cartogram-svg")
-    .attr("viewBox", `-20 -20 ${svg_width} ${svg_height}`)
+    .attr("viewBox", `-20 -20 ${svg_width} ${690}`)
 
   svg
     .append('g')
@@ -65,13 +85,12 @@ const applySimulation = (nodes) => {
 }
 
 const drawCartogram = async () => {
-  const us = await d3.json("./resources/us-atlas@2.1.0-us-10m.json");
-  combined_data = await d3.json("./scatter_cartogram.json");
+  const us = await d3.json("/d3-playground/resources/us-atlas@2.1.0-us-10m.json");
+  combined_data = await d3.json("/data/scatter_cartogram.json");
   const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
 
-  const year_selector = (year) => 0
   const year = year_selector(2008)
 
 
@@ -79,8 +98,8 @@ const drawCartogram = async () => {
   const baseMap = createBaseMap(stateBoundaries, nation);
 
   // this is a scale for converting obesity % to a radius
-  const obesityToRadius = d3.scaleSqrt()
-    .domain(d3.extent(Object.values(combined_data), d => d.obese[year_selector(2008)]))
+  obesityToRadius = d3.scaleSqrt()
+    .domain(d3.extent(Object.values(combined_data), d => d.obese[year]))
     .range([NODE.MIN_RADIUS, NODE.MAX_RADIUS])
 
   states.features.forEach((feature) => {
@@ -116,8 +135,9 @@ const drawCartogram = async () => {
     .classed('scatterBubble', true)
     .attr("transform", d => `translate(${d.x}, ${d.y})`)
     .append('circle')
-    .attr("r", (d) => d.r)
-    .attr("fill", "rgba(63, 191, 108)")
+    .attr("r", (d) => obesityToRadius(d.obese[year]))
+    // .attr("fill", "rgba(63, 191, 108)")
+    .attr("fill", d => colorScale(+d.obese[year]))
     // .attr("stroke", "black")
     .attr("stroke-width", 1)
 
@@ -166,10 +186,15 @@ const drawCartogram = async () => {
   //       .text(year)
   //   })
   // console.log(year_slider)
+
+
   function redrawLineChart(stateName, category) {
     const lineChart = d3.select(".line-chart")
       .remove()
     drawLineChart(stateName, category);
+    d3.select("#line-heading").text("How do different factors correlate with Obesity for " + stateName + "?")
+      .style("display", "block");
+    d3.select("#buttons").style("display", "block");
   }
 
   function click(d) {
@@ -191,13 +216,14 @@ const drawCartogram = async () => {
   }
 
   let moving = false;
-  let currentValue = 2008;
-  const targetValue = 2018;
+  let currentValue = MIN_YEAR;
+  const targetValue = MAX_YEAR;
   let timer;
 
   function step() {
     const yearslider = d3.select("#cartogram_year")
     currentValue = yearslider.attr("value");
+    updateYear(currentValue)
     //update(x.invert(currentValue));
     currentValue = +currentValue + 1;
     yearslider.attr("value", currentValue);
@@ -228,7 +254,19 @@ const drawCartogram = async () => {
     })
 };
 
-const update = (chosenXAxis) => {
+const updateScatter = (chosenXAxis, value) => {
+  cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '0')
+  d3.selectAll(".x").remove()
+
+  d3.selectAll('#correlation_selection a').classed('selected-axis', false)
+  d3.select(`#${chosenXAxis}`).classed('selected-axis', true)
+
+  d3.select(`#chart-title`).text('Correlations Discovered Between Obesity And Poverty, Age, Income, Healthcare And Smoking.')
+  d3.select(`#chart-description`).text('Interesting insight:')
+
+  const id = value.id
+  d3.select(`#chart-description`).text(chartsInfo[id])
+
   const scatterData = d3.values(combined_data)
 
   function addLabel(axis, label, x, y = 0, deg = 0) {
@@ -246,7 +284,7 @@ const update = (chosenXAxis) => {
 
   // Scales.
   const xExtent = d3
-    .extent(scatterData, d => d.scatter[chosenXAxis])
+    .extent(scatterData, d => +d.scatter[chosenXAxis])
     .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
 
   const xScale = d3
@@ -255,7 +293,7 @@ const update = (chosenXAxis) => {
     .range([0, width]);
 
   const yExtent = d3
-    .extent(scatterData, d => d.scatter.obesity)
+    .extent(scatterData, d => +d.scatter.obesity)
     .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
 
   const yScale = d3
@@ -278,7 +316,7 @@ const update = (chosenXAxis) => {
   xAxisDraw
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis)
-    .call(addLabel, chosenXAxis, 120, 8)
+    .call(addLabel, chosenXAxis, 30, 8)
 
   xAxisDraw.selectAll('text').attr('dy', '1em');
 
@@ -330,16 +368,67 @@ const update = (chosenXAxis) => {
     })
     .transition()
     .attr("transform", d => {
+      console.log(d)
       const x = xScale(d.scatter[chosenXAxis])
       const y = yScale(d.scatter.obesity)
       return `translate(${x}, ${y})`
     })
+}
+
+const updateCartogram = () => {
+  cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '1')
+  d3.selectAll(".x").remove()
+  d3.selectAll(".y").remove()
+
+  // d3.select('body').append(cartogramControls.node())
+  // hide the state outline
+  d3.selectAll(".state-boundaries,.nation-boundary")
+    .style('display', 'block')
+    .transition()
+    .duration(2000)
+    .style('transform', 'scale(1)')
+    .transition()
+
+  // move the bubbles to the right x and y coordinates
+  d3.selectAll(".scatterBubble")
+    .transition()
+    .duration(750)
+    .delay((d, i) => i * 15)
+    .attr("transform", d => {
+      const x = d.x
+      const y = d.y
+      return `translate(${x}, ${y})`
+    })
+    .transition()
+
+  d3.select('#chart-title')
+    .text('Obesity Cartogram')
+
+  d3.select('#chart-description')
+    .text('Obesity trend across the States in the US is rising')
+
+}
 
 
-
+const updateYear = (year) => {
+  const year_index = year_selector(year)
+  d3.selectAll(".scatterBubble").selectAll('circle')
+    .transition()
+    .attr('r', d => obesityToRadius(d.obese[year_index]))
+    .attr("fill", d => colorScale(+d.obese[year_index]))
 }
 
 drawCartogram()
 // update('income')
 // setTimeout(() => update('income'), 300)
-d3.select('#step2').on('click', () => update('income'))
+d3.select('#income').on('click', function () { updateScatter('income', this) })
+d3.select('#smokes').on('click', function () { updateScatter('smokes', this) })
+d3.select('#age').on('click', function () { updateScatter('age', this) })
+d3.select('#poverty').on('click', function () { updateScatter('poverty', this) })
+d3.select('#healthcare').on('click', function () { updateScatter('healthcare', this) })
+d3.select('#backToMap').on('click', function () { updateCartogram() })
+
+d3.select('input[type=range]#cartogram_year').on('input', function () {
+  const year = this.value
+  updateYear(year)
+})
