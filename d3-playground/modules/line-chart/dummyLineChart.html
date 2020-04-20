@@ -37,12 +37,12 @@
     <!-- Vanya's terrible attempt (working ..somewhat) -->
     <div id="Age Group"></div>
     <div id="Education Attained"></div>
-    <script src="line-chart.js"></script>
-    <script>
-        drawGraph('Texas', 'Age Group')
-        drawGraph('Michigan', 'Education Attained')
-        drawGraph('West Virginia', 'Race/Ethnicity')
-        drawGraph('Colorado', 'Age Group')
+    <script type="module">
+        import drawLineChart from './line-chart.js'
+        drawLineChart('Texas', 'Age Group')
+        drawLineChart('Michigan', 'Education Attained')
+        drawLineChart('West Virginia', 'Race/Ethnicity')
+        drawLineChart('Colorado', 'Age Group')
     </script>
 
 

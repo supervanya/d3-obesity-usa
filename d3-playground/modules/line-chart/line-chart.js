@@ -14,7 +14,7 @@ function groupAllData(data) {
     return groupedData;
 }
 
-function drawGraph(state, groupName) {
+function drawLineChart(state, groupName) {
     var margin = {
         top: 60,
         right: 250,
@@ -203,7 +203,6 @@ function drawGraph(state, groupName) {
                 if (isNaN(yPos)) {
                     xPos = (-10000)
                     yPos = (-10000)
-                    debugger;
                 }
                 return "translate(" + xPos + "," + yPos + ")";
             })
@@ -277,15 +276,15 @@ function drawGraph(state, groupName) {
                         // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
                             bisect = d3.bisector(function (d) { return d.year; }).right;
-                        idx = bisect(d.values, xDate);
+                        var idx = bisect(d.values, xDate);
 
                         var beginning = 0,
                             end = lines[i].getTotalLength(),
                             target = null;
 
                         while (true) {
-                            target = Math.floor((beginning + end) / 2);
-                            pos = lines[i].getPointAtLength(target);
+                            const target = Math.floor((beginning + end) / 2);
+                            var pos = lines[i].getPointAtLength(target);
                             if ((target === end || target === beginning) && pos.x !== mouse[0]) {
                                 break;
                             }
@@ -302,3 +301,5 @@ function drawGraph(state, groupName) {
             });
     });
 }
+
+export default drawLineChart;
