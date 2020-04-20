@@ -8,6 +8,17 @@
         cursor: pointer;
     }
 
+    .scatterBubbleGroup circle:hover {
+        /* opacity: 50%; */
+        /* cursor: pointer; */
+        /* transform: scale(3.0);
+        z-index: 1000; */
+    }
+
+    .scatterBubbleGroup circle {
+        stroke: black;
+    }
+
     .bubbleHover {
         /* opacity: 100%; */
     }
@@ -15,12 +26,13 @@
     .stateText {
         text-anchor: middle;
         font-size: 1.5em;
+        fill: white;
     }
 
     .stateValue {
         text-anchor: middle;
         font-family: Arial, Helvetica, sans-serif;
-        fill: white;
+        fill: black;
     }
 
     #year_scrubber {
@@ -59,45 +71,77 @@
         justify-content: center;
         height: 42px;
         align-items: end;
-        background-image: url(tick.png);
+        /* background-image: url(tick.png); */
         height: 4ex;
         background-position-y: -15px;
         background-position-x: center;
         z-index: -1;
     }
+
+    button {
+        padding: 20px;
+    }
+
+    #cartogram-container {
+        width: 70%;
+        max-width: 700px;
+        margin: auto;
+    }
+
+    #cartogram-svg {
+        margin-right: 50px;
+    }
+
+    .state-boundaries {
+        /* display: none; */
+        transform-origin: center;
+    }
+
+    .nation-boundary {
+        /* display: none; */
+        transform-origin: center;
+    }
+
+    .axis {
+        opacity: 0;
+        font-size: 15px;
+    }
 </style>
 
 <body>
     <h1>Cartogram trying</h1>
-    <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
-    <div id="cartogram_controls_container">
-        <div id="year_scrubber">
-            <input id="cartogram_year" value="2008" type="range" min="2008" max="2018" step="1" list="tickmarks">
-            <datalist id="tickmarks">
-                <option label="2008">2008</option>
-                <option>2009</option>
-                <option>2010</option>
-                <option>2011</option>
-                <option>2012</option>
-                <option label="2013">2013</option>
-                <option>2014</option>
-                <option>2015</option>
-                <option>2016</option>
-                <option>2017</option>
-                <option label="2018">2018</option>
-            </datalist>
+    <div id="cartogram-container">
+        <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
+        <div id="cartogram_controls_container">
+            <div id="year_scrubber">
+                <input id="cartogram_year" value="2008" type="range" min="2008" max="2018" step="1" list="tickmarks">
+                <datalist id="tickmarks">
+                    <option label="2008">2008</option>
+                    <option>2009</option>
+                    <option>2010</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option label="2013">2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option label="2018">2018</option>
+                </datalist>
+            </div>
+            <div id="cartogram_controls">
+                <button id="play-button">Play</button>
+            </div>
         </div>
-        <div id="cartogram_controls">
-            <output id="cartogram_year_label">2008</output>
-            <button id="play-button">Play</button>
-        </div>
+
+        <!-- cartogram chart -->
+        <svg id="cartogram-svg"></svg>
+        <button id="step2">Lets see some impressive stuff</button>
     </div>
 
-    <!-- load the d3.js library -->
-    <svg width=600 hight=400 id="d3-cartogram"></svg>
+
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
     <script src="./resources/topojson-client.min.js"></script>
-    <script type="module" src="./cartogram.js">
-    </script>
+    <script type="module" src="./cartogram.js"></script>
 </body>
