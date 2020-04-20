@@ -5,7 +5,7 @@ let combined_data;
 
 
 const chartsInfo = {
-  income: "",
+  income: "INteresing insifht:",
   smokes: "",
   age: "",
   poverty: "",
@@ -263,7 +263,7 @@ const update = (chosenXAxis, value) => {
   d3.select(`#chart-description`).text('Interesting insight:')
 
   const id = value.id
-  d3.select(`#${id}`).text(chartsInfo[id])
+  d3.select(`#chart-description`).text(chartsInfo[id])
 
   const scatterData = d3.values(combined_data)
 
