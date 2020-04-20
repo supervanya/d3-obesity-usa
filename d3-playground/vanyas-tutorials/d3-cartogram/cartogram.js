@@ -1,6 +1,7 @@
 import { parseRow, createStatePacks } from "./helpers.js";
 
 const geoPath = d3.geoPath();
+let combined_data;
 
 // chart parameters
 const width = 800;
@@ -57,7 +58,7 @@ const applySimulation = (nodes) => {
 
 const drawCartogram = async () => {
   const us = await d3.json("./resources/us-atlas@2.1.0-us-10m.json");
-  const combined_data = await d3.json("./scatter_cartogram.json");
+  combined_data = await d3.json("./scatter_cartogram.json");
   const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
@@ -102,10 +103,10 @@ const drawCartogram = async () => {
   // .style('opacity', '50%')
 
 
-  bubbles_group.append('circle')
-    // .classed('scatterBubble', true)
-    .attr("cx", (d) => d.x)
-    .attr("cy", (d) => d.y)
+  bubbles_group
+    .classed('scatterBubble', true)
+    .attr("transform", d => `translate(${d.x}, ${d.y})`)
+    .append('circle')
     .attr("r", (d) => d.r)
     .attr("fill", "rgba(63, 191, 108)")
     .attr("stroke", "black")
@@ -119,38 +120,35 @@ const drawCartogram = async () => {
 
 
 
-  bubbles_group.on('mouseover', function (d, i) {
-    d3.select(this)
-      // .classed('bubbleHover', true)
-      .transition()
-      .duration(250)
-      .style("transform", 'translate(0px, -5px)')
-    // .style('opacity', '100%')
-  })
+  // bubbles_group.on('mouseover', function (d, i) {
+  //   d3.select(this)
+  //     // .classed('bubbleHover', true)
+  //     .transition()
+  //     .duration(250)
+  //     .style("transform", 'translate(0px, -5px)')
+  //   // .style('opacity', '100%')
+  // })
 
-  bubbles_group.on('mouseout', function (d, i) {
-    d3.select(this)
-      // .classed('bubbleHover', false)
-      .transition()
-      .duration(250)
-      .style("transform", 'translate(0px, 0px)')
-    // .style('opacity', '50%')
-  })
+  // bubbles_group.on('mouseout', function (d, i) {
+  //   d3.select(this)
+  //     // .classed('bubbleHover', false)
+  //     .transition()
+  //     .duration(250)
+  //     .style("transform", 'translate(0px, 0px)')
+  //   // .style('opacity', '50%')
+  // })
 
   // adding the State Abbreviation to the bubbles
   bubbles_group
     .append('text')
     .classed('stateText', true)
-    .attr("x", d => d.x)
-    .attr("y", d => d.y - 5)
     .text(d => d.abbreviation)
 
   // adding the Value (obesity % at first) annotation to the bubbles
   bubbles_group
     .append('text')
     .classed('stateValue', true)
-    .attr("x", d => d.x)
-    .attr("y", d => d.y + 13)
+    .attr("y", 20)
     .text(d => `${d.obese[year]}%`)
 
   // const year_slider = d3.select('input[type=range]#cartogram_year')
@@ -159,7 +157,6 @@ const drawCartogram = async () => {
   //     d3.select("#cartogram_year_label")
   //       .text(year)
   //   })
-  // console.log(year_slider)
 
 
   let moving = false;
@@ -197,8 +194,61 @@ const drawCartogram = async () => {
       }
       console.log("Slider moving: " + moving);
     })
-
-
 };
 
+const update = (chosenXAxis) => {
+  console.log('updating data')
+  // console.log(chosenXAxis)
+  // console.log(combined_data)
+
+  const scatterData = d3.values(combined_data)
+
+  // Scales.
+  const xExtent = d3
+    .extent(scatterData, d => d.scatter[chosenXAxis])
+  // .map((d, i) => (i === 0 ? d * 0.95 : d * 1.05));
+
+
+  const xScale = d3
+    .scaleLinear()
+    .domain(xExtent)
+    .range([0, width]);
+
+
+
+  const yExtent = d3
+    .extent(scatterData, d => d.scatter.obesity)
+  // .map((d, i) => (i === 0 ? d * 0.1 : d * 1.1));
+
+  const yScale = d3
+    .scaleLinear()
+    .domain(yExtent)
+    .range([height, 0]);
+
+  // const xScale = ""
+  // const yScale = ""
+
+
+  const svg = d3.selectAll(".scatterBubble")
+    .transition()
+    .duration(2000)
+    .delay((d, i) => i * 15)
+    .attr("transform", d => {
+      // const x = xScale(d.scatter[chosenXAxis])
+      const x = d.x
+      const y = yScale(d.scatter.obesity)
+      return `translate(${x}, ${y})`
+    })
+    .transition()
+    .attr("transform", d => {
+      const x = xScale(d.scatter[chosenXAxis])
+      const y = yScale(d.scatter.obesity)
+      return `translate(${x}, ${y})`
+    })
+  // svg;
+}
+
 drawCartogram()
+// update('income')
+// setTimeout(() => update('income'), 300)
+d3.select('#step2').on('click', () => update('income'))

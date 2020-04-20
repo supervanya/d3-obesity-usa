@@ -65,10 +65,15 @@
         background-position-x: center;
         z-index: -1;
     }
+
+    button {
+        padding: 20px;
+    }
 </style>
 
 <body>
     <h1>Cartogram trying</h1>
+
     <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
     <div id="cartogram_controls_container">
         <div id="year_scrubber">
@@ -93,8 +98,10 @@
         </div>
     </div>
 
-    <!-- load the d3.js library -->
+    <!-- cartogram chart -->
     <svg width=600 hight=400 id="d3-cartogram"></svg>
+    <button id="step2">Lets see some impressive stuff</button>
+
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
     <script src="./resources/topojson-client.min.js"></script>
