@@ -63,7 +63,7 @@ function drawGraph(state, groupName) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    d3.csv('./data/obesity_data.csv', _data => {
+    d3.csv('./obesity_data.csv', _data => {
         const stateData = getGraphsForState(state, groupName, _data)
 
         let groupData = {}
