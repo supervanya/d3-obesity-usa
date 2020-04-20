@@ -5,11 +5,11 @@ let combined_data;
 
 
 const chartsInfo = {
-  income: "INteresing insifht:",
-  smokes: "",
-  age: "",
-  poverty: "",
-  healthcare: "",
+  income: "Interesting insight: Wealthier states tend to have less obesity.",
+  smokes: "Interesting insight: Smoking has a positive correlation obesity.",
+  age: "Interesting insight: Obesity rate is mostly found in the age group of 35 to 40 years.",
+  poverty: "Interesting insight: Positive correlation between Obesity and Poverty. Southern states tend to have the highest rates of obesity, poverty.",
+  healthcare: "Interesting insight: States with lack of health coverage tend to have more obesity.Texas being an outlier as it has the highest % lack in healthcare.",
 }
 
 // chart parameters
