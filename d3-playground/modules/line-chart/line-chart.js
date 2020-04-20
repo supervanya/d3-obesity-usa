@@ -55,6 +55,7 @@ function drawLineChart(state, groupName) {
     var svg = d3version3.select("body")
         .append('div')
         .attr('id', chartId)
+        .attr('class', 'line-chart')
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)

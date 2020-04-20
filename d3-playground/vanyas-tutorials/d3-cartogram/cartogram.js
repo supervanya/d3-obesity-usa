@@ -164,31 +164,28 @@ const drawCartogram = async () => {
   //       .text(year)
   //   })
   // console.log(year_slider)
+  function redrawLineChart(stateName, category){
+    const lineChart = d3.select(".line-chart")
+    .remove()
+    drawLineChart(stateName, category);
+  }
+
   function click(d) {
+    const state = d.scatter.state;
+    if (!window.selected_category){
+      redrawLineChart(state, "Age Group")
+    }
+    else{
+      redrawLineChart(state, window.selected_category)
+    }
     const buttons_container = d3.select("#buttons")
     .style("display","block");
-
-    const buttons_container1 = d3.select("#age-button")
-    selected_button = "Age"
-    drawLineChart(d.scatter.state, 'Age Group');
-
-    const buttons_container2 = d3.select("#ed-button")
-    drawLineChart(d.scatter.state, 'Education Attained');
-
-    const buttons_container3 = d3.select("#race-button")
-    drawLineChart(d.scatter.state, 'Race/Ethnicity');
-
-    const buttons_container4 = d3.select("#income-button")
-    drawLineChart(d.scatter.state, 'Household Income');
-
-    const buttons_container5 = d3.select("#gender-button")
-    drawLineChart(d.scatter.state, 'Gender');
-    //console.log(d.name)
-    drawLineChart(d.scatter.state, 'Age Group');
-    // drawLineChart(d.scatter.state, 'Education Attained');
-    // drawLineChart(d.scatter.state, 'Race/Ethnicity');
-    // drawLineChart(d.scatter.state, 'Household Income');
-    // drawLineChart(d.scatter.state, 'Gender');
+    const radios = d3.selectAll('input')
+    console.log(radios)
+    radios.on("change", function(){
+      window.selected_category = this.value;
+      redrawLineChart(state, this.value)
+    })
   }
 
   let moving = false;
@@ -230,7 +227,6 @@ const drawCartogram = async () => {
       console.log("Slider moving: " + moving);
 
     })
-
 
 };
 
