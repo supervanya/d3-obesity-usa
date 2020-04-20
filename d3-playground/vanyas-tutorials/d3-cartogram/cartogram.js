@@ -1,4 +1,4 @@
-import { parseRow, createStatePacks } from "./helpers.js";
+import drawLineChart from '../../modules/line-chart/line-chart.js'
 
 const geoPath = d3.geoPath();
 let combined_data;
@@ -108,6 +108,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
+    .on("click", function (d) { click(d) })
   // .style('opacity', '50%')
 
 
@@ -164,7 +165,30 @@ const drawCartogram = async () => {
   //     d3.select("#cartogram_year_label")
   //       .text(year)
   //   })
+  // console.log(year_slider)
+  function redrawLineChart(stateName, category) {
+    const lineChart = d3.select(".line-chart")
+      .remove()
+    drawLineChart(stateName, category);
+  }
 
+  function click(d) {
+    const state = d.scatter.state;
+    if (!window.selected_category) {
+      redrawLineChart(state, "Age Group")
+    }
+    else {
+      redrawLineChart(state, window.selected_category)
+    }
+    const buttons_container = d3.select("#buttons")
+      .style("display", "block");
+    const radios = d3.selectAll('input')
+    console.log(radios)
+    radios.on("change", function () {
+      window.selected_category = this.value;
+      redrawLineChart(state, this.value)
+    })
+  }
 
   let moving = false;
   let currentValue = 2008;
@@ -185,6 +209,7 @@ const drawCartogram = async () => {
       console.log("Slider moving: " + moving);
     }
   }
+
 
   const playButton = d3.select("#play-button")
     .on("click", function () {

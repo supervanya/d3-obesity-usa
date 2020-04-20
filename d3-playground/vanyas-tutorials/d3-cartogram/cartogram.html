@@ -82,6 +82,11 @@
         padding: 20px;
     }
 
+    div.line-chart {
+        display: flex;
+        justify-content: center;
+    }
+
     #cartogram-container {
         width: 70%;
         max-width: 700px;
@@ -107,6 +112,8 @@
         font-size: 15px;
     }
 </style>
+<link rel="stylesheet" href="../../../styles/line-chart.css">
+
 
 <body>
     <h1>Cartogram trying</h1>
@@ -139,7 +146,32 @@
         <button id="step2">Lets see some impressive stuff</button>
     </div>
 
+    <!-- load the d3.js library -->
+    <svg width=600 hight=400 id="d3-cartogram"></svg>
+    <form name="radios" id="buttons" style="display:none">
+        <!-- <button id="age-button">Age</button>
+        <button id="ed-button">Education</button>
+        <button id="gender-button">Gender</button>
+        <button id="race-button">Race</button>
+        <button id="income-button">Income</button> -->
+        <input name="btn" value="Age Group" type="radio" id="age-button" checked>Age</input>
+        <input name="btn" value="Race/Ethnicity" type="radio" id="race-button">Race/Ethnicity</input>
+        <input name="btn" value="Education Attained" type="radio" id="ed-button">Education Attained</input>
+        <input name="btn" value="Gender" type="radio" id="gender-button">Gender</input>
+        <input name="btn" value="Household Income" type="radio" id="income-button">Household Income</input>
+    </form>
 
+
+    <!-- Line chart loading -->
+    <script type="module" src="../../modules/line-chart/line-chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <script>
+        d3version3 = d3
+        window.d3 = null
+    </script>
+
+
+    <!-- Cartogram specific -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
     <script src="./resources/topojson-client.min.js"></script>

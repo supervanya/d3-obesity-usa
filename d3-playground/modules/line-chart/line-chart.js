@@ -21,8 +21,8 @@ function drawLineChart(state, groupName) {
         bottom: 30,
         left: 50
     },
-        width = 600 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        width = 550 - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
 
     var parseDate = d3version3.time.format("%Y").parse;
 
@@ -55,6 +55,7 @@ function drawLineChart(state, groupName) {
     var svg = d3version3.select("body")
         .append('div')
         .attr('id', chartId)
+        .attr('class', 'line-chart')
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -159,12 +160,12 @@ function drawLineChart(state, groupName) {
             });
 
         svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "x-l axis-l")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "y-l axis-l")
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)")
