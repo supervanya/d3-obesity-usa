@@ -71,46 +71,46 @@
         justify-content: center;
         height: 42px;
         align-items: end;
-        <<<<<<< HEAD=======
         /* background-image: url(tick.png); */
-        >>>>>>>master height: 4ex;
+        height: 4ex;
         background-position-y: -15px;
         background-position-x: center;
         z-index: -1;
     }
 
-    <<<<<<< HEAD div {
-        display: inline-flex;
+    button {
+        padding: 20px;
+    }
 
-        =======button {
-            padding: 20px;
-        }
+    div.line-chart {
+        display: flex;
+        justify-content: center;
+    }
 
-        #cartogram-container {
-            width: 70%;
-            max-width: 700px;
-            margin: auto;
-        }
+    #cartogram-container {
+        width: 70%;
+        max-width: 700px;
+        margin: auto;
+    }
 
-        #cartogram-svg {
-            margin-right: 50px;
-        }
+    #cartogram-svg {
+        margin-right: 50px;
+    }
 
-        .state-boundaries {
-            /* display: none; */
-            transform-origin: center;
-        }
+    .state-boundaries {
+        /* display: none; */
+        transform-origin: center;
+    }
 
-        .nation-boundary {
-            /* display: none; */
-            transform-origin: center;
-        }
+    .nation-boundary {
+        /* display: none; */
+        transform-origin: center;
+    }
 
-        .axis {
-            opacity: 0;
-            font-size: 15px;
-            >>>>>>>master
-        }
+    .axis {
+        opacity: 0;
+        font-size: 15px;
+    }
 </style>
 <link rel="stylesheet" href="../../../styles/line-chart.css">
 
@@ -145,6 +145,7 @@
         <svg id="cartogram-svg"></svg>
         <button id="step2">Lets see some impressive stuff</button>
     </div>
+
     <!-- load the d3.js library -->
     <svg width=600 hight=400 id="d3-cartogram"></svg>
     <form name="radios" id="buttons" style="display:none">
@@ -160,7 +161,6 @@
         <input name="btn" value="Household Income" type="radio" id="income-button">Household Income</input>
     </form>
 
-    <script src="./resources/topojson-client.min.js"></script>
 
     <!-- Line chart loading -->
     <script type="module" src="../../modules/line-chart/line-chart.js"></script>
@@ -169,17 +169,11 @@
         d3version3 = d3
         window.d3 = null
     </script>
-    <script type="module">
-        // import drawLineChart from '../../modules/line-chart/line-chart.js'
-        // drawLineChart('Texas', 'Age Group')
-        // drawLineChart('Michigan', 'Education Attained')
-        // drawLineChart('West Virginia', 'Race/Ethnicity')
-        // drawLineChart('Colorado', 'Age Group')
-    </script>
 
 
     <!-- Cartogram specific -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
+    <script src="./resources/topojson-client.min.js"></script>
     <script type="module" src="./cartogram.js"></script>
 </body>
