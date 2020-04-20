@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+    <!-- <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <style>
+        body {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .bar-header {
+            font-size: large;
+        }
+
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Vanya's terrible attempt (working ..somewhat) -->
+    <div id="Age Group"></div>
+    <div id="Education Attained"></div>
+    <script src="line-chart.js"></script>
+    <script>
+        drawGraph('Texas', 'Age Group')
+        drawGraph('Michigan', 'Education Attained')
+        drawGraph('West Virginia', 'Race/Ethnicity')
+        drawGraph('Colorado', 'Age Group')
+    </script>
+
+
+</html>
