@@ -170,10 +170,15 @@ const drawCartogram = async () => {
   //       .text(year)
   //   })
   // console.log(year_slider)
+
+
   function redrawLineChart(stateName, category) {
     const lineChart = d3.select(".line-chart")
       .remove()
     drawLineChart(stateName, category);
+    d3.select("#line-heading").text("How do different factors correlate with Obesity for "+ stateName + "?")
+    .style("display", "block");
+    d3.select("#buttons"). style("display", "block");
   }
 
   function click(d) {
