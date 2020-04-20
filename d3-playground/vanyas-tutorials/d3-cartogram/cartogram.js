@@ -107,6 +107,7 @@ const drawCartogram = async () => {
 
   bubbles_group.append('circle')
     // .classed('scatterBubble', true)
+    .on("click", function(d){click(d)})
     .attr("cx", (d) => d.x)
     .attr("cy", (d) => d.y)
     .attr("r", (d) => d.r)
@@ -163,7 +164,13 @@ const drawCartogram = async () => {
   //       .text(year)
   //   })
   // console.log(year_slider)
-
+  function click(d) {
+    alert('Hi');
+    drawGraph('Texas', 'Age Group');
+    drawGraph('Michigan', 'Education Attained');
+    drawGraph('West Virginia', 'Race/Ethnicity');
+    drawGraph('Colorado', 'Age Group');
+  }
   
   let moving = false;
   let currentValue = 0;
@@ -185,6 +192,7 @@ const drawCartogram = async () => {
       console.log("Slider moving: " + moving);
     }
   }
+
 
   const playButton = d3.select("#play-button")
     .on("click", function() {
