@@ -255,7 +255,7 @@ const drawCartogram = async () => {
 };
 
 const updateScatter = (chosenXAxis, value) => {
-  cartogramControls = d3.select("#cartogram_controls_container").remove()
+  cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '0')
   d3.selectAll(".x").remove()
 
   d3.selectAll('#correlation_selection a').classed('selected-axis', false)
@@ -376,15 +376,36 @@ const updateScatter = (chosenXAxis, value) => {
 }
 
 const updateCartogram = () => {
+  cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '1')
+  d3.selectAll(".x").remove()
+  d3.selectAll(".y").remove()
+
   // d3.select('body').append(cartogramControls.node())
   // hide the state outline
   d3.selectAll(".state-boundaries,.nation-boundary")
+    .style('display', 'block')
     .transition()
-    .duration(1000)
+    .duration(2000)
     .style('transform', 'scale(1)')
     .transition()
-    .style('display', 'block')
 
+  // move the bubbles to the right x and y coordinates
+  d3.selectAll(".scatterBubble")
+    .transition()
+    .duration(750)
+    .delay((d, i) => i * 15)
+    .attr("transform", d => {
+      const x = d.x
+      const y = d.y
+      return `translate(${x}, ${y})`
+    })
+    .transition()
+
+  d3.select('#chart-title')
+    .text('Obesity Cartogram')
+
+  d3.select('#chart-description')
+    .text('Obesity trend across the States in the US is rising')
 
 }
 

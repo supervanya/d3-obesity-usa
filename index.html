@@ -49,6 +49,10 @@
         form {
             font-size: 14px;
         }
+
+        p {
+            font-size: larger;
+        }
     </style>
     <link rel="stylesheet" href="styles/line-chart.css">
     <link rel="stylesheet" href="styles/cartogram.css">
@@ -59,7 +63,7 @@
 
     <div id="cartogram-container">
         <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
-        <div id="cartogram_controls_container">
+        <div id="cartogram_controls_container" style="height: 100px;">
             <div id="year_scrubber">
                 <input id="cartogram_year" value="2008" type="range" min="2008" max="2018" step="1" list="tickmarks">
                 <datalist id="tickmarks">
@@ -84,9 +88,10 @@
         </div>
 
         <!-- Description of the chart -->
-        <div id='chart-info'>
+        <div style="height: 100px;" id='chart-info'>
             <h2 id="chart-title">Obesity Cartogram</h2>
-            <p style="text-align: center;" id="chart-description">some description</p>
+            <p id="chart-description" style="text-align: center; max-width: 50%; margin: auto;">Obesity trend across the
+                States in the US is rising</p>
         </div>
         <!-- cartogram chart -->
         <svg id="cartogram-svg"></svg>
