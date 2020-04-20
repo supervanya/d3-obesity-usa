@@ -6,7 +6,7 @@ function getGraphsForState(state, groupName, data) {
 };
 
 function groupAllData(data) {
-    var groupedData = d3.nest()
+    var groupedData = d3version3.nest()
         .key(function (d) { return d.locationdesc; })
         .key(function (d) { return d.category; })
         .key(function (d) { return d.category_value; })
@@ -24,25 +24,25 @@ function drawLineChart(state, groupName) {
         width = 600 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
-    var parseDate = d3.time.format("%Y").parse;
+    var parseDate = d3version3.time.format("%Y").parse;
 
-    var x = d3.time.scale()
+    var x = d3version3.time.scale()
         .range([0, width]);
 
-    var y = d3.scale.linear()
+    var y = d3version3.scale.linear()
         .range([height, 0]);
 
-    var color = d3.scale.category10();
+    var color = d3version3.scale.category10();
 
-    var xAxis = d3.svg.axis()
+    var xAxis = d3version3.svg.axis()
         .scale(x)
         .orient("bottom");
 
-    var yAxis = d3.svg.axis()
+    var yAxis = d3version3.svg.axis()
         .scale(y)
         .orient("left");
 
-    var line = d3.svg.line()
+    var line = d3version3.svg.line()
         .interpolate("basis")
         .x(function (d) {
             return x(d.year);
@@ -52,8 +52,7 @@ function drawLineChart(state, groupName) {
         });
 
     const chartId = state + groupName.replace(" ", "_")
-
-    var svg = d3.select("body")
+    var svg = d3version3.select("body")
         .append('div')
         .attr('id', chartId)
         .append("svg")
@@ -63,7 +62,7 @@ function drawLineChart(state, groupName) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    d3.csv('./obesity_data.csv', _data => {
+    d3version3.csv('obesity_data.csv', _data => {
         const stateData = getGraphsForState(state, groupName, _data)
 
         let groupData = {}
@@ -75,7 +74,7 @@ function drawLineChart(state, groupName) {
 
 
 
-        let categories = d3.keys(groupData)
+        let categories = d3version3.keys(groupData)
         if (groupName === 'Age Group') {
             categories = categories.sort((a, b) => b.charAt(0) - a.charAt(0))
         } else {
@@ -102,13 +101,13 @@ function drawLineChart(state, groupName) {
 
         x.domain([years[0], years[years.length - 1]]);
         y.domain([
-            d3.min(breakoutGroups, function (c) {
-                return d3.min(c.values, function (v) {
+            d3version3.min(breakoutGroups, function (c) {
+                return d3version3.min(c.values, function (v) {
                     return v.obesity;
                 });
             }),
-            d3.max(breakoutGroups, function (c) {
-                return d3.max(c.values, function (v) {
+            d3version3.max(breakoutGroups, function (c) {
+                return d3version3.max(c.values, function (v) {
                     return v.obesity;
                 });
             })
@@ -263,7 +262,7 @@ function drawLineChart(state, groupName) {
                     .style("opacity", "1");
             })
             .on('mousemove', function () { // mouse moving over canvas
-                var mouse = d3.mouse(this);
+                var mouse = d3version3.mouse(this);
                 svg.select(`.mouse-line`)
                     .attr("d", function () {
                         var d = "M" + mouse[0] + "," + height;
@@ -275,7 +274,7 @@ function drawLineChart(state, groupName) {
                     .attr("transform", function (d, i) {
                         // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
-                            bisect = d3.bisector(function (d) { return d.year; }).right;
+                            bisect = d3version3.bisector(function (d) { return d.year; }).right;
                         var idx = bisect(d.values, xDate);
 
                         var beginning = 0,
@@ -293,7 +292,7 @@ function drawLineChart(state, groupName) {
                             else break; //position found
                         }
 
-                        d3.select(this).select('text')
+                        d3version3.select(this).select('text')
                             .text(y.invert(pos.y).toFixed(2) + "%");
 
                         return "translate(" + mouse[0] + "," + pos.y + ")";
