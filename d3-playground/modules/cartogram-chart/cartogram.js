@@ -85,8 +85,8 @@ const applySimulation = (nodes) => {
 }
 
 const drawCartogram = async () => {
-  const us = await d3.json("/d3-playground/resources/us-atlas@2.1.0-us-10m.json");
-  combined_data = await d3.json("/data/scatter_cartogram.json");
+  const us = await d3.json("d3-playground/resources/us-atlas@2.1.0-us-10m.json");
+  combined_data = await d3.json("data/scatter_cartogram.json");
   const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
