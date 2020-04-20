@@ -64,6 +64,9 @@
         background-position-x: center;
         z-index: -1;
     }
+    div{
+        display: inline-flex;
+    }
 </style>
 <link rel="stylesheet" href="../../../styles/line-chart.css">
 
@@ -93,9 +96,15 @@
             <button id="play-button">Play</button>
         </div>
     </div>
-
     <!-- load the d3.js library -->
     <svg width=600 hight=400 id="d3-cartogram"></svg>
+    <div id="buttons" style="display: none" >
+        <button id="age-button">Age</button>
+        <button id="ed-button">Education</button>
+        <button id="gender-button">Gender</button>
+        <button id="race-button">Race</button>
+        <button id="income-button">Income</button>
+    </div>
 
     <script src="./resources/topojson-client.min.js"></script>
 

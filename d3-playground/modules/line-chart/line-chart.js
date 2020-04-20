@@ -21,8 +21,8 @@ function drawLineChart(state, groupName) {
         bottom: 30,
         left: 50
     },
-        width = 600 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        width = 550 - margin.left - margin.right,
+        height = 350 - margin.top - margin.bottom;
 
     var parseDate = d3version3.time.format("%Y").parse;
 
