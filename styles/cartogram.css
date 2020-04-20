@@ -1,0 +1,110 @@
+.scatterBubble {}
+
+.scatterBubbleGroup {
+    /* opacity: 50%; */
+    cursor: pointer;
+}
+
+.scatterBubbleGroup circle:hover {
+    /* opacity: 50%; */
+    /* cursor: pointer; */
+    /* transform: scale(3.0);
+    z-index: 1000; */
+}
+
+.scatterBubbleGroup circle {
+    stroke: black;
+}
+
+.bubbleHover {
+    /* opacity: 100%; */
+}
+
+.stateText {
+    text-anchor: middle;
+    font-size: 1.5em;
+    fill: white;
+}
+
+.stateValue {
+    text-anchor: middle;
+    font-family: Arial, Helvetica, sans-serif;
+    fill: black;
+}
+
+#year_scrubber {
+    width: 70%;
+    display: inline-block;
+}
+
+#cartogram_controls_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cartogram_controls {
+    display: inline-block;
+    padding-left: 25px;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+datalist {
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: -23px;
+    padding-top: 0px;
+}
+
+option {
+    width: 2ex;
+    display: flex;
+    justify-content: center;
+    height: 42px;
+    align-items: end;
+    /* background-image: url(tick.png); */
+    height: 4ex;
+    background-position-y: -15px;
+    background-position-x: center;
+    z-index: -1;
+}
+
+button {
+    padding: 20px;
+}
+
+div.line-chart {
+    display: flex;
+    justify-content: center;
+}
+
+#cartogram-container {
+    width: 70%;
+    max-width: 700px;
+    margin: auto;
+}
+
+#cartogram-svg {
+    margin-right: 50px;
+}
+
+.state-boundaries {
+    /* display: none; */
+    transform-origin: center;
+}
+
+.nation-boundary {
+    /* display: none; */
+    transform-origin: center;
+}
+
+.axis {
+    opacity: 0;
+    font-size: 15px;
+}

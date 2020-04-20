@@ -8,21 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
         rel="stylesheet">
-    <style src>
-        .chart {
-            width: 1024px;
-            height: 512px;
-            background-color: slategray;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-            max-width: 80%;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
+    <style>
         body {
             font-family: 'Open Sans', sans-serif;
         }
@@ -62,43 +48,71 @@
         }
     </style>
     <link rel="stylesheet" href="styles/line-chart.css">
+    <link rel="stylesheet" href="styles/cartogram.css">
 </head>
 
 <body>
     <h1 class="chartTitle">USA Obesity Story</h1>
 
-    <h2>Obesity is on the rise</h2>
-    <div class="chart">
-        <p>introduction to the CDC data here (Cartogram)</p>
+    <div id="cartogram-container">
+        <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
+        <div id="cartogram_controls_container">
+            <div id="year_scrubber">
+                <input id="cartogram_year" value="2008" type="range" min="2008" max="2018" step="1" list="tickmarks">
+                <datalist id="tickmarks">
+                    <option label="2008">2008</option>
+                    <option>2009</option>
+                    <option>2010</option>
+                    <option>2011</option>
+                    <option>2012</option>
+                    <option label="2013">2013</option>
+                    <option>2014</option>
+                    <option>2015</option>
+                    <option>2016</option>
+                    <option>2017</option>
+                    <option label="2018">2018</option>
+                </datalist>
+            </div>
+            <div id="cartogram_controls">
+                <button id="play-button">Play</button>
+            </div>
+
+
+        </div>
+        <!-- cartogram chart -->
+        <svg id="cartogram-svg"></svg>
+        <button id="step2">Lets see some impressive stuff</button>
+
+        <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
+        <form name="radios" id="buttons" style="display:none">
+            <!-- <button id="age-button">Age</button>
+                                    <button id="ed-button">Education</button>
+                                    <button id="gender-button">Gender</button>
+                                    <button id="race-button">Race</button>
+                                    <button id="income-button">Income</button> -->
+            <input name="btn" value="Age Group" type="radio" id="age-button" checked>Age</input>
+            <input name="btn" value="Race/Ethnicity" type="radio" id="race-button">Race/Ethnicity</input>
+            <input name="btn" value="Education Attained" type="radio" id="ed-button">Education Attained</input>
+            <input name="btn" value="Gender" type="radio" id="gender-button">Gender</input>
+            <input name="btn" value="Household Income" type="radio" id="income-button">Household Income</input>
+        </form>
     </div>
-
-    <h2>Some factors that can contribute the epidemic</h2>
-    <div class="chart">
-        <p>Correlation of factors (Parallel Coordinates)</p>
-    </div>
-
-    <h2>How can we fight it?</h2>
-    <div class="chart">
-        <p>Correlation of factors (Cartogram / Scatter Plot)</p>
-    </div>
-
-    <footer>
-        <hr class="hr">
-        SI 649 Project, GitHub repo <a href="https://github.com/supervanya/d3-obesity-usa">here</a>
-    </footer>
-
 </body>
 
 </html>
+
+
+<!-- Line chart loading -->
+<script type="module" src="./d3-playground/modules/line-chart/line-chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
 <script>
     d3version3 = d3
     window.d3 = null
 </script>
-<script type="module">
-    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
-    drawLineChart('Texas', 'Age Group')
-    drawLineChart('Michigan', 'Education Attained')
-    drawLineChart('West Virginia', 'Race/Ethnicity')
-    drawLineChart('Colorado', 'Age Group')
-</script>
+
+
+<!-- Cartogram specific -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3-array.v2.js"></script>
+<script src="/d3-playground/resources/topojson-client.min.js"></script>
+<script type="module" src="/d3-playground/modules/cartogram-chart/cartogram.js"></script>
