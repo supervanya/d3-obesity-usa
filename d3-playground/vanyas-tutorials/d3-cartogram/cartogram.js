@@ -164,9 +164,9 @@ const drawCartogram = async () => {
   //   })
   // console.log(year_slider)
 
-  
+
   let moving = false;
-  let currentValue = 0;
+  let currentValue = 2008;
   const targetValue = 2018;
   let timer;
 
@@ -174,36 +174,33 @@ const drawCartogram = async () => {
     const yearslider = d3.select("#cartogram_year")
     currentValue = yearslider.attr("value");
     //update(x.invert(currentValue));
-    currentValue = currentValue + 1;
-    yearslider.attr("value",currentValue);
-    if (currentValue > targetValue) {
+    currentValue = +currentValue + 1;
+    yearslider.attr("value", currentValue);
+    if (+currentValue > +targetValue) {
       moving = false;
       currentValue = 0;
       clearInterval(timer);
-      // timer = 0;
       playButton.text("Play");
       console.log("Slider moving: " + moving);
     }
   }
 
   const playButton = d3.select("#play-button")
-    .on("click", function() {
-    
-    var button = d3.select(this);
-    if (button.text() == "Pause") {
-      moving = false;
-      clearInterval(timer);
-      timer = 0;
-      button.text("Play");
-    } else {
-      moving = true;
-      timer = setInterval(step, 1000);
-      button.text("Pause");
-    }
-    console.log("Slider moving: " + moving);
+    .on("click", function () {
+      var button = d3.select(this);
+      if (button.text() == "Pause") {
+        moving = false;
+        clearInterval(timer);
+        timer = 0;
+        button.text("Play");
+      } else {
+        moving = true;
+        timer = setInterval(step, 1000);
+        button.text("Pause");
+      }
+      console.log("Slider moving: " + moving);
+    })
 
-  })
-  
 
 };
 
