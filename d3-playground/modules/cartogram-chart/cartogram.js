@@ -251,8 +251,9 @@ const update = (chosenXAxis) => {
 
   // Scales.
   const xExtent = d3
-    .extent(scatterData, d => d.scatter[chosenXAxis])
-    .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
+    .extent(scatterData, d => +d.scatter[chosenXAxis])
+  // .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
+  debugger;
 
   const xScale = d3
     .scaleLinear()
@@ -260,8 +261,8 @@ const update = (chosenXAxis) => {
     .range([0, width]);
 
   const yExtent = d3
-    .extent(scatterData, d => d.scatter.obesity)
-    .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
+    .extent(scatterData, d => +d.scatter.obesity)
+  // .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
 
   const yScale = d3
     .scaleLinear()
@@ -335,8 +336,10 @@ const update = (chosenXAxis) => {
     })
     .transition()
     .attr("transform", d => {
+      console.log(d)
       const x = xScale(d.scatter[chosenXAxis])
       const y = yScale(d.scatter.obesity)
+      debugger;
       return `translate(${x}, ${y})`
     })
 }
@@ -352,6 +355,8 @@ drawCartogram()
 // update('income')
 // setTimeout(() => update('income'), 300)
 d3.select('#step2').on('click', () => update('income'))
+d3.select('#step3').on('click', () => update('smokes'))
+d3.select('#step4').on('click', () => update('income'))
 d3.select('input[type=range]#cartogram_year').on('input', function () {
   const year = this.value
   updateYear(year)
