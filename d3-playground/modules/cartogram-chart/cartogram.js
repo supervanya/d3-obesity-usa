@@ -19,6 +19,10 @@ const MIN_YEAR = 2008;
 const MAX_YEAR = 2018
 let obesityToRadius;
 const year_selector = (year) => MAX_YEAR - year
+const colorScale = d3.scaleSequential(d3.interpolateReds)
+  // .range()
+  .domain([20, 40]);
+
 
 // creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
@@ -121,7 +125,8 @@ const drawCartogram = async () => {
     .attr("transform", d => `translate(${d.x}, ${d.y})`)
     .append('circle')
     .attr("r", (d) => obesityToRadius(d.obese[year]))
-    .attr("fill", "rgba(63, 191, 108)")
+    // .attr("fill", "rgba(63, 191, 108)")
+    .attr("fill", d => colorScale(+d.obese[year]))
     // .attr("stroke", "black")
     .attr("stroke-width", 1)
 
@@ -176,9 +181,9 @@ const drawCartogram = async () => {
     const lineChart = d3.select(".line-chart")
       .remove()
     drawLineChart(stateName, category);
-    d3.select("#line-heading").text("How do different factors correlate with Obesity for "+ stateName + "?")
-    .style("display", "block");
-    d3.select("#buttons"). style("display", "block");
+    d3.select("#line-heading").text("How do different factors correlate with Obesity for " + stateName + "?")
+      .style("display", "block");
+    d3.select("#buttons").style("display", "block");
   }
 
   function click(d) {
@@ -350,10 +355,11 @@ const update = (chosenXAxis) => {
 }
 
 const updateYear = (year) => {
-
+  const year_index = year_selector(year)
   d3.selectAll(".scatterBubble").selectAll('circle')
     .transition()
-    .attr('r', d => obesityToRadius(d.obese[year_selector(year)]))
+    .attr('r', d => obesityToRadius(d.obese[year_index]))
+    .attr("fill", d => colorScale(+d.obese[year_index]))
 }
 
 drawCartogram()
