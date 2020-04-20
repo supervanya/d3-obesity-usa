@@ -6,7 +6,7 @@ let combined_data;
 // chart parameters
 // const width = 800;
 // const height = 600;
-const NODE = { MIN_RADIUS: 20, MAX_RADIUS: 50, PADDING: 2 };
+const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
 
 // Dimensions.
 const margin = { top: 80, right: 40, bottom: 40, left: 60 };
@@ -14,6 +14,11 @@ const width = 990 - margin.right - margin.left;
 const height = 750 - margin.top - margin.bottom;
 
 let svg;
+
+const MIN_YEAR = 2008;
+const MAX_YEAR = 2018
+let obesityToRadius;
+const year_selector = (year) => MAX_YEAR - year
 
 // creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
@@ -71,7 +76,6 @@ const drawCartogram = async () => {
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
 
-  const year_selector = (year) => 0
   const year = year_selector(2008)
 
 
@@ -79,8 +83,8 @@ const drawCartogram = async () => {
   const baseMap = createBaseMap(stateBoundaries, nation);
 
   // this is a scale for converting obesity % to a radius
-  const obesityToRadius = d3.scaleSqrt()
-    .domain(d3.extent(Object.values(combined_data), d => d.obese[year_selector(2008)]))
+  obesityToRadius = d3.scaleSqrt()
+    .domain(d3.extent(Object.values(combined_data), d => d.obese[year]))
     .range([NODE.MIN_RADIUS, NODE.MAX_RADIUS])
 
   states.features.forEach((feature) => {
@@ -116,7 +120,7 @@ const drawCartogram = async () => {
     .classed('scatterBubble', true)
     .attr("transform", d => `translate(${d.x}, ${d.y})`)
     .append('circle')
-    .attr("r", (d) => d.r)
+    .attr("r", (d) => obesityToRadius(d.obese[year]))
     .attr("fill", "rgba(63, 191, 108)")
     // .attr("stroke", "black")
     .attr("stroke-width", 1)
@@ -191,8 +195,8 @@ const drawCartogram = async () => {
   }
 
   let moving = false;
-  let currentValue = 2008;
-  const targetValue = 2018;
+  let currentValue = MIN_YEAR;
+  const targetValue = MAX_YEAR;
   let timer;
 
   function step() {
@@ -339,7 +343,19 @@ const update = (chosenXAxis) => {
 
 }
 
+const updateYear = (year) => {
+
+  d3.selectAll(".scatterBubble").selectAll('circle')
+    .transition()
+    .attr('r', d => obesityToRadius(d.obese[year_selector(year)]))
+}
+
 drawCartogram()
 // update('income')
 // setTimeout(() => update('income'), 300)
 d3.select('#step2').on('click', () => update('income'))
+d3.select('input[type=range]#cartogram_year').on('input', function () {
+  const year = this.value
+  updateYear(year)
+  console.log(year)
+})
