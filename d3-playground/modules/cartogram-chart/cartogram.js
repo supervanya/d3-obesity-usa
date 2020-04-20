@@ -244,6 +244,8 @@ const drawCartogram = async () => {
 };
 
 const update = (chosenXAxis) => {
+  d3.select("#cartogram_controls_container").remove()
+
   const scatterData = d3.values(combined_data)
 
   function addLabel(axis, label, x, y = 0, deg = 0) {
@@ -262,8 +264,7 @@ const update = (chosenXAxis) => {
   // Scales.
   const xExtent = d3
     .extent(scatterData, d => +d.scatter[chosenXAxis])
-  // .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
-  debugger;
+    .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
 
   const xScale = d3
     .scaleLinear()
@@ -272,7 +273,7 @@ const update = (chosenXAxis) => {
 
   const yExtent = d3
     .extent(scatterData, d => +d.scatter.obesity)
-  // .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
+    .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
 
   const yScale = d3
     .scaleLinear()
@@ -349,7 +350,6 @@ const update = (chosenXAxis) => {
       console.log(d)
       const x = xScale(d.scatter[chosenXAxis])
       const y = yScale(d.scatter.obesity)
-      debugger;
       return `translate(${x}, ${y})`
     })
 }
@@ -367,7 +367,9 @@ drawCartogram()
 // setTimeout(() => update('income'), 300)
 d3.select('#step2').on('click', () => update('income'))
 d3.select('#step3').on('click', () => update('smokes'))
-d3.select('#step4').on('click', () => update('income'))
+d3.select('#step4').on('click', () => update('age'))
+d3.select('#step5').on('click', () => update('poverty'))
+d3.select('#step6').on('click', () => update('healthcare'))
 d3.select('input[type=range]#cartogram_year').on('input', function () {
   const year = this.value
   updateYear(year)

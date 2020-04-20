@@ -46,7 +46,7 @@
             border-top: 1px solid rgb(180, 200, 223);
         }
 
-        form{
+        form {
             font-size: 14px;
         }
     </style>
@@ -84,31 +84,37 @@
         </div>
         <!-- cartogram chart -->
         <svg id="cartogram-svg"></svg>
-        <a href="#" id="step2">Income</a>
-        <a href="#" id="step3">Other</a>
-        <a href="#" id="step4">Another</a>
+
+        <ol id="correlation_selection">
+            <a href="#" id="step2">Median Household Income</a>
+            <a href="#" id="step3">Smoking (%)</a>
+            <a href="#" id="step4">Median Age</a>
+            <a href="#" id="step5">Poverty (%)</a>
+            <a href="#" id="step6">Lack of Health Care (%)</a>
+        </ol>
 
         <div>
-        <h2 style="text-align: center;" id="line-heading" style="display: none;"></h2>
-        <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
-        <form name="radios" id="buttons" style="text-align: center; padding-top: 5px; padding-bottom: 40px; display:none">
-            <input type="radio" name="btn" id="Age Group" value="Age Group" checked>
-            <label for="Age Group" style="padding-right: 15px;">Age Group</label>
+            <h2 style="text-align: center;" id="line-heading" style="display: none;"></h2>
+            <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
+            <form name="radios" id="buttons"
+                style="text-align: center; padding-top: 5px; padding-bottom: 40px; display:none">
+                <input type="radio" name="btn" id="Age Group" value="Age Group" checked>
+                <label for="Age Group" style="padding-right: 15px;">Age Group</label>
 
-            <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity">
-            <label for="Race/Ethnicity" style="padding-right: 15px;">Race/Ethnicity</label>
+                <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity">
+                <label for="Race/Ethnicity" style="padding-right: 15px;">Race/Ethnicity</label>
 
-            <input type="radio" name="btn" id="Education Attained" value="Education Attained">
-            <label for="Education Attained" style="padding-right: 15px;">Education Attained</label>
+                <input type="radio" name="btn" id="Education Attained" value="Education Attained">
+                <label for="Education Attained" style="padding-right: 15px;">Education Attained</label>
 
-            <input type="radio" name="btn" id="Gender" value="Gender">
-            <label for="Gender" style="padding-right: 15px;">Gender</label>
+                <input type="radio" name="btn" id="Gender" value="Gender">
+                <label for="Gender" style="padding-right: 15px;">Gender</label>
 
-            <input type="radio" name="btn" id="Household Income" value="Household Income">
-            <label for="Household Income">Household Income</label>
+                <input type="radio" name="btn" id="Household Income" value="Household Income">
+                <label for="Household Income">Household Income</label>
 
-        </form>
-    </div>
+            </form>
+        </div>
     </div>
 </body>
 
