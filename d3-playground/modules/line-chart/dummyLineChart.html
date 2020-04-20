@@ -4,7 +4,6 @@
 <head>
     <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
     <!-- <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
     <style>
         body {
             font: 10px sans-serif;
@@ -35,8 +34,11 @@
 
 <body>
     <!-- Vanya's terrible attempt (working ..somewhat) -->
-    <div id="Age Group"></div>
-    <div id="Education Attained"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <script>
+        d3version3 = d3
+        window.d3 = null
+    </script>
     <script type="module">
         import drawLineChart from './line-chart.js'
         drawLineChart('Texas', 'Age Group')

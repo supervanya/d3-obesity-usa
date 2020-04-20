@@ -61,6 +61,7 @@
             border-top: 1px solid rgb(180, 200, 223);
         }
     </style>
+    <link rel="stylesheet" href="styles/line-chart.css">
 </head>
 
 <body>
@@ -89,3 +90,15 @@
 </body>
 
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+<script>
+    d3version3 = d3
+    window.d3 = null
+</script>
+<script type="module">
+    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
+    drawLineChart('Texas', 'Age Group')
+    drawLineChart('Michigan', 'Education Attained')
+    drawLineChart('West Virginia', 'Race/Ethnicity')
+    drawLineChart('Colorado', 'Age Group')
+</script>
