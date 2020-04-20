@@ -3,6 +3,15 @@ import drawLineChart from '../../modules/line-chart/line-chart.js'
 const geoPath = d3.geoPath();
 let combined_data;
 
+
+const chartsInfo = {
+  income: "",
+  smokes: "",
+  age: "",
+  poverty: "",
+  healthcare: "",
+}
+
 // chart parameters
 // const width = 800;
 // const height = 600;
@@ -30,7 +39,7 @@ const createBaseMap = (stateBoundaries, nation) => {
   const svg_height = height + margin.top + margin.bottom
   svg = d3
     .select("#cartogram-svg")
-    .attr("viewBox", `-20 -20 ${svg_width} ${svg_height}`)
+    .attr("viewBox", `-20 -20 ${svg_width} ${690}`)
 
   svg
     .append('g')
@@ -243,8 +252,18 @@ const drawCartogram = async () => {
     })
 };
 
-const update = (chosenXAxis) => {
+const update = (chosenXAxis, value) => {
   d3.select("#cartogram_controls_container").remove()
+  d3.selectAll(".x").remove()
+
+  d3.selectAll('#correlation_selection a').classed('selected-axis', false)
+  d3.select(`#${chosenXAxis}`).classed('selected-axis', true)
+
+  d3.select(`#chart-title`).text('Correlations Discovered Between Obesity And Poverty, Age, Income, Healthcare And Smoking.')
+  d3.select(`#chart-description`).text('Interesting insight:')
+
+  const id = value.id
+  d3.select(`#${id}`).text(chartsInfo[id])
 
   const scatterData = d3.values(combined_data)
 
@@ -295,7 +314,7 @@ const update = (chosenXAxis) => {
   xAxisDraw
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis)
-    .call(addLabel, chosenXAxis, 120, 8)
+    .call(addLabel, chosenXAxis, 30, 8)
 
   xAxisDraw.selectAll('text').attr('dy', '1em');
 
@@ -365,11 +384,12 @@ const updateYear = (year) => {
 drawCartogram()
 // update('income')
 // setTimeout(() => update('income'), 300)
-d3.select('#step2').on('click', () => update('income'))
-d3.select('#step3').on('click', () => update('smokes'))
-d3.select('#step4').on('click', () => update('age'))
-d3.select('#step5').on('click', () => update('poverty'))
-d3.select('#step6').on('click', () => update('healthcare'))
+d3.select('#income').on('click', function () { update('income', this) })
+d3.select('#smokes').on('click', function () { update('smokes', this) })
+d3.select('#age').on('click', function () { update('age', this) })
+d3.select('#poverty').on('click', function () { update('poverty', this) })
+d3.select('#healthcare').on('click', function () { update('healthcare', this) })
+
 d3.select('input[type=range]#cartogram_year').on('input', function () {
   const year = this.value
   updateYear(year)

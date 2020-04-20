@@ -115,5 +115,22 @@ div.line-chart {
 #correlation_selection{
     display: flex;
     flex-direction: column;
+    text-align: center;
+    color: rgb(89, 89, 89);
+
 }
+#correlation_selection a {
+    text-decoration: none;
+    color: rgb(89, 89, 89);
+
+}
+#correlation_selection a:hover {
+    color: red;
+}
+
+.selected-axis {
+    color:black;
+    font-weight: bold;
+}
+
 
