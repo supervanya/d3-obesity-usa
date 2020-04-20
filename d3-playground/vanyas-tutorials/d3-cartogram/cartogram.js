@@ -6,7 +6,7 @@ let combined_data;
 // chart parameters
 // const width = 800;
 // const height = 600;
-const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
+const NODE = { MIN_RADIUS: 20, MAX_RADIUS: 50, PADDING: 2 };
 
 // Dimensions.
 const margin = { top: 80, right: 40, bottom: 40, left: 60 };
@@ -21,7 +21,7 @@ const createBaseMap = (stateBoundaries, nation) => {
   const svg_height = height + margin.top + margin.bottom
   svg = d3
     .select("#cartogram-svg")
-    .attr("viewBox", `-40 -40 ${svg_width} ${svg_height}`)
+    .attr("viewBox", `-20 -20 ${svg_width} ${svg_height}`)
 
   svg
     .append('g')
@@ -117,24 +117,23 @@ const drawCartogram = async () => {
     .append('circle')
     .attr("r", (d) => d.r)
     .attr("fill", "rgba(63, 191, 108)")
-    .attr("stroke", "black")
+    // .attr("stroke", "black")
     .attr("stroke-width", 1)
 
+
+  // TODO: mouseover animation to highlight
   // bubbles_group.exit().transition().delay(40)
   //   .duration(1000)
   //   .attr("r", 0)
   //   .remove();
-
-
-
 
   // bubbles_group.on('mouseover', function (d, i) {
   //   d3.select(this)
   //     // .classed('bubbleHover', true)
   //     .transition()
   //     .duration(250)
-  //     .style("transform", 'translate(0px, -5px)')
-  //   // .style('opacity', '100%')
+  //     // .style("transform", 'translate(0px, -5px)')
+  //     .style('opacity', '100%')
   // })
 
   // bubbles_group.on('mouseout', function (d, i) {
@@ -205,27 +204,25 @@ const drawCartogram = async () => {
 };
 
 const update = (chosenXAxis) => {
-  console.log('updating data')
-  // console.log(chosenXAxis)
-  // console.log(combined_data)
-
   const scatterData = d3.values(combined_data)
 
-  function addLabel(axis, label, x) {
+  function addLabel(axis, label, x, y = 0, deg = 0) {
     axis
       .select('.tick:last-of-type text')
       .clone()
       .text(label)
       .attr('x', x)
+      .attr('y', y)
       .style('text-anchor', 'start')
       .style('font-weight', 'bold')
+      .style('transform', `rotate(${deg}deg)`)
       .style('fill', '#555');
   }
 
   // Scales.
   const xExtent = d3
     .extent(scatterData, d => d.scatter[chosenXAxis])
-  // .map((d, i) => (i === 0 ? d * 0.95 : d * 1.05));
+    .map((d, i) => (i === 0 ? d * 0.9 : d * 1.05));
 
   const xScale = d3
     .scaleLinear()
@@ -234,7 +231,7 @@ const update = (chosenXAxis) => {
 
   const yExtent = d3
     .extent(scatterData, d => d.scatter.obesity)
-  // .map((d, i) => (i === 0 ? d * 0.1 : d * 1.1));
+    .map((d, i) => (i === 0 ? d * 0.97 : d * 1.05));
 
   const yScale = d3
     .scaleLinear()
@@ -246,41 +243,62 @@ const update = (chosenXAxis) => {
     .axisBottom(xScale)
     .ticks(5)
     // .tickFormat(formatTicks)
-    .tickSizeInner(-height)
+    // .tickSizeInner(-height)
     .tickSizeOuter(0);
 
   const xAxisDraw = svg
     .append('g')
     .attr('class', 'x axis')
+
+  xAxisDraw
     .attr('transform', `translate(0, ${height})`)
     .call(xAxis)
-    .call(addLabel, chosenXAxis + " Prevalence (%)", 25);
+    .call(addLabel, chosenXAxis, 120, 8)
 
   xAxisDraw.selectAll('text').attr('dy', '1em');
 
   // Draw y axis.
   const yAxis = d3
     .axisLeft(yScale)
-    .ticks(5)
-    // .tickFormat(formatTicks)
-    .tickSizeInner(-width)
+    .ticks(15)
     .tickSizeOuter(0);
 
   const yAxisDraw = svg
     .append('g')
     .attr('class', 'y axis')
     .call(yAxis)
-    .call(addLabel, 'Obesity Prevalence (%)', 5);
+    .call(addLabel, 'Obesity Prevalence (%)', -135, 15, -90);
+
+  // show the axis
+  xAxisDraw.transition()
+    .duration(1000)
+    .delay(2500)
+    .style("opacity", 1)
+
+  // show the axis
+  yAxisDraw.transition()
+    .duration(1000)
+    .delay(2500)
+    .style("opacity", 1)
 
 
+  // hide the state outline
+  d3.selectAll(".state-boundaries,.nation-boundary")
+    .transition()
+    .duration(1000)
+    .style('transform', 'scale(0.1)')
+    .transition()
+    .delay(200)
+    .style('display', 'none')
 
 
+  // move the bubbles to the right x and y coordinates
   d3.selectAll(".scatterBubble")
     .transition()
-    .duration(2000)
-    .delay((d, i) => i * 15)
+    .delay(1000)
+    .duration(750)
+    // .delay((d, i) => i * 15)
     .attr("transform", d => {
-      // const x = xScale(d.scatter[chosenXAxis])
       const x = d.x
       const y = yScale(d.scatter.obesity)
       return `translate(${x}, ${y})`
@@ -291,7 +309,9 @@ const update = (chosenXAxis) => {
       const y = yScale(d.scatter.obesity)
       return `translate(${x}, ${y})`
     })
-  // svg;
+
+
+
 }
 
 drawCartogram()

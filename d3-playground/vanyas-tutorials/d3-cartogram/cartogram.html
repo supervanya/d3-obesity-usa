@@ -8,6 +8,17 @@
         cursor: pointer;
     }
 
+    .scatterBubbleGroup circle:hover {
+        /* opacity: 50%; */
+        /* cursor: pointer; */
+        /* transform: scale(3.0);
+        z-index: 1000; */
+    }
+
+    .scatterBubbleGroup circle {
+        stroke: black;
+    }
+
     .bubbleHover {
         /* opacity: 100%; */
     }
@@ -15,12 +26,13 @@
     .stateText {
         text-anchor: middle;
         font-size: 1.5em;
+        fill: white;
     }
 
     .stateValue {
         text-anchor: middle;
         font-family: Arial, Helvetica, sans-serif;
-        fill: white;
+        fill: black;
     }
 
     #year_scrubber {
@@ -81,11 +93,18 @@
     }
 
     .state-boundaries {
-        display: none;
+        /* display: none; */
+        transform-origin: center;
     }
 
     .nation-boundary {
-        display: none;
+        /* display: none; */
+        transform-origin: center;
+    }
+
+    .axis {
+        opacity: 0;
+        font-size: 15px;
     }
 </style>
 
@@ -124,6 +143,5 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
     <script src="./resources/topojson-client.min.js"></script>
-    <script type="module" src="./cartogram.js">
-    </script>
+    <script type="module" src="./cartogram.js"></script>
 </body>
