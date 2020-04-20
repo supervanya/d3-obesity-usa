@@ -1,4 +1,4 @@
-import { parseRow, createStatePacks } from "./helpers.js";
+import drawLineChart from '../../modules/line-chart/line-chart.js'
 
 const geoPath = d3.geoPath();
 
@@ -107,7 +107,7 @@ const drawCartogram = async () => {
 
   bubbles_group.append('circle')
     // .classed('scatterBubble', true)
-    .on("click", function(d){click(d)})
+    .on("click", function (d) { click(d) })
     .attr("cx", (d) => d.x)
     .attr("cy", (d) => d.y)
     .attr("r", (d) => d.r)
@@ -165,13 +165,10 @@ const drawCartogram = async () => {
   //   })
   // console.log(year_slider)
   function click(d) {
-    alert('Hi');
-    drawGraph('Texas', 'Age Group');
-    drawGraph('Michigan', 'Education Attained');
-    drawGraph('West Virginia', 'Race/Ethnicity');
-    drawGraph('Colorado', 'Age Group');
+    alert('Tada!!!');
+    drawLineChart('Texas', 'Age Group');
   }
-  
+
   let moving = false;
   let currentValue = 0;
   const targetValue = 2018;
@@ -182,7 +179,7 @@ const drawCartogram = async () => {
     currentValue = yearslider.attr("value");
     //update(x.invert(currentValue));
     currentValue = currentValue + 1;
-    yearslider.attr("value",currentValue);
+    yearslider.attr("value", currentValue);
     if (currentValue > targetValue) {
       moving = false;
       currentValue = 0;
@@ -195,23 +192,23 @@ const drawCartogram = async () => {
 
 
   const playButton = d3.select("#play-button")
-    .on("click", function() {
-    
-    var button = d3.select(this);
-    if (button.text() == "Pause") {
-      moving = false;
-      clearInterval(timer);
-      timer = 0;
-      button.text("Play");
-    } else {
-      moving = true;
-      timer = setInterval(step, 1000);
-      button.text("Pause");
-    }
-    console.log("Slider moving: " + moving);
+    .on("click", function () {
 
-  })
-  
+      var button = d3.select(this);
+      if (button.text() == "Pause") {
+        moving = false;
+        clearInterval(timer);
+        timer = 0;
+        button.text("Play");
+      } else {
+        moving = true;
+        timer = setInterval(step, 1000);
+        button.text("Pause");
+      }
+      console.log("Slider moving: " + moving);
+
+    })
+
 
 };
 

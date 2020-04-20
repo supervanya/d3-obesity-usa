@@ -59,13 +59,14 @@
         justify-content: center;
         height: 42px;
         align-items: end;
-        background-image: url(tick.png);
         height: 4ex;
         background-position-y: -15px;
         background-position-x: center;
         z-index: -1;
     }
 </style>
+<link rel="stylesheet" href="../../../styles/line-chart.css">
+
 
 <body>
     <h1>Cartogram trying</h1>
@@ -95,9 +96,27 @@
 
     <!-- load the d3.js library -->
     <svg width=600 hight=400 id="d3-cartogram"></svg>
+
+    <script src="./resources/topojson-client.min.js"></script>
+
+    <!-- Line chart loading -->
+    <script type="module" src="../../modules/line-chart/line-chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <script>
+        d3version3 = d3
+        window.d3 = null
+    </script>
+    <script type="module">
+        // import drawLineChart from '../../modules/line-chart/line-chart.js'
+        // drawLineChart('Texas', 'Age Group')
+        // drawLineChart('Michigan', 'Education Attained')
+        // drawLineChart('West Virginia', 'Race/Ethnicity')
+        // drawLineChart('Colorado', 'Age Group')
+    </script>
+
+
+    <!-- Cartogram specific -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-array.v2.js"></script>
-    <script src="./resources/topojson-client.min.js"></script>
-    <script type="module" src="../../modules/line-chart/line-chart.js"></script>
     <script type="module" src="./cartogram.js"></script>
 </body>
