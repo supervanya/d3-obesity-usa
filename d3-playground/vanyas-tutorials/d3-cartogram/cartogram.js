@@ -4,19 +4,27 @@ const geoPath = d3.geoPath();
 let combined_data;
 
 // chart parameters
-const width = 800;
-const height = 600;
+// const width = 800;
+// const height = 600;
 const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
+
+// Dimensions.
+const margin = { top: 80, right: 40, bottom: 40, left: 60 };
+const width = 990 - margin.right - margin.left;
+const height = 750 - margin.top - margin.bottom;
+
+let svg;
 
 // creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
-  const svg = d3
-    .select("#d3-cartogram")
-    .attr("viewBox", `0 0 960 ${height}`)
-    .style("width", "100%")
-    .style("height", "auto");
+  const svg_width = width + margin.right + margin.left
+  const svg_height = height + margin.top + margin.bottom
+  svg = d3
+    .select("#cartogram-svg")
+    .attr("viewBox", `-40 -40 ${svg_width} ${svg_height}`)
 
   svg
+    .append('g')
     .append("path")
     .classed("state-boundaries", true)
     .datum(stateBoundaries)
@@ -112,10 +120,10 @@ const drawCartogram = async () => {
     .attr("stroke", "black")
     .attr("stroke-width", 1)
 
-  bubbles_group.exit().transition().delay(40)
-    .duration(1000)
-    .attr("r", 0)
-    .remove();
+  // bubbles_group.exit().transition().delay(40)
+  //   .duration(1000)
+  //   .attr("r", 0)
+  //   .remove();
 
 
 
@@ -203,18 +211,26 @@ const update = (chosenXAxis) => {
 
   const scatterData = d3.values(combined_data)
 
+  function addLabel(axis, label, x) {
+    axis
+      .select('.tick:last-of-type text')
+      .clone()
+      .text(label)
+      .attr('x', x)
+      .style('text-anchor', 'start')
+      .style('font-weight', 'bold')
+      .style('fill', '#555');
+  }
+
   // Scales.
   const xExtent = d3
     .extent(scatterData, d => d.scatter[chosenXAxis])
   // .map((d, i) => (i === 0 ? d * 0.95 : d * 1.05));
 
-
   const xScale = d3
     .scaleLinear()
     .domain(xExtent)
     .range([0, width]);
-
-
 
   const yExtent = d3
     .extent(scatterData, d => d.scatter.obesity)
@@ -225,11 +241,41 @@ const update = (chosenXAxis) => {
     .domain(yExtent)
     .range([height, 0]);
 
-  // const xScale = ""
-  // const yScale = ""
+  // Draw x axis.
+  const xAxis = d3
+    .axisBottom(xScale)
+    .ticks(5)
+    // .tickFormat(formatTicks)
+    .tickSizeInner(-height)
+    .tickSizeOuter(0);
+
+  const xAxisDraw = svg
+    .append('g')
+    .attr('class', 'x axis')
+    .attr('transform', `translate(0, ${height})`)
+    .call(xAxis)
+    .call(addLabel, chosenXAxis + " Prevalence (%)", 25);
+
+  xAxisDraw.selectAll('text').attr('dy', '1em');
+
+  // Draw y axis.
+  const yAxis = d3
+    .axisLeft(yScale)
+    .ticks(5)
+    // .tickFormat(formatTicks)
+    .tickSizeInner(-width)
+    .tickSizeOuter(0);
+
+  const yAxisDraw = svg
+    .append('g')
+    .attr('class', 'y axis')
+    .call(yAxis)
+    .call(addLabel, 'Obesity Prevalence (%)', 5);
 
 
-  const svg = d3.selectAll(".scatterBubble")
+
+
+  d3.selectAll(".scatterBubble")
     .transition()
     .duration(2000)
     .delay((d, i) => i * 15)
