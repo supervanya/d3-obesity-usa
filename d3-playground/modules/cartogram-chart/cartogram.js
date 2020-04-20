@@ -202,6 +202,7 @@ const drawCartogram = async () => {
   function step() {
     const yearslider = d3.select("#cartogram_year")
     currentValue = yearslider.attr("value");
+    updateYear(currentValue)
     //update(x.invert(currentValue));
     currentValue = +currentValue + 1;
     yearslider.attr("value", currentValue);
@@ -338,9 +339,6 @@ const update = (chosenXAxis) => {
       const y = yScale(d.scatter.obesity)
       return `translate(${x}, ${y})`
     })
-
-
-
 }
 
 const updateYear = (year) => {
@@ -357,5 +355,4 @@ d3.select('#step2').on('click', () => update('income'))
 d3.select('input[type=range]#cartogram_year').on('input', function () {
   const year = this.value
   updateYear(year)
-  console.log(year)
 })
