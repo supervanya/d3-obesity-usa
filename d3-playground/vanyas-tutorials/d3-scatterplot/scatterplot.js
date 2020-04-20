@@ -14,7 +14,7 @@ console.log(maxObese, minObesity)
 const height = 400
 const width = 800
 
-const container = d3.select('#d3-cartogram')
+const container = d3.select('#cartogram-svg')
 const svg = container.append("svg")
     .attr("viewBox", [0, 0, width, height])
     .attr('fill', 'red')

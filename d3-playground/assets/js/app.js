@@ -158,6 +158,11 @@ let chosenYAxis = "obesity";
 
       // changes classes to change bold text
       if (chosenXAxis === "age") {
+        d3.select("#poverty").style("display", "none");
+        d3.select("#age").style("display", "block");
+        d3.select("#smokes").style("display", "none");
+        d3.select("#income").style("display", "none");
+        d3.select("#health").style("display", "none");
         povertyLabel
           .classed("active", false)
           .classed("inactive", true);
@@ -175,6 +180,11 @@ let chosenYAxis = "obesity";
           .classed("inactive", true);
       }
       else if (chosenXAxis === "income") {
+        d3.select("#income").style("display", "block");
+        d3.select("#poverty").style("display", "none");
+        d3.select("#smokes").style("display", "none");
+        d3.select("#age").style("display", "none");
+        d3.select("#health").style("display", "none");
         povertyLabel
           .classed("active", false)
           .classed("inactive", true);
@@ -192,6 +202,11 @@ let chosenYAxis = "obesity";
           .classed("inactive", true);
       }
       else if (chosenXAxis === "poverty"){
+        d3.select("#poverty").style("display", "block");
+        d3.select("#smokes").style("display", "none");
+        d3.select("#age").style("display", "none");
+        d3.select("#income").style("display", "none");
+        d3.select("#health").style("display", "none");
         povertyLabel
           .classed("active", true)
           .classed("inactive", false);
@@ -209,6 +224,11 @@ let chosenYAxis = "obesity";
           .classed("inactive", true);
       }
       else if (chosenXAxis === "healthcare") {
+        d3.select("#poverty").style("display", "none");
+        d3.select("#smokes").style("display", "none");
+        d3.select("#age").style("display", "none");
+        d3.select("#income").style("display", "none");
+        d3.select("#health").style("display", "block");
         healthcareLabel
           .classed("active", true)
           .classed("inactive", false);
@@ -226,6 +246,11 @@ let chosenYAxis = "obesity";
           .classed("inactive", true);
       }
       else {
+        d3.select("#poverty").style("display", "none");
+        d3.select("#smokes").style("display", "block");
+        d3.select("#age").style("display", "none");
+        d3.select("#income").style("display", "none");
+        d3.select("#health").style("display", "none");
         healthcareLabel
           .classed("active", false)
           .classed("inactive", true);
