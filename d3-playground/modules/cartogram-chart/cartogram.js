@@ -33,6 +33,8 @@ const colorScale = d3.scaleSequential(d3.interpolateReds)
   .domain([20, 40]);
 
 
+let cartogramControls;
+
 // creates, appends and returns base outline map of US 
 const createBaseMap = (stateBoundaries, nation) => {
   const svg_width = width + margin.right + margin.left
@@ -252,8 +254,8 @@ const drawCartogram = async () => {
     })
 };
 
-const update = (chosenXAxis, value) => {
-  d3.select("#cartogram_controls_container").remove()
+const updateScatter = (chosenXAxis, value) => {
+  cartogramControls = d3.select("#cartogram_controls_container").remove()
   d3.selectAll(".x").remove()
 
   d3.selectAll('#correlation_selection a').classed('selected-axis', false)
@@ -373,6 +375,20 @@ const update = (chosenXAxis, value) => {
     })
 }
 
+const updateCartogram = () => {
+  // d3.select('body').append(cartogramControls.node())
+  // hide the state outline
+  d3.selectAll(".state-boundaries,.nation-boundary")
+    .transition()
+    .duration(1000)
+    .style('transform', 'scale(1)')
+    .transition()
+    .style('display', 'block')
+
+
+}
+
+
 const updateYear = (year) => {
   const year_index = year_selector(year)
   d3.selectAll(".scatterBubble").selectAll('circle')
@@ -384,11 +400,12 @@ const updateYear = (year) => {
 drawCartogram()
 // update('income')
 // setTimeout(() => update('income'), 300)
-d3.select('#income').on('click', function () { update('income', this) })
-d3.select('#smokes').on('click', function () { update('smokes', this) })
-d3.select('#age').on('click', function () { update('age', this) })
-d3.select('#poverty').on('click', function () { update('poverty', this) })
-d3.select('#healthcare').on('click', function () { update('healthcare', this) })
+d3.select('#income').on('click', function () { updateScatter('income', this) })
+d3.select('#smokes').on('click', function () { updateScatter('smokes', this) })
+d3.select('#age').on('click', function () { updateScatter('age', this) })
+d3.select('#poverty').on('click', function () { updateScatter('poverty', this) })
+d3.select('#healthcare').on('click', function () { updateScatter('healthcare', this) })
+d3.select('#backToMap').on('click', function () { updateCartogram() })
 
 d3.select('input[type=range]#cartogram_year').on('input', function () {
   const year = this.value
