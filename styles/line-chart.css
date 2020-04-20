@@ -2,14 +2,14 @@ body {
     font: 10px sans-serif;
 }
 
-.axis path,
-.axis line {
+.axis-l path,
+.axis-l line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
 }
 
-.x.axis path {
+.x-l.axis-l path {
     display: none;
 }
 

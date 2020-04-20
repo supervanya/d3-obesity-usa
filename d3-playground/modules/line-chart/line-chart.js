@@ -160,12 +160,12 @@ function drawLineChart(state, groupName) {
             });
 
         svg.append("g")
-            .attr("class", "x axis")
+            .attr("class", "x-l axis-l")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
         svg.append("g")
-            .attr("class", "y axis")
+            .attr("class", "y-l axis-l")
             .call(yAxis)
             .append("text")
             .attr("transform", "rotate(-90)")
