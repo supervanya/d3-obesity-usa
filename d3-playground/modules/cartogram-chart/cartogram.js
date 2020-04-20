@@ -15,7 +15,7 @@ const chartsInfo = {
 // chart parameters
 // const width = 800;
 // const height = 600;
-const NODE = { MIN_RADIUS: 15, MAX_RADIUS: 40, PADDING: 2 };
+const NODE = { MIN_RADIUS: 4, MAX_RADIUS: 20, PADDING: 2 };
 
 // Dimensions.
 const margin = { top: 80, right: 40, bottom: 40, left: 60 };
@@ -24,13 +24,14 @@ const height = 750 - margin.top - margin.bottom;
 
 let svg;
 
-const MIN_YEAR = 2008;
-const MAX_YEAR = 2018
+const MIN_YEAR = 1995;
+const MAX_YEAR = 2016;
+let selectedYear = 1995;
 let obesityToRadius;
 const year_selector = (year) => MAX_YEAR - year
 const colorScale = d3.scaleSequential(d3.interpolateReds)
   // .range()
-  .domain([20, 40]);
+  .domain([10, 40]);
 
 
 let cartogramControls;
@@ -91,7 +92,7 @@ const drawCartogram = async () => {
   const nation = topojson.mesh(us, us.objects.nation);
   const states = topojson.feature(us, us.objects.states);
 
-  const year = year_selector(2008)
+  const year = year_selector(selectedYear)
 
 
   // creating the general outline of the US with states
@@ -127,7 +128,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
-    .on("click", function (d) { click(d) })
+    .on("click", function (d) { debugger; click(d) })
   // .style('opacity', '50%')
 
 
@@ -194,7 +195,7 @@ const drawCartogram = async () => {
     drawLineChart(stateName, category);
     d3.select("#line-heading").text("How do different factors correlate with Obesity for " + stateName + "?")
       .style("display", "block");
-    d3.select("#buttons").style("display", "block");
+    d3.select("#lineChart-radioInputs").style("display", "block");
   }
 
   function click(d) {
@@ -205,11 +206,11 @@ const drawCartogram = async () => {
     else {
       redrawLineChart(state, window.selected_category)
     }
-    const buttons_container = d3.select("#buttons")
+    const buttons_container = d3.select("#lineChart-radioInputs")
       .style("display", "block");
-    const radios = d3.selectAll('input')
-    console.log(radios)
+    const radios = buttons_container.selectAll('input')
     radios.on("change", function () {
+      debugger;
       window.selected_category = this.value;
       redrawLineChart(state, this.value)
     })
@@ -368,7 +369,6 @@ const updateScatter = (chosenXAxis, value) => {
     })
     .transition()
     .attr("transform", d => {
-      console.log(d)
       const x = xScale(d.scatter[chosenXAxis])
       const y = yScale(d.scatter.obesity)
       return `translate(${x}, ${y})`
@@ -411,11 +411,31 @@ const updateCartogram = () => {
 
 
 const updateYear = (year) => {
+  selectedYear = year;
+  console.log(selectedYear)
+
+
+
+
+
   const year_index = year_selector(year)
-  d3.selectAll(".scatterBubble").selectAll('circle')
-    .transition()
+  const bubbles = d3.selectAll(".scatterBubble")
+    .selectAll('circle')
+
+  bubbles.transition()
+    .ease(d3.easeElastic)
+    .duration(750)
+
+
+
+  bubbles
     .attr('r', d => obesityToRadius(d.obese[year_index]))
     .attr("fill", d => colorScale(+d.obese[year_index]))
+
+
+  d3.selectAll('.stateValue').text(d => { return `${d.obese[year_index]}%` })
+
+
 }
 
 drawCartogram()
