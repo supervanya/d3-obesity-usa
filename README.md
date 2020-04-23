@@ -2,6 +2,7 @@
 # USA OBESITY STORY
 
 ### [Live Link](https://supervanya.github.io/d3-obesity-usa/)
+### [Interractive Mockup](https://www.figma.com/proto/4yjvkZc7XPvFDhz5izKXIW/Portfolio?node-id=423%3A167&scaling=min-zoom)
 
 
 ## Goal: 
