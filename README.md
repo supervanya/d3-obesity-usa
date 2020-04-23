@@ -1,6 +1,9 @@
 # SI 649 Final Porject: Team 2 
 # USA OBESITY STORY
 
+### [Live Link](https://supervanya.github.io/d3-obesity-usa/)
+
+
 ## Goal: 
 Find how each state is doing and what could be some reasons.
 
