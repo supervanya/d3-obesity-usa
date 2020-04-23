@@ -1,3 +1,5 @@
+
+
 .scatterBubble {}
 
 .scatterBubbleGroup {
@@ -31,7 +33,6 @@
 
 .stateValue {
     text-anchor: middle;
-    font-family: Arial, Helvetica, sans-serif;
     fill: black;
 }
 
@@ -116,16 +117,22 @@ div.line-chart {
     display: flex;
     flex-direction: column;
     text-align: center;
-    color: rgb(89, 89, 89);
 
 }
-#correlation_selection a {
+
+.scatter-x-axis {
+    font-weight: lighter;
+    cursor: pointer;
     text-decoration: none;
-    color: rgb(89, 89, 89);
-
+    color: rgb(162, 162, 162);
+    transition: 0.3s ease-out;
+    text-anchor: middle;
+    border: none;
 }
-#correlation_selection a:hover {
-    color: red;
+
+.scatter-x-axis:hover {
+    color:black;
+    /* font-weight: bold; */
 }
 
 .selected-axis {

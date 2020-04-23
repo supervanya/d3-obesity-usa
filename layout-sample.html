@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+    <style>
+        html {
+            font-size: 14px;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            min-width: fit-content;
+            background-color: rgb(222, 222, 222);
+            margin: auto;
+        }
+
+        main {
+            max-width: 1500px;
+            min-width: fit-content;
+            background-color: lightgreen;
+            height: fit-content;
+            min-height: 95vh;
+            padding-bottom: 2.5rem; /* footer height */
+            margin: auto;
+        }
+
+        footer {
+            height: 2.5rem;
+            background-color: forestgreen;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #plots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+        }
+
+        #scarto-plot {
+            background-color: blueviolet;
+        }
+
+        #line-charts {
+            background-color: goldenrod;
+        }
+
+        .plot {
+            min-width: 400px;
+            width: 50%;
+            height: 500px; /* TODO: this should be auto? */
+        }
+
+        #main-title {
+            height: 40px;
+            width: 100%;
+            background-color: forestgreen;
+        }
+
+        #explanation {
+            height: 160px;
+            background-color: salmon;
+        }
+
+        /* temp styles */
+        div,
+        footer {
+            font-size: 1.5rem;
+            color: wheat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* not working animation, use d3? */
+        #line-charts {
+            display: none;
+            transition: all;
+            animation-duration: 4s;
+            animation-delay: 2s;
+            transition: transform 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div id="main-title"><h2>Main Title</h2></div>
+        <div id="explanation">Some insights about current step can go here</div>
+
+        <div id="plots">
+            <div id="scarto-plot" class="plot">sCarto-plot (Scatterplot/Cartogram)</div>
+            <div id="line-charts" class="plot">Line Chart</div>
+        </div>
+
+        <div id="show-button">
+            <a href='#' onclick="document.querySelector('#line-charts').style.display = 'flex'">Show line chart</a>
+        </div>
+    </main>
+    <footer>Footer</footer>
+
+</body>
+
+</html>
