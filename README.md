@@ -4,7 +4,7 @@
 * 📈 [Live Link](https://supervanya.github.io/d3-obesity-usa/)❤️
 * 🎨 [Interractive Mockup](https://www.figma.com/proto/NhHZBKuiAZvEjUI94xQaJY/SI-649-Final-Project?node-id=1%3A26&scaling=min-zoom) 
 * 📄 [Report](https://docs.google.com/document/d/1Z7ODrlVF2wLYBtoT0PQU5oQUB7z7rvtoapWrp4CCgao/edit?usp=sharing)
-* 🖥️ [Data Source](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
+* 🖥️ [Data Source (CDC - BRFSS)](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
 
 
 ### Goal: 
