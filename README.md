@@ -3,7 +3,8 @@
 
 * 📈 [Live Link](https://supervanya.github.io/d3-obesity-usa/)❤️
 * 🎨 [Interractive Mockup](https://www.figma.com/proto/NhHZBKuiAZvEjUI94xQaJY/SI-649-Final-Project?node-id=1%3A26&scaling=min-zoom) 
-* 📄 [Report](https://docs.google.com/document/d/1Z7ODrlVF2wLYBtoT0PQU5oQUB7z7rvtoapWrp4CCgao/edit?usp=sharing) 
+* 📄 [Report](https://docs.google.com/document/d/1Z7ODrlVF2wLYBtoT0PQU5oQUB7z7rvtoapWrp4CCgao/edit?usp=sharing)
+* 🖥️ [Data Source](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
 
 
 ### Goal: 
@@ -21,13 +22,13 @@ How is obesity correlated with demographics and other factors ( median income, e
 In our visualization we tried to create structure similar to Martini glass style. Starting with the author driven animation showwing the animation on Obesity rise. Then leading the reader to correlation plot to find how obesity is related to smoking, poverty, income, lack of healthcare, age group. Obese poplulation is defined as one with BMI > 30.
 
 <details>
- <summary>More details</summary>
+ <summary>Data Encodings</summary>
 
-#### Encodings
 #### 1. Dorling Cartogram 
 This animation shows change in the obesity rate over the years 
 * Mark type: circle (Dorling Cartogram)
 * Interaction : time slider
+
 Encoding Specification: 
 * x-axis: Latitude : Quantitative 
 * y-axis: Longitude: Quantitative
@@ -43,24 +44,24 @@ Encoding
 * Y axis: Obesity rate
 Interaction: click on deisplays the text that explains the correlation.
 
-#### Obesity Correlation with:
+##### Obesity Correlation with:
 * Age group
 * Smoking
 * Lack Healthcare
 * Poverty
 * Household income
 
-### 3.Time series interactive charts (from Dorling Chart Interaction)
+#### 3.Time series interactive charts (from Dorling Chart Interaction)
 
-Selection : Line chart for breakout categories
+**Selection: Line chart for breakout categories**
 * X axis: Year: Quantitative
 * Y axis ->  Obesity rate: Quantitative
 * Color -> Breakout categories
 * Selection: radio button
 
 
-#### Breakout categories are:
-##### Age Group: 
+##### Breakout categories are:
+**Age Group:** 
 * 18-24 yr
 * 25 -34 yr
 * 35-44 yr
@@ -68,27 +69,27 @@ Selection : Line chart for breakout categories
 * 55-64 yr
 * 65 and above
 
-##### Race/Ethnicity:
+**Race/Ethnicity:**
 * American Indian,
 * Asian, Black, Hispanic
 * Multiracial
 * Other
 * White
 
-##### Household Income: 
+**Household Income:** 
 * College graduate
 * H.S or G.E.D
 * Less than H.S
 * Some post H.S
 
-##### Education attained: 
+**Education attained:**
 * Less than $15K
 * $15K-$24K 
 * $25K-$34K
 * $35K-$49K
 * $50K and more
 
-##### Gender: 
+**Gender:**
 * Female
 * Male
 
