@@ -6,10 +6,16 @@
  * 2. Align chart text left
  * 3. Make it feel like a webpage (grey margins? Sections indication?)
  * 4. Fix font sizing
+ * 5. Horizontal Legend
+ * 6. Try Red/Blue color scheme
  * 
  * Functionality:
  * 1. Tooltips when hovering over the state circles
  * 2. Increase the clickable area of the radio buttons and add hover icon https://uxplanet.org/radio-buttons-ux-design-588e5c0a50dc
+ * 
+ * Critical
+ * 1. Sometimes the obesity values on the Y axis are wrong
+ * 2. Add exercise data
  */
 
 import drawLineChart from '../../modules/line-chart/line-chart.js'
