@@ -148,7 +148,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
-    .on("click", function (d) { debugger; click(d) })
+    .on("click", function (d) { click(d) })
   // .style('opacity', '50%')
 
 
@@ -230,7 +230,7 @@ const drawCartogram = async () => {
       .style("display", "block");
     const radios = buttons_container.selectAll('input')
     radios.on("change", function () {
-      debugger;
+
       window.selected_category = this.value;
       redrawLineChart(state, this.value)
     })
@@ -280,7 +280,7 @@ const updateScatter = (caller) => {
   const id = caller.id
   const chosenXAxis = id
   const axisLabel = caller.text;
-  debugger;
+
 
 
   cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '0')

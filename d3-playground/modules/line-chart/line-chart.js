@@ -15,8 +15,6 @@ function groupAllData(data) {
 }
 
 function drawLineChart(state, groupName) {
-    debugger;
-
     var margin = {
         top: 60,
         right: 250,
