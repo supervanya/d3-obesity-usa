@@ -9,9 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
         rel="stylesheet">
     <style>
+        p {
+            font-family: monospace;
+        }
+
         body {
             height: 2000px;
-            font-family: 'Open Sans', sans-serif;
+            /* font-family: monospace; */
         }
 
         .chart>p {
@@ -96,14 +100,17 @@
     /* right: 170px; */
     top: 500px;" src="vertical_legend.jpg">
 
-        <ol id="correlation_selection">
-            <a href="#" id="income">Median Household Income</a>
-            <a href="#" id="smokes">Smoking (%)</a>
-            <a href="#" id="age">Median Age</a>
-            <a href="#" id="poverty">Poverty (%)</a>
-            <a href="#" id="healthcare">Lack of Health Care (%)</a>
-            <a style="line-height: 3em; font-weight: bolder;" href="#" id="backToMap">Return to Cartogram</a>
-        </ol>
+        <div id="correlation_selection">
+            <text class='scatter-x-axis' href="#" id="smokes">Smoking (%)</text>
+            <text class='scatter-x-axis' href="#" id="poverty">Poverty (%)</text>
+            <text class='scatter-x-axis' href="#" id="healthcare">Lack of Health Care (%)</text>
+            <text class='scatter-x-axis' href="#" id="age">Median Age</text>
+            <text class='scatter-x-axis' href="#" id="income">Median Household Income</text>
+
+            <text class='scatter-x-axis' style="line-height: 3em; font-weight: bolder;" href="#" id="backToMap">Return
+                to
+                Cartogram</text>
+        </div>
 
         <div>
             <h2 style="text-align: center;" id="line-heading" style="display: none;"></h2>
