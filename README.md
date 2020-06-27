@@ -7,6 +7,12 @@
 * 🖥️ [Data Source (CDC - BRFSS)](https://www.cdc.gov/brfss/annual_data/annual_data.htm)
 
 
+### Work in Progress still
+- [ ] Make the line chart module use the D3 v5 instead of v3
+- [ ] Use Bhawna's mockup to adjust styling
+- [ ] Update the readability of the code for the scatterplot
+ 
+
 ### Goal: 
 Find how each state is doing and what could be some reasons.
 
