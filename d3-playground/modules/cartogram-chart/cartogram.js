@@ -148,7 +148,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
-    .on("click", function (d) { click(d) })
+    .on("click", d => click(d))
   // .style('opacity', '50%')
 
 
@@ -213,7 +213,8 @@ const drawCartogram = async () => {
     const lineChart = d3.select(".line-chart")
       .remove()
     drawLineChart(stateName, category);
-    d3.select("#line-heading").text("How do different factors correlate with Obesity for " + stateName + "?")
+    d3.select("#line-heading")
+      .text("How do different factors correlate with Obesity for " + stateName + "?")
       .style("display", "block");
     d3.select("#lineChart-radioInputs").style("display", "block");
   }
@@ -256,7 +257,6 @@ const drawCartogram = async () => {
       console.log("Slider moving: " + moving);
     }
   }
-
 
   const playButton = d3.select("#play-button")
     .on("click", function () {
