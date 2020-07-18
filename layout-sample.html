@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
-    <style>
+    <!-- <style>
         html {
             font-size: 14px;
         }
@@ -25,7 +25,8 @@
             background-color: lightgreen;
             height: fit-content;
             min-height: 95vh;
-            padding-bottom: 2.5rem; /* footer height */
+            padding-bottom: 2.5rem;
+            /* footer height */
             margin: auto;
         }
 
@@ -55,7 +56,8 @@
         .plot {
             min-width: 400px;
             width: 50%;
-            height: 500px; /* TODO: this should be auto? */
+            height: 500px;
+            /* TODO: this should be auto? */
         }
 
         #main-title {
@@ -78,6 +80,7 @@
             align-items: center;
             justify-content: center;
         }
+
         /* not working animation, use d3? */
         #line-charts {
             display: none;
@@ -86,25 +89,52 @@
             animation-delay: 2s;
             transition: transform 0.5s;
         }
+    </style> -->
+    <style>
+        body {
+            display: flex;
+        }
+
+        aside {
+            background-color: #F7D5A5;
+            flex-basis: 230px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            height: 100vh;
+        }
+
+        main {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #scartogram {
+            width: 60%;
+            background-color: gray;
+            min-width: 700px;
+        }
+
+        #helper-menu {
+            width: 40%;
+            background-color: pink;
+            min-width: 300px;
+        }
     </style>
 </head>
 
 <body>
+    <aside id="nav-menu">
+        <h2>Nav Menu</h2>
+    </aside>
     <main>
-        <div id="main-title"><h2>Main Title</h2></div>
-        <div id="explanation">Some insights about current step can go here</div>
-
-        <div id="plots">
-            <div id="scarto-plot" class="plot">sCarto-plot (Scatterplot/Cartogram)</div>
-            <div id="line-charts" class="plot">Line Chart</div>
+        <div id="scartogram">
+            <h2>Scartogram</h2>
         </div>
-
-        <div id="show-button">
-            <a href='#' onclick="document.querySelector('#line-charts').style.display = 'flex'">Show line chart</a>
+        <div id="helper-menu">
+            <h2>Helper Menu</h2>
         </div>
     </main>
-    <footer>Footer</footer>
-
 </body>
 
 </html>
