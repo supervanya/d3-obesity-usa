@@ -148,7 +148,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed('scatterBubbleGroup', true)
-    .on("click", function (d) { debugger; click(d) })
+    .on("click", d => click(d))
   // .style('opacity', '50%')
 
 
@@ -213,7 +213,8 @@ const drawCartogram = async () => {
     const lineChart = d3.select(".line-chart")
       .remove()
     drawLineChart(stateName, category);
-    d3.select("#line-heading").text("How do different factors correlate with Obesity for " + stateName + "?")
+    d3.select("#line-heading")
+      .text("How do different factors correlate with Obesity for " + stateName + "?")
       .style("display", "block");
     d3.select("#lineChart-radioInputs").style("display", "block");
   }
@@ -230,7 +231,7 @@ const drawCartogram = async () => {
       .style("display", "block");
     const radios = buttons_container.selectAll('input')
     radios.on("change", function () {
-      debugger;
+
       window.selected_category = this.value;
       redrawLineChart(state, this.value)
     })
@@ -257,7 +258,6 @@ const drawCartogram = async () => {
     }
   }
 
-
   const playButton = d3.select("#play-button")
     .on("click", function () {
       var button = d3.select(this);
@@ -280,7 +280,7 @@ const updateScatter = (caller) => {
   const id = caller.id
   const chosenXAxis = id
   const axisLabel = caller.text;
-  debugger;
+
 
 
   cartogramControls = d3.select("#cartogram_controls_container").style('opacity', '0')

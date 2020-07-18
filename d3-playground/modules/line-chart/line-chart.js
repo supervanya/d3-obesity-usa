@@ -6,7 +6,7 @@ function getGraphsForState(state, groupName, data) {
 };
 
 function groupAllData(data) {
-    var groupedData = d3version3.nest()
+    var groupedData = d3.nest()
         .key(function (d) { return d.locationdesc; })
         .key(function (d) { return d.category; })
         .key(function (d) { return d.category_value; })
@@ -15,8 +15,6 @@ function groupAllData(data) {
 }
 
 function drawLineChart(state, groupName) {
-    debugger;
-
     var margin = {
         top: 60,
         right: 250,
@@ -26,35 +24,42 @@ function drawLineChart(state, groupName) {
         width = 550 - margin.left - margin.right,
         height = 350 - margin.top - margin.bottom;
 
-    var parseDate = d3version3.time.format("%Y").parse;
+    // date parser to turn '2008' -> 'Tue Jan 01 2008 00:00:00 GMT-0500 (Eastern Standard Time)'
+    var parseDate = d3.timeParse("%Y");
 
-    var x = d3version3.time.scale()
+    var x = d3.scaleTime()
         .range([0, width]);
 
-    var y = d3version3.scale.linear()
+    var y = d3.scaleLinear()
         .range([height, 0]);
 
-    var color = d3version3.scale.category10();
+    // this is the color scale. More info: https://github.com/d3/d3-scale-chromatic
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    var xAxis = d3version3.svg.axis()
-        .scale(x)
-        .orient("bottom");
+    var xAxis = d3.axisBottom().scale(x)
 
-    var yAxis = d3version3.svg.axis()
-        .scale(y)
-        .orient("left");
+    var yAxis = d3.axisLeft().scale(y)
 
-    var line = d3version3.svg.line()
-        .interpolate("basis")
-        .x(function (d) {
-            return x(d.year);
-        })
-        .y(function (d) {
-            return y(d.obesity);
-        });
 
+
+
+    // this is a function to generate a line from coordinates
+    var line = d3.line()
+        .x(d => x(d.year))
+        .y(d => y(d.obesity))
+    /**
+     * If you'd like to add interpolation(smoothing)
+     * you can use the following methods:
+     *    .curve(d3.curveBasis)
+     *    .curve(d3.curveCatmullRomOpen)
+     */
+
+
+    // this is the unique id for selected chart, for example: "Michigan_Age_Group"
     const chartId = state + groupName.replace(" ", "_")
-    var svg = d3version3.select("body")
+
+    // crating the svg element that the line chart will attach to
+    var svg = d3.select("body")
         .append('div')
         .attr('id', chartId)
         .attr('class', 'line-chart')
@@ -65,7 +70,8 @@ function drawLineChart(state, groupName) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-    d3version3.csv('obesity_data.csv', _data => {
+    // reading the CSV and after resolving the promise rendering the line chart
+    d3.csv('obesity_data.csv').then(_data => {
         const stateData = getGraphsForState(state, groupName, _data)
 
         let groupData = {}
@@ -75,16 +81,13 @@ function drawLineChart(state, groupName) {
             groupData[key] = values
         })
 
-
-
-        let categories = d3version3.keys(groupData)
+        let categories = d3.keys(groupData)
         if (groupName === 'Age Group') {
             categories = categories.sort((a, b) => b.charAt(0) - a.charAt(0))
         } else {
             categories = categories.sort()
         }
         color.domain(categories);
-
 
         const yearsInt = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
         const years = yearsInt.map(year => parseDate(year.toString()));
@@ -104,13 +107,13 @@ function drawLineChart(state, groupName) {
 
         x.domain([years[0], years[years.length - 1]]);
         y.domain([
-            d3version3.min(breakoutGroups, function (c) {
-                return d3version3.min(c.values, function (v) {
+            d3.min(breakoutGroups, function (c) {
+                return d3.min(c.values, function (v) {
                     return v.obesity;
                 });
             }),
-            d3version3.max(breakoutGroups, function (c) {
-                return d3version3.max(c.values, function (v) {
+            d3.max(breakoutGroups, function (c) {
+                return d3.max(c.values, function (v) {
                     return v.obesity;
                 });
             })
@@ -265,7 +268,7 @@ function drawLineChart(state, groupName) {
                     .style("opacity", "1");
             })
             .on('mousemove', function () { // mouse moving over canvas
-                var mouse = d3version3.mouse(this);
+                var mouse = d3.mouse(this);
                 svg.select(`.mouse-line`)
                     .attr("d", function () {
                         var d = "M" + mouse[0] + "," + height;
@@ -275,9 +278,8 @@ function drawLineChart(state, groupName) {
 
                 svg.selectAll(`.mouse-per-line`)
                     .attr("transform", function (d, i) {
-                        // console.log(width / mouse[0])
                         var xDate = x.invert(mouse[0]),
-                            bisect = d3version3.bisector(function (d) { return d.year; }).right;
+                            bisect = d3.bisector(function (d) { return d.year; }).right;
                         var idx = bisect(d.values, xDate);
 
                         var beginning = 0,
@@ -295,7 +297,7 @@ function drawLineChart(state, groupName) {
                             else break; //position found
                         }
 
-                        d3version3.select(this).select('text')
+                        d3.select(this).select('text')
                             .text(y.invert(pos.y).toFixed(2) + "%");
 
                         return "translate(" + mouse[0] + "," + pos.y + ")";
