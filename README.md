@@ -11,6 +11,7 @@
 - [ ] Make the line chart module use the D3 v5 instead of v3
 - [ ] Use Bhawna's mockup to adjust styling
 - [ ] Update the readability of the code for the scatterplot
+- [ ] Make the Y-Axis update based on the year when in scatterplot mode
  
 
 ### Goal: 
