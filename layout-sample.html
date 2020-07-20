@@ -93,6 +93,7 @@
     <style>
         body {
             display: flex;
+            min-width: 1024px;
         }
 
         aside {
@@ -101,6 +102,7 @@
             flex-grow: 0;
             flex-shrink: 0;
             height: 100vh;
+            min-height: 768px;
         }
 
         main {
@@ -110,15 +112,19 @@
         }
 
         #scartogram {
-            width: 60%;
+            /* width: 100%; */
             background-color: gray;
             min-width: 700px;
+            min-height: calc(768px/2);
+            flex-grow: 6;
         }
 
         #helper-menu {
-            width: 40%;
+            /* width: 100%; */
             background-color: pink;
             min-width: 300px;
+            min-height: calc(768px/2);
+            flex-grow: 4;
         }
     </style>
 </head>
