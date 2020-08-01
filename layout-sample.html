@@ -139,7 +139,7 @@
         <div id="helper-menu">
             <h2>Obesity trends by state</h2>
             <h>Obesity vs
-                <select name="breakoutcategories" id="breakoutcategories">
+                <select name="breakoutcategories" id="breakoutgroup">
                     <option value="age">Age Group</option>
                     <option value="race">Race/Ethnicity</option>
                     <option value="ed">Education Attained</option>
@@ -147,7 +147,7 @@
                     <option value="income">Household Income</option>
                 </select>
                 for
-                <select name="state" class="states" id="state">
+                <select name="state" class="states" id="state" onchange="redrawlinechart()">
                     <option value="">Select State</option>
                 </select>
             </h>
@@ -167,8 +167,14 @@
 
 <!-- Line chart loading -->
 <script type="module">
-    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
-    drawLineChart('Texas', 'Age Group')
+    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'    
+    function redrawlinechart(){
+        const state = document.getElementById('state')
+        const breakoutgroup = document.getElementById('breakoutgroup')
+        console.log(state, breakoutgroup)
+        drawLineChart(state, breakoutgroup)
+
+    }
 </script>
 
 <!-- Rendering the states selector -->
