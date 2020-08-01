@@ -55,14 +55,15 @@ function drawLineChart(state, groupName) {
      */
 
 
+
     // this is the unique id for selected chart, for example: "Michigan_Age_Group"
     const chartId = state + groupName.replace(" ", "_")
 
     // crating the svg element that the line chart will attach to
-    var svg = d3.select("body")
-        .append('div')
+    var svg = d3.select(".line-chart")
+        //.append('div')
         .attr('id', chartId)
-        .attr('class', 'line-chart')
+        //.attr('class', 'line-chart')
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -121,21 +122,21 @@ function drawLineChart(state, groupName) {
 
 
         // Draw header.
-        const header = svg
-            .append("g")
-            .attr("class", "bar-header")
-            .attr("transform", `translate(0,${-margin.top * 0.6})`)
-            .append("text");
+        // const header = svg
+        //     .append("g")
+        //     .attr("class", "bar-header")
+        //     .attr("transform", `translate(0,${-margin.top * 0.6})`)
+        //     .append("text");
 
-        header.append("tspan").text(`Obesity Prevalence in ${state}, by ${groupName}`);
+        // //header.append("tspan").text(`Obesity Prevalence in ${state}, by ${groupName}`);
 
-        header
-            .append("tspan")
-            .attr("x", 0)
-            .attr("dy", "1.5em")
-            .style("font-size", "0.8em")
-            .style("fill", "#555")
-            .text(`United States, ${yearsInt[0]}-${yearsInt[yearsInt.length - 1]}`);
+        // header
+        //     .append("tspan")
+        //     .attr("x", 0)
+        //     .attr("dy", "1.5em")
+        //     .style("font-size", "0.8em")
+        //     .style("fill", "#555")
+        //     .text(`United States, ${yearsInt[0]}-${yearsInt[yearsInt.length - 1]}`);
 
 
         var legend = svg.selectAll('g.legend')

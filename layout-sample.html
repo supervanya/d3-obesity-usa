@@ -125,6 +125,7 @@
             flex-grow: 3;
         }
     </style>
+    <link rel="stylesheet" href="styles/line-chart.css">
 </head>
 
 <body>
@@ -136,9 +137,47 @@
             <h2>Scartogram</h2>
         </div>
         <div id="helper-menu">
-            <h2>Helper Menu</h2>
+            <h2>Obesity trends by state</h2>
+            <h>Obesity vs
+                <select name="breakoutcategories" id="breakoutcategories">
+                    <option value="age">Age Group</option>
+                    <option value="race">Race/Ethnicity</option>
+                    <option value="ed">Education Attained</option>
+                    <option value="gender">Gender</option>
+                    <option value="income">Household Income</option>
+                  </select>
+                for
+                <select name="state" class="states" id="stateId">
+                    <option value="">Select State</option>
+                </select>
+            </h>
+            <div class="line-chart"></div>
         </div>
     </main>
+    <script type= "text/javascript" src="./d3-playground/modules/states.js">
+        console.log("Check")
+        populateCountries("country", "state");
+    </script>
+
 </body>
 
+
 </html>
+
+<!-- Loading D3 v5 here -->
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3-array.v2.js"></script>
+
+<!-- Line chart loading -->
+<!-- <script type="module" src="./d3-playground/modules/line-chart/line-chart.js">
+const lineChart = d3.select(".line-chart")
+      .remove()
+    drawLineChart(stateName, category);
+</script> -->
+<script type="module">
+    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
+    drawLineChart('Texas', 'Age Group')
+</script>
+
+
+
