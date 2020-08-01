@@ -145,19 +145,16 @@
                     <option value="ed">Education Attained</option>
                     <option value="gender">Gender</option>
                     <option value="income">Household Income</option>
-                  </select>
+                </select>
                 for
-                <select name="state" class="states" id="stateId">
+                <select name="state" class="states" id="state">
                     <option value="">Select State</option>
                 </select>
             </h>
             <div class="line-chart"></div>
         </div>
     </main>
-    <script type= "text/javascript" src="./d3-playground/modules/states.js">
-        console.log("Check")
-        populateCountries("country", "state");
-    </script>
+
 
 </body>
 
@@ -169,15 +166,10 @@
 <script src="https://d3js.org/d3-array.v2.js"></script>
 
 <!-- Line chart loading -->
-<!-- <script type="module" src="./d3-playground/modules/line-chart/line-chart.js">
-const lineChart = d3.select(".line-chart")
-      .remove()
-    drawLineChart(stateName, category);
-</script> -->
 <script type="module">
     import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
     drawLineChart('Texas', 'Age Group')
 </script>
 
-
-
+<!-- Rendering the states selector -->
+<script src="./d3-playground/modules/states.js"></script>
