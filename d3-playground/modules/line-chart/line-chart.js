@@ -47,6 +47,8 @@ function drawLineChart(state, groupName) {
     var line = d3.line()
         .x(d => x(d.year))
         .y(d => y(d.obesity))
+        .curve(d3.curveBasis)
+
     /**
      * If you'd like to add interpolation(smoothing)
      * you can use the following methods:
@@ -239,12 +241,8 @@ function drawLineChart(state, groupName) {
             .attr("class", "mouse-per-line");
 
         mousePerLine.append("circle")
-            .attr("r", 7)
-            .style("stroke", function (d) {
-                return color(d.name);
-            })
-            .style("fill", "none")
-            .style("stroke-width", "1px")
+            .attr("r", 4)
+            .style("fill", (d) => color(d.name))
             .style("opacity", "0");
 
         mousePerLine.append("text")
