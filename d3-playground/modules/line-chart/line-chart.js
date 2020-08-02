@@ -310,4 +310,18 @@ function drawLineChart(state, groupName) {
     });
 }
 
+function redrawlinechart() {
+    const state = document.getElementById('state').value
+    const breakoutgroup = document.getElementById('breakoutgroup').value
+    console.log(state, breakoutgroup)
+    drawLineChart(state, breakoutgroup)
+}
+
+const stateSelector = document.getElementById('state')
+const breakoutGroupSelector = document.getElementById('breakoutgroup')
+
+stateSelector.addEventListener('change', redrawlinechart)
+breakoutGroupSelector.addEventListener('change', redrawlinechart)
+
+
 export default drawLineChart;

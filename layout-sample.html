@@ -119,10 +119,21 @@
         }
 
         #helper-menu {
-            background-color: pink;
+            background-color: #fff5f7;
             min-width: 300px;
             min-height: calc(768px/2);
-            flex-grow: 3;
+            /* flex-grow: 3; */
+        }
+
+        select {
+            background-color: transparent;
+            text-decoration: underline;
+            color: #E39629;
+            border: none;
+        }
+
+        select:focus {
+            outline: none;
         }
     </style>
     <link rel="stylesheet" href="styles/line-chart.css">
@@ -138,8 +149,9 @@
         </div>
         <div id="helper-menu">
             <h2>Obesity trends by state</h2>
-            <h>Obesity vs
+            <p>Obesity vs
                 <select name="breakoutcategories" id="breakoutgroup">
+                    <option value="">Select Group</option>
                     <option value="Age Group">Age Group</option>
                     <option value="Race/Ethnicity">Race/Ethnicity</option>
                     <option value="Education Attained">Education Attained</option>
@@ -147,10 +159,9 @@
                     <option value="Household Income">Household Income</option>
                 </select>
                 for
-                <select name="state" class="states" id="state">
-                    <option value="">Select State</option>
-                </select>
-            </h>
+                <!-- States dropdown list is populated via JS in "../states.js" module  -->
+                <select name="state" class="states" id="state"></select>
+            </p>
             <div class="line-chart"></div>
         </div>
     </main>
@@ -169,18 +180,4 @@
 <script src="./d3-playground/modules/states.js"></script>
 
 <!-- Line chart loading -->
-<script type="module">
-    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
-    function redrawlinechart() {
-        const state = document.getElementById('state').value
-        const breakoutgroup = document.getElementById('breakoutgroup').value
-        console.log(state, breakoutgroup)
-        drawLineChart(state, breakoutgroup)
-    }
-
-    const stateSelector = document.getElementById('state')
-    const breakoutGroupSelector = document.getElementById('breakoutgroup')
-
-    stateSelector.addEventListener('change', redrawlinechart)
-    breakoutGroupSelector.addEventListener('change', redrawlinechart)
-</script>
+<script type="module" src='./d3-playground/modules/line-chart/line-chart.js'></script>
