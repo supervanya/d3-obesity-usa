@@ -140,14 +140,14 @@
             <h2>Obesity trends by state</h2>
             <h>Obesity vs
                 <select name="breakoutcategories" id="breakoutgroup">
-                    <option value="age">Age Group</option>
-                    <option value="race">Race/Ethnicity</option>
-                    <option value="ed">Education Attained</option>
-                    <option value="gender">Gender</option>
-                    <option value="income">Household Income</option>
+                    <option value="Age Group">Age Group</option>
+                    <option value="Race/Ethnicity">Race/Ethnicity</option>
+                    <option value="Education Attained">Education Attained</option>
+                    <option value="Gender">Gender</option>
+                    <option value="Household Income">Household Income</option>
                 </select>
                 for
-                <select name="state" class="states" id="state" onchange="redrawlinechart()">
+                <select name="state" class="states" id="state">
                     <option value="">Select State</option>
                 </select>
             </h>
@@ -165,17 +165,22 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://d3js.org/d3-array.v2.js"></script>
 
-<!-- Line chart loading -->
-<script type="module">
-    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'    
-    function redrawlinechart(){
-        const state = document.getElementById('state')
-        const breakoutgroup = document.getElementById('breakoutgroup')
-        console.log(state, breakoutgroup)
-        drawLineChart(state, breakoutgroup)
-
-    }
-</script>
-
 <!-- Rendering the states selector -->
 <script src="./d3-playground/modules/states.js"></script>
+
+<!-- Line chart loading -->
+<script type="module">
+    import drawLineChart from './d3-playground/modules/line-chart/line-chart.js'
+    function redrawlinechart() {
+        const state = document.getElementById('state').value
+        const breakoutgroup = document.getElementById('breakoutgroup').value
+        console.log(state, breakoutgroup)
+        drawLineChart(state, breakoutgroup)
+    }
+
+    const stateSelector = document.getElementById('state')
+    const breakoutGroupSelector = document.getElementById('breakoutgroup')
+
+    stateSelector.addEventListener('change', redrawlinechart)
+    breakoutGroupSelector.addEventListener('change', redrawlinechart)
+</script>

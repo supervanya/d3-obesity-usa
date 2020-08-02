@@ -59,12 +59,15 @@ function drawLineChart(state, groupName) {
     // this is the unique id for selected chart, for example: "Michigan_Age_Group"
     const chartId = state + groupName.replace(" ", "_")
 
+
+    d3.select("#lineChartSVG").remove()
     // crating the svg element that the line chart will attach to
     var svg = d3.select(".line-chart")
         //.append('div')
         .attr('id', chartId)
         //.attr('class', 'line-chart')
         .append("svg")
+        .attr('id', 'lineChartSVG')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
