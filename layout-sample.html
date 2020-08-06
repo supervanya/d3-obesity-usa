@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Obesity Story</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@seznam/szn-select@1.x/szn-select-nojs.css">
     <!-- <style>
         html {
             font-size: 14px;
@@ -91,6 +92,32 @@
         }
     </style> -->
     <style>
+        /* variables not getting picked up */
+        :root {
+            --szn-select--border-width: 1px;
+            --szn-select--border-color: orange;
+            --szn-select--active-border-color: #7dbfff;
+            --szn-select--border-radius: 4px;
+            --szn-select--min-width: 109px;
+            --szn-select--height: 2em;
+            --szn-select--height-px: 32px;
+            
+            --szn-select--option-indent: 12px;
+            --szn-select--option-padding: 5px 5px 5px var(--szn-select--option-indent);
+            --szn-select--selected-option-background: red;
+            
+            --szn-select--button-padding: 0 5px 0 var(--szn-select--option-indent);
+            --szn-select--state-arrow-width: var(--szn-select--height);
+            
+            --szn-select--state-arrow-closed: "x";
+            --szn-select--state-arrow-opened: "y";
+            --szn-select--text-color: #000000;
+            --szn-select--disabled-text-color: #cccccc;
+            --szn-select--background: blue;
+            
+            --szn-select--active-box-shadow: 0 0 3px rgba(0, 132, 255, .4);
+        }
+
         body {
             display: flex;
             min-width: 1024px;
@@ -125,11 +152,28 @@
             /* flex-grow: 3; */
         }
 
-        select {
+        /* select {
             background-color: transparent;
             text-decoration: underline;
             color: #E39629;
             border: none;
+        } */
+
+        szn-select szn-select--button {
+            background: transparent;
+            border: 0;
+            color: #E39629;
+            display: flex;
+            text-decoration: underline;
+            width: min-content;
+        }
+
+        szn-select szn-select--button [data-szn-select--button--mark]:after { 
+            content: '∨';
+        }
+
+        szn-select szn-select-button [data-szn-select--button--open]:after {
+            content: 'boop';
         }
 
         select:focus {
@@ -150,34 +194,41 @@
         <div id="helper-menu">
             <h2>Obesity trends by state</h2>
             <p>Obesity vs
-                <select name="breakoutcategories" id="breakoutgroup">
-                    <option value="">Select Group</option>
-                    <option value="Age Group">Age Group</option>
-                    <option value="Race/Ethnicity">Race/Ethnicity</option>
-                    <option value="Education Attained">Education Attained</option>
-                    <option value="Gender">Gender</option>
-                    <option value="Household Income">Household Income</option>
-                </select>
+                <szn-select data-szn-select--standalone>
+                    <select name="breakoutcategories" id="breakoutgroup">
+                        <option value="">Select Group</option>
+                        <option value="Age Group">Age Group</option>
+                        <option value="Race/Ethnicity">Race/Ethnicity</option>
+                        <option value="Education Attained">Education Attained</option>
+                        <option value="Gender">Gender</option>
+                        <option value="Household Income">Household Income</option>
+                    </select>
+                    <span data-szn-select--ui></span>
+                </szn-select>
                 for
                 <!-- States dropdown list is populated via JS in "../states.js" module  -->
-                <select name="state" class="states" id="state"></select>
+                <szn-select data-szn-select--standalone>
+                    <select name="state" class="states" id="state"></select>
+                    <span data-szn-select--ui></span>
+                </szn-select>
             </p>
             <div class="line-chart"></div>
         </div>
     </main>
 
-
+    <!-- Loading szn-select package for better styling support -->
+    <script src="https://cdn.jsdelivr.net/npm/@seznam/szn-select@1.x/loader.min.js"></script>
+    
+    <!-- Loading D3 v5 here -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.js"></script>
+    
+    <!-- Rendering the states selector -->
+    <script src="./d3-playground/modules/states.js"></script>
+    
+    <!-- Line chart loading -->
+    <script type="module" src='./d3-playground/modules/line-chart/line-chart.js'></script>
 </body>
 
 
 </html>
-
-<!-- Loading D3 v5 here -->
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="https://d3js.org/d3-array.v2.js"></script>
-
-<!-- Rendering the states selector -->
-<script src="./d3-playground/modules/states.js"></script>
-
-<!-- Line chart loading -->
-<script type="module" src='./d3-playground/modules/line-chart/line-chart.js'></script>
