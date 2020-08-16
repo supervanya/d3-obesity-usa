@@ -139,7 +139,7 @@
         }
 
         #scartogram {
-            background-color: gray;
+            /* background-color: gray; */
             min-width: 700px;
             min-height: calc(768px/2);
             flex-grow: 7;
@@ -196,7 +196,24 @@
     </aside>
     <main>
         <div id="scartogram">
-            <h2>Scartogram</h2>
+            <h2>Sample title 1</h2>
+            <hr>
+            <h3>Sample Sub title 1</h3>
+            <h3>Obesity rate (%)</h3>
+            <svg id="cartogram-svg"></svg>
+
+        <div id="correlation_selection">
+            <p class='scatter-x-axis' href="#" id="smokes">Smoking (%)</p>
+            <p class='scatter-x-axis' href="#" id="poverty">Poverty (%)</p>
+            <p class='scatter-x-axis' href="#" id="healthcare">Lack of Health Care (%)</p>
+            <p class='scatter-x-axis' href="#" id="age">Median Age</p>
+            <p class='scatter-x-axis' href="#" id="income">Median Household Income</p>
+
+            <p class='scatter-x-axis' style="line-height: 3em; font-weight: bolder;" href="#" id="backToMap">Return
+                to
+                Cartogram</p>
+        </div>
+
         </div>
         <div id="helper-menu">
             <h2>Obesity trends by state</h2>
@@ -235,6 +252,10 @@
     
     <!-- Line chart loading -->
     <script type="module" src='./d3-playground/modules/line-chart/line-chart.js'></script>
+
+    <!-- Cartogram specific -->
+    <script src="d3-playground/resources/topojson-client.min.js"></script>
+    <script type="module" src="d3-playground/modules/cartogram-chart/cartogram.js"></script>
 </body>
 
 
