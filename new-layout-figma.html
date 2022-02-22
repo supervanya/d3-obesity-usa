@@ -9,6 +9,10 @@
       href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
     />
     <style>
+      :root {
+        --nav-text-color: #bd812d;
+      }
+
       html {
         font-family: Roboto;
       }
@@ -16,16 +20,18 @@
       body {
         display: grid;
         min-height: 100vh;
-        grid-template-columns: 300px 6fr 4fr;
+        grid-template-columns: 310px 6fr 4fr;
         background-color: rgb(222, 222, 222);
       }
 
       nav {
-        color: rgba(150, 92, 11, 0.35);
+        color: var(--nav-text-color);
         background-color: #f7d5a5;
 
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
         padding: 16px;
       }
 
@@ -35,11 +41,25 @@
 
       aside {
         background-color: pink;
+        border: 1px solid black;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+        margin: 10%;
+        font-size: 20px;
+      }
+
+      footer {
+        padding-top: 4px;
+        border-top: 1px var(--nav-text-color) solid;
+        font-size: 11px;
       }
 
       @media only screen and (max-width: 768px) {
         body {
-          grid-template-columns: 300px 1fr;
+          grid-template-columns: 310px 1fr;
           grid-template-rows: auto;
         }
         nav {
@@ -48,7 +68,7 @@
       }
 
       .nav-icon {
-        fill: rgba(150, 92, 11, 0.35);
+        fill: var(--nav-text-color);
       }
 
       #main-logo {
@@ -73,6 +93,30 @@
         text-transform: uppercase;
         letter-spacing: 0.2em;
       }
+
+      #umich-attribution {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+      }
+
+      #github-link {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      nav a:link,
+      nav a:visited,
+      nav a:hover,
+      nav a:active {
+        color: #724200;
+      }
     </style>
   </head>
 
@@ -93,19 +137,30 @@
         <p>Factors that affect obesity</p>
       </div>
 
-      <div>
-        <p>
-          Made with love by students of SI 649 class University of Michigan
-          School of Information
-        </p>
-        <svg width="24" height="24" class="nav-icon">
-          <use xlink:href="#umich" />
-        </svg>
+      <footer>
+        <span id="umich-attribution">
+          <p>
+            Made with passion by the students of
+            <a href="https://www.si.umich.edu/programs/courses/649">SI 649</a>
+            University of Michigan -
+            <a href="https://www.si.umich.edu/">School of Information</a>
+          </p>
+          <span>
+            <svg width="36" height="28" class="nav-icon">
+              <use xlink:href="#umich" />
+            </svg>
+          </span>
+        </span>
 
-        <svg width="24" height="24" class="nav-icon">
-          <use xlink:href="#github" />
-        </svg>
-      </div>
+        <span id="github-link">
+          <svg width="24" height="24" class="nav-icon">
+            <use xlink:href="#github" />
+          </svg>
+          <a href="https://github.com/supervanya/d3-obesity-usa"
+            >Git Hub Repo
+          </a>
+        </span>
+      </footer>
     </nav>
 
     <main>
