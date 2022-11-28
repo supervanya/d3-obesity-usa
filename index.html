@@ -1,144 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>USA Obesity Story</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        p {
-            font-family: monospace;
-        }
+      p {
+        font-family: monospace;
+      }
 
-        body {
-            height: 2000px;
-            /* font-family: monospace; */
-        }
+      body {
+        height: 2000px;
+        /* font-family: monospace; */
+      }
 
-        .chart>p {
-            color: white;
-            font-style: italic;
-        }
+      .chart > p {
+        color: white;
+        font-style: italic;
+      }
 
-        h1 {
-            text-align: center;
-            text-transform: uppercase;
-            background-color: rgb(180, 200, 223);
-            margin: 0;
-            padding: 24px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-        }
+      h1 {
+        text-align: center;
+        text-transform: uppercase;
+        background-color: rgb(180, 200, 223);
+        margin: 0;
+        padding: 24px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+      }
 
-        h2 {
-            margin-top: 64px;
-            text-align: center;
-            text-transform: capitalize;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-        }
+      h2 {
+        margin-top: 64px;
+        text-align: center;
+        text-transform: capitalize;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+      }
 
-        footer {
-            text-align: center;
-            color: slategray;
-            padding: 15px;
-        }
+      footer {
+        text-align: center;
+        color: slategray;
+        padding: 15px;
+      }
 
-        .hr {
-            border-top: 1px solid rgb(180, 200, 223);
-        }
+      .hr {
+        border-top: 1px solid rgb(180, 200, 223);
+      }
 
-        form {
-            font-size: 14px;
-        }
+      form {
+        font-size: 14px;
+      }
 
-        p {
-            font-size: larger;
-        }
+      p {
+        font-size: larger;
+      }
     </style>
-    <link rel="stylesheet" href="styles/line-chart.css">
-    <link rel="stylesheet" href="styles/cartogram.css">
-</head>
+    <link rel="stylesheet" href="styles/line-chart.css" />
+    <link rel="stylesheet" href="styles/cartogram.css" />
+  </head>
 
-<body>
+  <body>
     <h1 class="chartTitle">USA Obesity Story</h1>
 
     <div id="cartogram-container">
-        <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
-        <div id="cartogram_controls_container" style="height: 100px;">
-            <div id="year_scrubber">
-                <input id="cartogram_year" value="1995" type="range" min="1995" max="2016" step="1" list="tickmarks">
-                <datalist id="tickmarks">
-                    <option>1995</option>
-                    <option>2000</option>
-                    <option>2005</option>
-                    <option>2010</option>
-                    <option>2016</option>
-                </datalist>
-            </div>
-            <div id="cartogram_controls">
-                <button id="play-button">Play</button>
-            </div>
-
-
+      <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
+      <div id="cartogram_controls_container" style="height: 100px">
+        <div id="year_scrubber">
+          <input id="cartogram_year" value="1995" type="range" min="1995" max="2016" step="1" list="tickmarks" />
+          <datalist id="tickmarks">
+            <option>1995</option>
+            <option>2000</option>
+            <option>2005</option>
+            <option>2010</option>
+            <option>2016</option>
+          </datalist>
         </div>
-
-        <!-- Description of the chart -->
-        <div style="height: 100px;" id='chart-info'>
-            <h2 id="chart-title">Obesity Cartogram</h2>
-            <p id="chart-description" style="text-align: center; max-width: 50%; margin: auto;">Obesity trend across the
-                States in the US is rising</p>
+        <div id="cartogram_controls">
+          <button id="play-button">Play</button>
         </div>
-        <!-- cartogram chart -->
-        <svg id="cartogram-svg"></svg>
+      </div>
 
-        <img style="position: absolute;
-    width: 60px;
-    /* right: 170px; */
-    top: 500px;" src="vertical_legend.jpg">
+      <!-- Description of the chart -->
+      <div style="height: 100px" id="chart-info">
+        <h2 id="chart-title">Obesity Cartogram</h2>
+        <p id="chart-description" style="text-align: center; max-width: 50%; margin: auto">
+          Obesity trend across the States in the US is rising
+        </p>
+      </div>
+      <!-- cartogram chart -->
+      <svg id="cartogram-svg"></svg>
 
-        <div id="correlation_selection">
-            <text class='scatter-x-axis' href="#" id="smokes">Smoking (%)</text>
-            <text class='scatter-x-axis' href="#" id="poverty">Poverty (%)</text>
-            <text class='scatter-x-axis' href="#" id="healthcare">Lack of Health Care (%)</text>
-            <text class='scatter-x-axis' href="#" id="age">Median Age</text>
-            <text class='scatter-x-axis' href="#" id="income">Median Household Income</text>
+      <img style="position: absolute; width: 60px; /* right: 170px; */ top: 500px" src="vertical_legend.jpg" />
 
-            <text class='scatter-x-axis' style="line-height: 3em; font-weight: bolder;" href="#" id="backToMap">Return
-                to
-                Cartogram</text>
-        </div>
+      <div id="correlation_selection">
+        <text class="scatter-x-axis" href="#" id="smokes">Smoking (%)</text>
+        <text class="scatter-x-axis" href="#" id="poverty">Poverty (%)</text>
+        <text class="scatter-x-axis" href="#" id="healthcare">Lack of Health Care (%)</text>
+        <text class="scatter-x-axis" href="#" id="age">Median Age</text>
+        <text class="scatter-x-axis" href="#" id="income">Median Household Income</text>
 
-        <div>
-            <h2 style="text-align: center;" id="line-heading" style="display: none;"></h2>
-            <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
-            <form name="radios" id="lineChart-radioInputs"
-                style="text-align: center; padding-top: 5px; padding-bottom: 40px; display:none">
-                <input type="radio" name="btn" id="Age Group" value="Age Group" checked>
-                <label for="Age Group" style="padding-right: 15px;">Age Group</label>
+        <text class="scatter-x-axis" style="line-height: 3em; font-weight: bolder" href="#" id="backToMap"
+          >Return to Cartogram</text
+        >
+      </div>
 
-                <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity">
-                <label for="Race/Ethnicity" style="padding-right: 15px;">Race/Ethnicity</label>
+      <div>
+        <h2 style="text-align: center" id="line-heading" style="display: none"></h2>
+        <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
+        <form
+          name="radios"
+          id="lineChart-radioInputs"
+          style="text-align: center; padding-top: 5px; padding-bottom: 40px; display: none"
+        >
+          <input type="radio" name="btn" id="Age Group" value="Age Group" checked />
+          <label for="Age Group" style="padding-right: 15px">Age Group</label>
 
-                <input type="radio" name="btn" id="Education Attained" value="Education Attained">
-                <label for="Education Attained" style="padding-right: 15px;">Education Attained</label>
+          <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity" />
+          <label for="Race/Ethnicity" style="padding-right: 15px">Race/Ethnicity</label>
 
-                <input type="radio" name="btn" id="Gender" value="Gender">
-                <label for="Gender" style="padding-right: 15px;">Gender</label>
+          <input type="radio" name="btn" id="Education Attained" value="Education Attained" />
+          <label for="Education Attained" style="padding-right: 15px">Education Attained</label>
 
-                <input type="radio" name="btn" id="Household Income" value="Household Income">
-                <label for="Household Income">Household Income</label>
+          <input type="radio" name="btn" id="Gender" value="Gender" />
+          <label for="Gender" style="padding-right: 15px">Gender</label>
 
-            </form>
-        </div>
+          <input type="radio" name="btn" id="Household Income" value="Household Income" />
+          <label for="Household Income">Household Income</label>
+        </form>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
-
 
 <!-- Loading D3 v5 here -->
 <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -148,5 +145,5 @@
 <script type="module" src="./d3-playground/modules/line-chart/line-chart.js"></script>
 
 <!-- Cartogram specific -->
-<script src="d3-playground/resources/topojson-client.min.js"></script>
-<script type="module" src="d3-playground/modules/cartogram-chart/cartogram.js"></script>
+<script src="./d3-playground/resources/topojson-client.min.js"></script>
+<script type="module" src="./d3-playground/modules/cartogram-chart/cartogram.js"></script>
