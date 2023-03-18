@@ -21,7 +21,7 @@
   "homepage": "https://github.com/supervanya/d3-obesity-usa#readme",
   "dependencies": {
     "@types/d3": "^5.7.2",
-    "d3": "^5.15.0",
+    "d3": "^7.8.2",
     "d3-dsv": "^1.2.0"
   },
   "prettier": {
