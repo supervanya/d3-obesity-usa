@@ -8,6 +8,7 @@
     <style>
       :root {
         --nav-text-color: #bd812d;
+        --nav-width: 290px;
       }
 
       html {
@@ -15,9 +16,11 @@
       }
 
       body {
+        max-width: 1920px;
+        margin: auto;
         display: grid;
         min-height: 100vh;
-        grid-template-columns: 310px 6fr 4fr;
+        grid-template-columns: var(--nav-width) 6fr 4fr;
         background-color: rgb(222, 222, 222);
       }
 
@@ -54,9 +57,9 @@
         font-size: 11px;
       }
 
-      @media only screen and (max-width: 768px) {
+      @media only screen and (max-width: 1000px) {
         body {
-          grid-template-columns: 310px 1fr;
+          grid-template-columns: calc(var(--nav-width) - 50px) 1fr;
           grid-template-rows: auto;
         }
         nav {
@@ -153,7 +156,7 @@
           <svg width="24" height="24" class="nav-icon">
             <use xlink:href="#github" />
           </svg>
-          <a href="https://github.com/supervanya/d3-obesity-usa">Git Hub Repo </a>
+          <a href="https://github.com/supervanya/d3-obesity-usa">GitHub Repo </a>
         </span>
       </footer>
     </nav>
