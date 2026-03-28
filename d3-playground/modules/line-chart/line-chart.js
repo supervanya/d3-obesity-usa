@@ -1,3 +1,5 @@
+import * as d3 from 'd3'
+
 function getGraphsForState(state, groupName, data) {
     const groupedData = groupAllData(data)
     const stateData = groupedData.find(stateData => stateData.key === state)

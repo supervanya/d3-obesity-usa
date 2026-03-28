@@ -18,6 +18,8 @@
  * 2. Add exercise data
  */
 
+import * as d3 from 'd3'
+import * as topojson from 'topojson-client'
 import drawLineChart from '../../modules/line-chart/line-chart.js'
 
 const geoPath = d3.geoPath();
