@@ -54,7 +54,7 @@ const colorScale = d3.scaleSequential(d3.interpolateReds).domain([10, 40]);
 
 // creates, appends and returns base outline map of US
 const createBaseMap = (stateBoundaries, nation) => {
-  const svgWidth = width + margin.right + margin.left;
+  const svgWidth = width + margin.right + margin.left + 80;
   svg = d3.select("#cartogram-svg").attr("viewBox", `-30 -20 ${svgWidth} ${690}`);
 
   svg
@@ -76,6 +76,33 @@ const createBaseMap = (stateBoundaries, nation) => {
     .attr("stroke", "gray")
     .attr("stroke-linejoin", "round")
     .attr("d", d3.geoPath());
+
+  // Create SVG gradient legend for obesity color scale
+  const legendWidth = 20;
+  const legendHeight = 200;
+  const legendX = width + margin.left - 10;
+  const legendY = 80;
+
+  const defs = svg.append("defs");
+  const linearGradient = defs.append("linearGradient").attr("id", "obesity-gradient").attr("x1", "0%").attr("y1", "100%").attr("x2", "0%").attr("y2", "0%");
+
+  const [domainMin, domainMax] = colorScale.domain();
+  const steps = 10;
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const value = domainMin + t * (domainMax - domainMin);
+    linearGradient.append("stop").attr("offset", `${t * 100}%`).attr("stop-color", colorScale(value));
+  }
+
+  const legendGroup = svg.append("g").attr("class", "legend").attr("transform", `translate(${legendX}, ${legendY})`);
+
+  legendGroup.append("rect").attr("width", legendWidth).attr("height", legendHeight).style("fill", "url(#obesity-gradient)").attr("stroke", "#ccc").attr("stroke-width", 0.5);
+
+  const legendScale = d3.scaleLinear().domain([domainMin, domainMax]).range([legendHeight, 0]);
+  const legendAxis = d3.axisRight(legendScale).ticks(5).tickFormat((d) => `${d}%`);
+  legendGroup.append("g").attr("transform", `translate(${legendWidth}, 0)`).call(legendAxis);
+
+  legendGroup.append("text").attr("x", legendWidth / 2).attr("y", -10).attr("text-anchor", "middle").style("font-size", "11px").style("font-weight", "bold").text("Obesity %");
 
   return svg.node();
 };
