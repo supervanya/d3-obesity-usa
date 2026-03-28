@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import type { ObesityRecord } from "./types.ts";
 
 interface LineDataPoint {
   year: Date;
@@ -16,26 +15,8 @@ function loadData() {
 }
 
 function getGraphsForState(state, groupName, data) {
-  const groupedData = groupAllData(data);
-  const stateData = groupedData.find((stateData) => stateData.key === state);
-  const stateGroupData = stateData["values"].find((stateData) => stateData.key === groupName);
-  return stateGroupData.values;
-}
-
-function groupAllData(data) {
-  const groupedData = d3
-    .nest<ObesityRecord>()
-    .key(function (d) {
-      return d.locationdesc;
-    })
-    .key(function (d) {
-      return d.category;
-    })
-    .key(function (d) {
-      return d.category_value;
-    })
-    .entries(data);
-  return groupedData;
+  const grouped = d3.group(data, (d: any) => d.locationdesc, (d: any) => d.category, (d: any) => d.category_value);
+  return grouped.get(state)?.get(groupName);
 }
 
 function drawLineChart(state, groupName) {
@@ -58,9 +39,9 @@ function drawLineChart(state, groupName) {
   // this is the color scale. More info: https://github.com/d3/d3-scale-chromatic
   const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  const xAxis = d3.axisBottom(x as any);
+  const xAxis = d3.axisBottom(x);
 
-  const yAxis = d3.axisLeft(y as any);
+  const yAxis = d3.axisLeft(y);
 
   // this is a function to generate a line from coordinates
   const line = d3
@@ -102,13 +83,11 @@ function drawLineChart(state, groupName) {
       const stateData = getGraphsForState(state, groupName, _data);
 
     const groupData = {};
-    stateData.forEach((category) => {
-      const values = category.values.map((value) => value.avg_data_value);
-      const key = category.key;
-      groupData[key] = values;
+    stateData.forEach((values, key) => {
+      groupData[key] = values.map((value) => value.avg_data_value);
     });
 
-    let categories = d3.keys(groupData);
+    let categories = Object.keys(groupData);
     if (groupName === "Age Group") {
       categories = categories.sort((a, b) => +b.charAt(0) - +a.charAt(0));
     } else {
@@ -288,16 +267,16 @@ function drawLineChart(state, groupName) {
         svg.selectAll(`.mouse-per-line circle`).style(`opacity`, `1`);
         svg.selectAll(`.mouse-per-line text`).style("opacity", "1");
       })
-      .on("mousemove", function () {
+      .on("mousemove", function (event) {
         // mouse moving over canvas
-        const mouse = d3.mouse(this as SVGRectElement);
+        const mouse = d3.pointer(event);
         svg.select(`.mouse-line`).attr("d", function () {
           let d = "M" + mouse[0] + "," + height;
           d += " " + mouse[0] + "," + 0;
           return d;
         });
 
-        svg.selectAll(`.mouse-per-line`).attr("transform", function (d: any, i) {
+        svg.selectAll(`.mouse-per-line`).attr("transform", function (this: SVGGElement, d: any, i) {
           const xDate = x.invert(mouse[0]),
             bisect = d3.bisector(function (d: any) {
               return d.year;

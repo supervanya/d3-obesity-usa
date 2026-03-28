@@ -218,7 +218,7 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed("scatterBubbleGroup", true)
-    .on("click", (d) => click(d));
+    .on("click", (_event, d) => click(d));
 
   bubbles_group
     .classed("scatterBubble", true)
@@ -259,9 +259,9 @@ const drawCartogram = async () => {
     }
     const buttons_container = d3.select("#lineChart-radioInputs").style("display", "block");
     const radios = buttons_container.selectAll("input");
-    radios.on("change", function () {
-      selectedCategory = (this as HTMLInputElement).value;
-      redrawLineChart(state, (this as HTMLInputElement).value);
+    radios.on("change", (event) => {
+      selectedCategory = event.currentTarget.value;
+      redrawLineChart(state, event.currentTarget.value);
     });
   }
 
@@ -286,8 +286,8 @@ const drawCartogram = async () => {
     }
   }
 
-  const playButton = d3.select("#play-button").on("click", function () {
-    const button = d3.select(this);
+  const playButton = d3.select("#play-button").on("click", (event) => {
+    const button = d3.select(event.currentTarget);
     if (button.text() == "Pause") {
       moving = false;
       clearInterval(timer);
@@ -321,7 +321,7 @@ const updateScatter = (caller) => {
 
   d3.select(`#chart-description`).text(chartsInfo[id]);
 
-  const scatterData = d3.values(combinedData);
+  const scatterData = Object.values(combinedData);
 
   function addLabel(axis, label, x, y = 0, deg = 0) {
     axis
@@ -447,15 +447,15 @@ const updateYear = (year) => {
 
 drawCartogram();
 
-d3.selectAll(".scatter-x-axis").on("click", function () {
-  updateScatter(this);
+d3.selectAll(".scatter-x-axis").on("click", (event) => {
+  updateScatter(event.currentTarget);
 });
 
-d3.select("#backToMap").on("click", function () {
+d3.select("#backToMap").on("click", () => {
   updateCartogram();
 });
 
-d3.select("input[type=range]#cartogram_year").on("input", function () {
-  const year = (this as HTMLInputElement).value;
+d3.select("input[type=range]#cartogram_year").on("input", (event) => {
+  const year = event.currentTarget.value;
   updateYear(year);
 });
