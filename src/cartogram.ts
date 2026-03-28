@@ -33,6 +33,11 @@ interface CartogramNode extends d3.SimulationNodeDatum {
 }
 
 const geoPath = d3.geoPath();
+
+const tooltip = d3
+  .select("body")
+  .append("div")
+  .attr("class", "tooltip");
 let combinedData: CombinedData;
 let selectedCategory: string | undefined;
 
@@ -218,7 +223,26 @@ const drawCartogram = async () => {
   bubbles_group = bubbles_group
     .join("g")
     .classed("scatterBubbleGroup", true)
-    .on("click", (_event, d) => click(d));
+    .on("click", (_event, d) => click(d))
+    .on("mouseover", (event, d) => {
+      const yi = year_selector(selectedYear);
+      tooltip
+        .style("opacity", "1")
+        .html(
+          `<div class="tooltip-title">${d.name}</div>` +
+          `<div class="tooltip-value">Obesity: ${d.obese[yi]}%</div>` +
+          `<div class="tooltip-value">Poverty: ${d.scatter.poverty}%</div>` +
+          `<div class="tooltip-value">Income: $${Number(d.scatter.income).toLocaleString()}</div>`,
+        );
+    })
+    .on("mousemove", (event) => {
+      tooltip
+        .style("left", event.pageX + 12 + "px")
+        .style("top", event.pageY - 28 + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", "0");
+    });
 
   bubbles_group
     .classed("scatterBubble", true)

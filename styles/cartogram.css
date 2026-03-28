@@ -137,3 +137,27 @@ div.line-chart {
   color: black;
   font-weight: bold;
 }
+
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 1000;
+}
+
+.tooltip .tooltip-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tooltip .tooltip-value {
+  color: #555;
+}
