@@ -1,0 +1,46 @@
+h2 {
+  margin-top: 32px;
+  text-align: center;
+  text-transform: capitalize;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+}
+
+form {
+  font-size: 14px;
+}
+
+#chart-info {
+  min-height: 80px;
+}
+
+#chart-description {
+  text-align: center;
+  max-width: 80%;
+  margin: auto;
+  font-size: 15px;
+  color: #555;
+}
+
+#line-heading {
+  text-align: center;
+  display: none;
+  font-size: 1.1rem;
+}
+
+#lineChart-radioInputs {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  display: none;
+}
+
+#lineChart-radioInputs label {
+  padding-right: 15px;
+  font-size: 13px;
+}
+
+#backToMap {
+  line-height: 3em;
+  font-weight: bolder;
+}
