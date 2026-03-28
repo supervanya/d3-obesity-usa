@@ -1,5 +1,14 @@
 import * as d3 from "d3";
 
+let cachedData = null;
+
+function loadData() {
+  if (!cachedData) {
+    cachedData = d3.csv("data/obesity_data.csv");
+  }
+  return cachedData;
+}
+
 function getGraphsForState(state, groupName, data) {
   const groupedData = groupAllData(data);
   const stateData = groupedData.find((stateData) => stateData.key === state);
@@ -74,8 +83,8 @@ function drawLineChart(state, groupName) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  // reading the CSV and after resolving the promise rendering the line chart
-  d3.csv("data/obesity_data.csv").then((_data) => {
+  // reading the CSV (cached after first load)
+  loadData().then((_data) => {
     const stateData = getGraphsForState(state, groupName, _data);
 
     let groupData = {};
