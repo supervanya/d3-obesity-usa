@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+p {
+  font-size: larger;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  background-color: rgb(180, 200, 223);
+  margin: 0;
+  padding: 24px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+}
+
+h2 {
+  margin-top: 64px;
+  text-align: center;
+  text-transform: capitalize;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+}
+
+footer {
+  text-align: center;
+  color: slategray;
+  padding: 15px;
+}
+
+form {
+  font-size: 14px;
+}
+
+#chart-info {
+  min-height: 100px;
+}
+
+#chart-description {
+  text-align: center;
+  max-width: 50%;
+  margin: auto;
+}
+
+#line-heading {
+  text-align: center;
+  display: none;
+}
+
+#lineChart-radioInputs {
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 40px;
+  display: none;
+}
+
+#lineChart-radioInputs label {
+  padding-right: 15px;
+}
+
+#backToMap {
+  line-height: 3em;
+  font-weight: bolder;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.2rem;
+    padding: 16px;
+  }
+
+  h2 {
+    margin-top: 32px;
+    font-size: 1.1rem;
+  }
+
+  #cartogram-container {
+    width: 95%;
+    max-width: none;
+  }
+
+  #chart-description {
+    max-width: 90%;
+  }
+
+  #year_scrubber {
+    width: 60%;
+  }
+
+  #lineChart-radioInputs {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  #lineChart-radioInputs label {
+    padding-right: 0;
+  }
+
+  #correlation_selection {
+    font-size: 0.9em;
+  }
+
+  div.line-chart svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
