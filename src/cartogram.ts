@@ -20,11 +20,21 @@
 
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import drawLineChart from "./line-chart.js";
+import type { Topology } from "topojson-specification";
+import drawLineChart from "./line-chart.ts";
+import type { CombinedData, ScatterData } from "./types.ts";
+
+interface CartogramNode extends d3.SimulationNodeDatum {
+  name: string;
+  abbreviation: string;
+  obese: number[];
+  scatter: ScatterData;
+  r: number;
+}
 
 const geoPath = d3.geoPath();
-let combinedData;
-let selectedCategory;
+let combinedData: CombinedData;
+let selectedCategory: string | undefined;
 
 const chartsInfo = {
   income: "Interesting insight: Wealthier states tend to have less obesity.",
@@ -107,21 +117,21 @@ const createBaseMap = (stateBoundaries, nation) => {
   return svg.node();
 };
 
-const applySimulation = (nodes) => {
+const applySimulation = (nodes: CartogramNode[]) => {
   const simulation = d3
     .forceSimulation(nodes)
     .force(
       "cx",
       d3
         .forceX()
-        .x((d) => width / 2)
+        .x(() => width / 2)
         .strength(0.02),
     )
     .force(
       "cy",
       d3
         .forceY()
-        .y((d) => height / 2)
+        .y(() => height / 2)
         .strength(0.02),
     )
     .force(
@@ -143,7 +153,7 @@ const applySimulation = (nodes) => {
       "collide",
       d3
         .forceCollide()
-        .radius((d) => d.r + NODE.PADDING)
+        .radius((d: any) => d.r + NODE.PADDING)
         .strength(1),
     )
     .stop();
@@ -152,7 +162,7 @@ const applySimulation = (nodes) => {
     simulation.tick();
   }
 
-  return simulation.nodes();
+  return simulation.nodes() as CartogramNode[];
 };
 
 const showError = (message) => {
@@ -164,17 +174,17 @@ const showError = (message) => {
 };
 
 const drawCartogram = async () => {
-  let us, states, stateBoundaries, nation;
+  let us: Topology;
   try {
-    us = await d3.json("us-atlas-10m.json");
-    combinedData = await d3.json("data/scatter_cartogram.json");
+    us = (await d3.json("us-atlas-10m.json")) as Topology;
+    combinedData = (await d3.json("data/scatter_cartogram.json")) as CombinedData;
   } catch (error) {
-    showError(error.message);
+    showError((error as Error).message);
     return;
   }
-  stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
-  nation = topojson.mesh(us, us.objects.nation);
-  states = topojson.feature(us, us.objects.states);
+  const stateBoundaries = topojson.mesh(us, us.objects.states as any, (a: any, b: any) => a !== b);
+  const nation = topojson.mesh(us, us.objects.nation as any);
+  const states = topojson.feature(us, us.objects.states as any) as any;
 
   const year = year_selector(selectedYear);
 
@@ -250,8 +260,8 @@ const drawCartogram = async () => {
     const buttons_container = d3.select("#lineChart-radioInputs").style("display", "block");
     const radios = buttons_container.selectAll("input");
     radios.on("change", function () {
-      selectedCategory = this.value;
-      redrawLineChart(state, this.value);
+      selectedCategory = (this as HTMLInputElement).value;
+      redrawLineChart(state, (this as HTMLInputElement).value);
     });
   }
 
@@ -262,7 +272,7 @@ const drawCartogram = async () => {
 
   function step() {
     const yearslider = d3.select("#cartogram_year");
-    currentValue = yearslider.attr("value");
+    currentValue = +yearslider.attr("value");
     updateYear(currentValue);
     //update(x.invert(currentValue));
     currentValue = +currentValue + 1;
@@ -277,7 +287,7 @@ const drawCartogram = async () => {
   }
 
   const playButton = d3.select("#play-button").on("click", function () {
-    var button = d3.select(this);
+    const button = d3.select(this);
     if (button.text() == "Pause") {
       moving = false;
       clearInterval(timer);
@@ -376,13 +386,13 @@ const updateScatter = (caller) => {
     .transition()
     .delay(1000)
     .duration(750)
-    .attr("transform", (d) => {
+    .attr("transform", (d: any) => {
       const x = d.x;
       const y = yScale(d.scatter.obesity);
       return `translate(${x}, ${y})`;
     })
     .transition()
-    .attr("transform", (d) => {
+    .attr("transform", (d: any) => {
       const x = xScale(d.scatter[chosenXAxis]);
       const y = yScale(d.scatter.obesity);
       return `translate(${x}, ${y})`;
@@ -407,7 +417,7 @@ const updateCartogram = () => {
     .transition()
     .duration(750)
     .delay((d, i) => i * 15)
-    .attr("transform", (d) => {
+    .attr("transform", (d: any) => {
       const x = d.x;
       const y = d.y;
       return `translate(${x}, ${y})`;
@@ -428,9 +438,9 @@ const updateYear = (year) => {
 
   bubbles.transition().ease(d3.easeElastic).duration(750);
 
-  bubbles.attr("r", (d) => obesityToRadius(d.obese[year_index])).attr("fill", (d) => colorScale(+d.obese[year_index]));
+  bubbles.attr("r", (d: any) => obesityToRadius(d.obese[year_index])).attr("fill", (d: any) => colorScale(+d.obese[year_index]));
 
-  d3.selectAll(".stateValue").text((d) => {
+  d3.selectAll(".stateValue").text((d: any) => {
     return `${d.obese[year_index]}%`;
   });
 };
@@ -446,6 +456,6 @@ d3.select("#backToMap").on("click", function () {
 });
 
 d3.select("input[type=range]#cartogram_year").on("input", function () {
-  const year = this.value;
+  const year = (this as HTMLInputElement).value;
   updateYear(year);
 });

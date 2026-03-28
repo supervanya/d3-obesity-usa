@@ -1,4 +1,10 @@
 import * as d3 from "d3";
+import type { ObesityRecord } from "./types.ts";
+
+interface LineDataPoint {
+  year: Date;
+  obesity: number;
+}
 
 let cachedData = null;
 
@@ -17,8 +23,8 @@ function getGraphsForState(state, groupName, data) {
 }
 
 function groupAllData(data) {
-  var groupedData = d3
-    .nest()
+  const groupedData = d3
+    .nest<ObesityRecord>()
     .key(function (d) {
       return d.locationdesc;
     })
@@ -33,7 +39,7 @@ function groupAllData(data) {
 }
 
 function drawLineChart(state, groupName) {
-  var margin = {
+  const margin = {
       top: 60,
       right: 250,
       bottom: 30,
@@ -43,22 +49,22 @@ function drawLineChart(state, groupName) {
     height = 350 - margin.top - margin.bottom;
 
   // date parser to turn '2008' -> 'Tue Jan 01 2008 00:00:00 GMT-0500 (Eastern Standard Time)'
-  var parseDate = d3.timeParse("%Y");
+  const parseDate = d3.timeParse("%Y");
 
-  var x = d3.scaleTime().range([0, width]);
+  const x = d3.scaleTime().range([0, width]);
 
-  var y = d3.scaleLinear().range([height, 0]);
+  const y = d3.scaleLinear().range([height, 0]);
 
   // this is the color scale. More info: https://github.com/d3/d3-scale-chromatic
-  var color = d3.scaleOrdinal(d3.schemeCategory10);
+  const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  var xAxis = d3.axisBottom().scale(x);
+  const xAxis = d3.axisBottom(x as any);
 
-  var yAxis = d3.axisLeft().scale(y);
+  const yAxis = d3.axisLeft(y as any);
 
   // this is a function to generate a line from coordinates
-  var line = d3
-    .line()
+  const line = d3
+    .line<LineDataPoint>()
     .x((d) => x(d.year))
     .y((d) => y(d.obesity));
   /**
@@ -72,7 +78,7 @@ function drawLineChart(state, groupName) {
   const chartId = state + groupName.replace(" ", "_");
 
   // crating the svg element that the line chart will attach to
-  var svg = d3
+  const svg = d3
     .select("body")
     .append("div")
     .attr("id", chartId)
@@ -95,7 +101,7 @@ function drawLineChart(state, groupName) {
       if (!_data) return;
       const stateData = getGraphsForState(state, groupName, _data);
 
-    let groupData = {};
+    const groupData = {};
     stateData.forEach((category) => {
       const values = category.values.map((value) => value.avg_data_value);
       const key = category.key;
@@ -104,7 +110,7 @@ function drawLineChart(state, groupName) {
 
     let categories = d3.keys(groupData);
     if (groupName === "Age Group") {
-      categories = categories.sort((a, b) => b.charAt(0) - a.charAt(0));
+      categories = categories.sort((a, b) => +b.charAt(0) - +a.charAt(0));
     } else {
       categories = categories.sort();
     }
@@ -113,7 +119,7 @@ function drawLineChart(state, groupName) {
     const yearsInt = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018];
     const years = yearsInt.map((year) => parseDate(year.toString()));
 
-    var breakoutGroups = color.domain().map(function (name) {
+    const breakoutGroups = color.domain().map(function (name) {
       return {
         name: name,
         values: years.map(function (year, i) {
@@ -156,7 +162,7 @@ function drawLineChart(state, groupName) {
       .style("fill", "#555")
       .text(`United States, ${yearsInt[0]}-${yearsInt[yearsInt.length - 1]}`);
 
-    var legend = svg.selectAll("g.legend").data(breakoutGroups).enter().append("g").attr("class", "legend");
+    const legend = svg.selectAll("g.legend").data(breakoutGroups).enter().append("g").attr("class", "legend");
 
     legend
       .append("rect")
@@ -197,7 +203,7 @@ function drawLineChart(state, groupName) {
       .style("text-anchor", "end")
       .text("Obesity Prevalence (%)");
 
-    var city = svg.selectAll(".city").data(breakoutGroups).enter().append("g").attr("class", "city");
+    const city = svg.selectAll(".city").data(breakoutGroups).enter().append("g").attr("class", "city");
 
     const lineClass = `${chartId}mouse-line line`;
 
@@ -234,7 +240,7 @@ function drawLineChart(state, groupName) {
         return d.name;
       });
 
-    var mouseG = svg.append("g").attr("class", "mouse-over-effects");
+    const mouseG = svg.append("g").attr("class", "mouse-over-effects");
 
     mouseG
       .append("path") // this is the black vertical line to follow mouse
@@ -243,9 +249,9 @@ function drawLineChart(state, groupName) {
       .style("stroke-width", "1px")
       .style("opacity", "0");
 
-    var lines = document.getElementsByClassName(lineClass);
+    const lines = document.getElementsByClassName(lineClass);
 
-    var mousePerLine = mouseG
+    const mousePerLine = mouseG
       .selectAll(".mouse-per-line")
       .data(breakoutGroups)
       .enter()
@@ -284,27 +290,27 @@ function drawLineChart(state, groupName) {
       })
       .on("mousemove", function () {
         // mouse moving over canvas
-        var mouse = d3.mouse(this);
+        const mouse = d3.mouse(this as SVGRectElement);
         svg.select(`.mouse-line`).attr("d", function () {
-          var d = "M" + mouse[0] + "," + height;
+          let d = "M" + mouse[0] + "," + height;
           d += " " + mouse[0] + "," + 0;
           return d;
         });
 
-        svg.selectAll(`.mouse-per-line`).attr("transform", function (d, i) {
-          var xDate = x.invert(mouse[0]),
-            bisect = d3.bisector(function (d) {
+        svg.selectAll(`.mouse-per-line`).attr("transform", function (d: any, i) {
+          const xDate = x.invert(mouse[0]),
+            bisect = d3.bisector(function (d: any) {
               return d.year;
             }).right;
-          var idx = bisect(d.values, xDate);
+          bisect(d.values, xDate);
 
-          var beginning = 0,
-            end = lines[i].getTotalLength(),
-            target = null;
+          let beginning = 0,
+            end = (lines[i] as SVGPathElement).getTotalLength();
+          let pos: SVGPoint;
 
           while (true) {
             const target = Math.floor((beginning + end) / 2);
-            var pos = lines[i].getPointAtLength(target);
+            pos = (lines[i] as SVGPathElement).getPointAtLength(target);
             if ((target === end || target === beginning) && pos.x !== mouse[0]) {
               break;
             }
