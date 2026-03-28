@@ -20,7 +20,7 @@
 
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
-import drawLineChart from "./line-chart.js";
+import drawLineChart from "./line-chart";
 
 const geoPath = d3.geoPath();
 let combinedData;
@@ -260,15 +260,11 @@ const updateScatter = (caller) => {
   d3.select("#cartogram_controls_container").style("opacity", "0");
   d3.selectAll(".x").remove();
 
+  cartogramControls = d3.select("#cartogram_controls_container").style("opacity", "0");
+  d3.selectAll(".x").remove();
+
   d3.selectAll(".scatter-x-axis").classed("selected-axis", false);
   d3.select(`#${chosenXAxis}`).classed("selected-axis", true);
-
-  d3.select(`#chart-title`).text(
-    "Correlations Discovered Between Obesity And Poverty, Age, Income, Healthcare And Smoking.",
-  );
-  d3.select(`#chart-description`).text("Interesting insight:");
-
-  d3.select(`#chart-description`).text(chartsInfo[id]);
 
   const scatterData = d3.values(combinedData);
 
@@ -379,29 +375,18 @@ const updateYear = (year) => {
   selectedYear = year;
   console.log(selectedYear);
 
-  const year_index = year_selector(year);
-  const bubbles = d3.selectAll(".scatterBubble").selectAll("circle");
+  drawCartogram();
 
-  bubbles.transition().ease(d3.easeElastic).duration(750);
+  d3.selectAll(".scatter-x-axis").on("click", function () {
+    updateScatter(this);
+  });
 
-  bubbles.attr("r", (d) => obesityToRadius(d.obese[year_index])).attr("fill", (d) => colorScale(+d.obese[year_index]));
+  d3.select("#backToMap").on("click", function () {
+    updateCartogram();
+  });
 
-  d3.selectAll(".stateValue").text((d) => {
-    return `${d.obese[year_index]}%`;
+  d3.select("input[type=range]#cartogram_year").on("input", function () {
+    const year = this.value;
+    updateYear(year);
   });
 };
-
-drawCartogram();
-
-d3.selectAll(".scatter-x-axis").on("click", function () {
-  updateScatter(this);
-});
-
-d3.select("#backToMap").on("click", function () {
-  updateCartogram();
-});
-
-d3.select("input[type=range]#cartogram_year").on("input", function () {
-  const year = this.value;
-  updateYear(year);
-});
