@@ -84,8 +84,16 @@ function drawLineChart(state, groupName) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // reading the CSV (cached after first load)
-  loadData().then((_data) => {
-    const stateData = getGraphsForState(state, groupName, _data);
+  loadData()
+    .catch((error) => {
+      const lineChartDiv = document.getElementById(chartId);
+      if (lineChartDiv) {
+        lineChartDiv.innerHTML = `<p style="color: #b00; padding: 16px;">Failed to load line chart data: ${error.message}</p>`;
+      }
+    })
+    .then((_data) => {
+      if (!_data) return;
+      const stateData = getGraphsForState(state, groupName, _data);
 
     let groupData = {};
     stateData.forEach((category) => {

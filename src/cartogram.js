@@ -155,12 +155,26 @@ const applySimulation = (nodes) => {
   return simulation.nodes();
 };
 
+const showError = (message) => {
+  const container = document.getElementById("cartogram-container");
+  const errorDiv = document.createElement("div");
+  errorDiv.style.cssText = "color: #b00; background: #fee; border: 1px solid #b00; padding: 16px; margin: 16px; border-radius: 4px; text-align: center;";
+  errorDiv.textContent = `Failed to load visualization data: ${message}`;
+  container.prepend(errorDiv);
+};
+
 const drawCartogram = async () => {
-  const us = await d3.json("us-atlas-10m.json");
-  combinedData = await d3.json("data/scatter_cartogram.json");
-  const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
-  const nation = topojson.mesh(us, us.objects.nation);
-  const states = topojson.feature(us, us.objects.states);
+  let us, states, stateBoundaries, nation;
+  try {
+    us = await d3.json("us-atlas-10m.json");
+    combinedData = await d3.json("data/scatter_cartogram.json");
+  } catch (error) {
+    showError(error.message);
+    return;
+  }
+  stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
+  nation = topojson.mesh(us, us.objects.nation);
+  states = topojson.feature(us, us.objects.states);
 
   const year = year_selector(selectedYear);
 
