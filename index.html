@@ -10,57 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
       rel="stylesheet"
     />
-    <style>
-      p {
-        font-family: monospace;
-      }
-
-      body {
-        height: 2000px;
-        /* font-family: monospace; */
-      }
-
-      .chart > p {
-        color: white;
-        font-style: italic;
-      }
-
-      h1 {
-        text-align: center;
-        text-transform: uppercase;
-        background-color: rgb(180, 200, 223);
-        margin: 0;
-        padding: 24px;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 800;
-      }
-
-      h2 {
-        margin-top: 64px;
-        text-align: center;
-        text-transform: capitalize;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 800;
-      }
-
-      footer {
-        text-align: center;
-        color: slategray;
-        padding: 15px;
-      }
-
-      .hr {
-        border-top: 1px solid rgb(180, 200, 223);
-      }
-
-      form {
-        font-size: 14px;
-      }
-
-      p {
-        font-size: larger;
-      }
-    </style>
+    <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/line-chart.css" />
     <link rel="stylesheet" href="styles/cartogram.css" />
   </head>
@@ -70,7 +20,7 @@
 
     <div id="cartogram-container">
       <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
-      <div id="cartogram_controls_container" style="height: 100px">
+      <div id="cartogram_controls_container">
         <div id="year_scrubber">
           <input id="cartogram_year" value="1995" type="range" min="1995" max="2016" step="1" list="tickmarks" />
           <datalist id="tickmarks">
@@ -87,9 +37,9 @@
       </div>
 
       <!-- Description of the chart -->
-      <div style="height: 100px" id="chart-info">
+      <div id="chart-info">
         <h2 id="chart-title">Obesity Cartogram</h2>
-        <p id="chart-description" style="text-align: center; max-width: 50%; margin: auto">
+        <p id="chart-description">
           Obesity trend across the States in the US is rising
         </p>
       </div>
@@ -103,30 +53,27 @@
         <text class="scatter-x-axis" href="#" id="age">Median Age</text>
         <text class="scatter-x-axis" href="#" id="income">Median Household Income</text>
 
-        <text class="scatter-x-axis" style="line-height: 3em; font-weight: bolder" href="#" id="backToMap"
-          >Return to Cartogram</text
-        >
+        <text class="scatter-x-axis" href="#" id="backToMap">Return to Cartogram</text>
       </div>
 
       <div>
-        <h2 style="text-align: center" id="line-heading" style="display: none"></h2>
+        <h2 id="line-heading"></h2>
         <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
         <form
           name="radios"
           id="lineChart-radioInputs"
-          style="text-align: center; padding-top: 5px; padding-bottom: 40px; display: none"
         >
           <input type="radio" name="btn" id="Age Group" value="Age Group" checked />
-          <label for="Age Group" style="padding-right: 15px">Age Group</label>
+          <label for="Age Group">Age Group</label>
 
           <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity" />
-          <label for="Race/Ethnicity" style="padding-right: 15px">Race/Ethnicity</label>
+          <label for="Race/Ethnicity">Race/Ethnicity</label>
 
           <input type="radio" name="btn" id="Education Attained" value="Education Attained" />
-          <label for="Education Attained" style="padding-right: 15px">Education Attained</label>
+          <label for="Education Attained">Education Attained</label>
 
           <input type="radio" name="btn" id="Gender" value="Gender" />
-          <label for="Gender" style="padding-right: 15px">Gender</label>
+          <label for="Gender">Gender</label>
 
           <input type="radio" name="btn" id="Household Income" value="Household Income" />
           <label for="Household Income">Household Income</label>
