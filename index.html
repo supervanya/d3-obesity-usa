@@ -96,8 +96,6 @@
       <!-- cartogram chart -->
       <svg id="cartogram-svg"></svg>
 
-      <img style="position: absolute; width: 60px; /* right: 170px; */ top: 500px" src="vertical_legend.jpg" />
-
       <div id="correlation_selection">
         <text class="scatter-x-axis" href="#" id="smokes">Smoking (%)</text>
         <text class="scatter-x-axis" href="#" id="poverty">Poverty (%)</text>
@@ -135,20 +133,7 @@
         </form>
       </div>
     </div>
+
+    <script type="module" src="./src/cartogram.ts"></script>
   </body>
-  <!-- <p is="word-count"></p> -->
 </html>
-
-<!-- Loading D3 v5 here -->
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="https://d3js.org/d3-array.v2.js"></script>
-
-<!-- Line chart loading -->
-<script type="module" src="./d3-playground/modules/line-chart/line-chart.js"></script>
-
-<!-- Cartogram specific -->
-<script src="./d3-playground/resources/topojson-client.min.js"></script>
-<script type="module" src="./d3-playground/modules/cartogram-chart/cartogram.js"></script>
-
-<!-- Web Components -->
-<script type="module" src="./d3-playground/modules/word-count.js"></script>
