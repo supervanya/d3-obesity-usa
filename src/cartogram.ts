@@ -23,6 +23,7 @@ import * as topojson from "topojson-client";
 import type { Topology } from "topojson-specification";
 import drawLineChart from "./line-chart.ts";
 import type { CombinedData, ScatterData } from "./types.ts";
+import { MIN_YEAR, MAX_YEAR, NODE, margin, width, height, yearToIndex, colorScale, chartsInfo } from "./constants.ts";
 
 interface CartogramNode extends d3.SimulationNodeDatum {
   name: string;
@@ -41,31 +42,10 @@ const tooltip = d3
 let combinedData: CombinedData;
 let selectedCategory: string | undefined;
 
-const chartsInfo = {
-  income: "Interesting insight: Wealthier states tend to have less obesity.",
-  smokes: "Interesting insight: Smoking has a positive correlation obesity.",
-  age: "Interesting insight: Obesity rate is mostly found in the age group of 35 to 40 years.",
-  poverty:
-    "Interesting insight: Positive correlation between Obesity and Poverty. Southern states tend to have the highest rates of obesity, poverty.",
-  healthcare:
-    "Interesting insight: States with lack of health coverage tend to have more obesity.Texas being an outlier as it has the highest % lack in healthcare.",
-};
-
-const NODE = { MIN_RADIUS: 4, MAX_RADIUS: 20, PADDING: 2 };
-
-// Dimensions.
-const margin = { top: 80, right: 40, bottom: 40, left: 60 };
-const width = 990 - margin.right - margin.left;
-const height = 750 - margin.top - margin.bottom;
-
 let svg;
 
-const MIN_YEAR = 1995;
-const MAX_YEAR = 2016;
-let selectedYear = 1995;
+let selectedYear = MIN_YEAR;
 let obesityToRadius;
-const year_selector = (year) => MAX_YEAR - year;
-const colorScale = d3.scaleSequential(d3.interpolateReds).domain([10, 40]);
 
 // creates, appends and returns base outline map of US
 const createBaseMap = (stateBoundaries, nation) => {
@@ -191,7 +171,7 @@ const drawCartogram = async () => {
   const nation = topojson.mesh(us, us.objects.nation as any);
   const states = topojson.feature(us, us.objects.states as any) as any;
 
-  const year = year_selector(selectedYear);
+  const year = yearToIndex(selectedYear);
 
   // creating the general outline of the US with states
   const baseMap = createBaseMap(stateBoundaries, nation);
@@ -225,7 +205,7 @@ const drawCartogram = async () => {
     .classed("scatterBubbleGroup", true)
     .on("click", (_event, d) => click(d))
     .on("mouseover", (event, d) => {
-      const yi = year_selector(selectedYear);
+      const yi = yearToIndex(selectedYear);
       tooltip
         .style("opacity", "1")
         .html(
@@ -457,7 +437,7 @@ const updateYear = (year) => {
   selectedYear = year;
   console.log(selectedYear);
 
-  const year_index = year_selector(year);
+  const year_index = yearToIndex(year);
   const bubbles = d3.selectAll(".scatterBubble").selectAll("circle");
 
   bubbles.transition().ease(d3.easeElastic).duration(750);
