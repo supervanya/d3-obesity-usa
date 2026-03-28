@@ -2,9 +2,14 @@
   "name": "obesity-story",
   "version": "1.0.0",
   "description": "This is an interactive story explaining the current state of obesity in United States and how it changed over the past 2 decades",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write src/ styles/"
   },
   "repository": {
     "type": "git",
@@ -20,9 +25,17 @@
   },
   "homepage": "https://github.com/supervanya/d3-obesity-usa#readme",
   "dependencies": {
-    "@types/d3": "^5.7.2",
-    "d3": "^5.15.0",
-    "d3-dsv": "^1.2.0"
+    "d3": "^7.9.0",
+    "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/topojson-client": "^3.1.5",
+    "eslint": "^10.1.0",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.57.2",
+    "vite": "^8.0.3"
   },
   "prettier": {
     "printWidth": 120

@@ -1,143 +1,163 @@
-
-
-.scatterBubble {}
+.scatterBubble {
+}
 
 .scatterBubbleGroup {
-    /* opacity: 50%; */
-    cursor: pointer;
+  /* opacity: 50%; */
+  cursor: pointer;
 }
 
 .scatterBubbleGroup circle:hover {
-    /* opacity: 50%; */
-    /* cursor: pointer; */
-    /* transform: scale(3.0);
+  /* opacity: 50%; */
+  /* cursor: pointer; */
+  /* transform: scale(3.0);
     z-index: 1000; */
 }
 
 .scatterBubbleGroup circle {
-    stroke: black;
+  stroke: black;
 }
 
 .bubbleHover {
-    /* opacity: 100%; */
+  /* opacity: 100%; */
 }
 
 .stateText {
-    text-anchor: middle;
-    font-size: 1.5em;
-    /* stroke: black; */
-    /* font-weight: bolder; */
-    fill: black;
-    /* fill: white; */
+  text-anchor: middle;
+  font-size: 1.5em;
+  /* stroke: black; */
+  /* font-weight: bolder; */
+  fill: black;
+  /* fill: white; */
 }
 
 .stateValue {
-    text-anchor: middle;
-    fill: black;
+  text-anchor: middle;
+  fill: black;
 }
 
 #year_scrubber {
-    width: 70%;
-    display: inline-block;
+  width: 70%;
+  display: inline-block;
 }
 
 #cartogram_controls_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #cartogram_controls {
-    display: inline-block;
-    padding-left: 25px;
+  display: inline-block;
+  padding-left: 25px;
 }
 
 input[type="range"] {
-    width: 100%;
-    margin: 0;
-    box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 datalist {
-    display: inline-flex;
-    width: 100%;
-    justify-content: space-between;
-    margin-top: -23px;
-    padding-top: 0px;
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: -23px;
+  padding-top: 0px;
 }
 
 option {
-    width: 2ex;
-    display: flex;
-    justify-content: center;
-    height: 42px;
-    align-items: end;
-    /* background-image: url(tick.png); */
-    height: 4ex;
-    background-position-y: -15px;
-    background-position-x: center;
-    z-index: -1;
+  width: 2ex;
+  display: flex;
+  justify-content: center;
+  height: 42px;
+  align-items: end;
+  /* background-image: url(tick.png); */
+  height: 4ex;
+  background-position-y: -15px;
+  background-position-x: center;
+  z-index: -1;
 }
 
 button {
-    padding: 20px;
+  padding: 20px;
 }
 
 div.line-chart {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #cartogram-container {
-    width: 70%;
-    max-width: 700px;
-    margin: auto;
+  width: 70%;
+  max-width: 700px;
+  margin: auto;
 }
 
 #cartogram-svg {
-    margin-right: 50px;
+  margin-right: 50px;
 }
 
 .state-boundaries {
-    /* display: none; */
-    transform-origin: center;
+  /* display: none; */
+  transform-origin: center;
 }
 
 .nation-boundary {
-    /* display: none; */
-    transform-origin: center;
+  /* display: none; */
+  transform-origin: center;
 }
 
 .axis {
-    opacity: 0;
-    font-size: 15px;
+  opacity: 0;
+  font-size: 15px;
 }
 
-#correlation_selection{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-
+#correlation_selection {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .scatter-x-axis {
-    font-weight: lighter;
-    cursor: pointer;
-    text-decoration: none;
-    color: rgb(162, 162, 162);
-    transition: 0.3s ease-out;
-    text-anchor: middle;
-    border: none;
+  font-weight: lighter;
+  cursor: pointer;
+  text-decoration: none;
+  color: rgb(162, 162, 162);
+  transition: 0.3s ease-out;
+  text-anchor: middle;
+  border: none;
 }
 
 .scatter-x-axis:hover {
-    color:black;
-    /* font-weight: bold; */
+  color: black;
+  /* font-weight: bold; */
 }
 
 .selected-axis {
-    color:black;
-    font-weight: bold;
+  color: black;
+  font-weight: bold;
 }
 
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 1000;
+}
 
+.tooltip .tooltip-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tooltip .tooltip-value {
+  color: #555;
+}
