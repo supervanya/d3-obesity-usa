@@ -60,7 +60,7 @@ function drawLineChart(state, groupName) {
 
   // crating the svg element that the line chart will attach to
   const svg = d3
-    .select("body")
+    .select("#line-chart-panel")
     .append("div")
     .attr("id", chartId)
     .attr("class", "line-chart")

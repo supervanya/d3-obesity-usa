@@ -4,22 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
     <title>USA Obesity Story</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:ital@0;1&family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles/layout.css" />
     <link rel="stylesheet" href="styles/main.css" />
     <link rel="stylesheet" href="styles/line-chart.css" />
     <link rel="stylesheet" href="styles/cartogram.css" />
   </head>
 
   <body>
-    <h1 class="chartTitle">USA Obesity Story</h1>
+    <nav>
+      <div id="main-logo">
+        <svg width="50" height="88" class="nav-icon">
+          <use xlink:href="#obesity" />
+        </svg>
+        <span>
+          <h1 id="main-logo-title">USA<br />Obesity</h1>
+          <p id="main-logo-subtitle">The Story</p>
+        </span>
+      </div>
 
-    <div id="cartogram-container">
-      <!-- Slider https://bl.ocks.org/officeofjane/47d2b0bfeecfcb41d2212d06d095c763 -->
+      <div class="nav-links">
+        <p>Obesity is on the rise</p>
+        <p>Factors that affect obesity</p>
+      </div>
+
+      <div id="correlation_selection">
+        <span class="scatter-x-axis" id="smokes">Smoking (%)</span>
+        <span class="scatter-x-axis" id="poverty">Poverty (%)</span>
+        <span class="scatter-x-axis" id="healthcare">Lack of Health Care (%)</span>
+        <span class="scatter-x-axis" id="age">Median Age</span>
+        <span class="scatter-x-axis" id="income">Median Household Income</span>
+        <span class="scatter-x-axis" id="backToMap">Return to Cartogram</span>
+      </div>
+
+      <footer>
+        <span id="umich-attribution">
+          <p>
+            Made with passion by the students of
+            <a href="https://www.si.umich.edu/programs/courses/649">SI 649</a>
+            University of Michigan -
+            <a href="https://www.si.umich.edu/">School of Information</a>
+          </p>
+          <svg width="36" height="28" class="nav-icon">
+            <use xlink:href="#umich" />
+          </svg>
+        </span>
+        <span id="github-link">
+          <svg width="24" height="24" class="nav-icon">
+            <use xlink:href="#github" />
+          </svg>
+          <a href="https://github.com/supervanya/d3-obesity-usa">GitHub Repo</a>
+        </span>
+      </footer>
+    </nav>
+
+    <main id="cartogram-container">
       <div id="cartogram_controls_container">
         <div id="year_scrubber">
           <input id="cartogram_year" value="1995" type="range" min="1995" max="2016" step="1" list="tickmarks" />
@@ -36,51 +79,62 @@
         </div>
       </div>
 
-      <!-- Description of the chart -->
       <div id="chart-info">
         <h2 id="chart-title">Obesity Cartogram</h2>
         <p id="chart-description">
           Obesity trend across the States in the US is rising
         </p>
       </div>
-      <!-- cartogram chart -->
+
       <svg id="cartogram-svg"></svg>
+    </main>
 
-      <div id="correlation_selection">
-        <text class="scatter-x-axis" href="#" id="smokes">Smoking (%)</text>
-        <text class="scatter-x-axis" href="#" id="poverty">Poverty (%)</text>
-        <text class="scatter-x-axis" href="#" id="healthcare">Lack of Health Care (%)</text>
-        <text class="scatter-x-axis" href="#" id="age">Median Age</text>
-        <text class="scatter-x-axis" href="#" id="income">Median Household Income</text>
+    <aside>
+      <div id="aside-content">
+        <p id="aside-instruction">Click on the map to see how obesity has changed over the past two decades</p>
 
-        <text class="scatter-x-axis" href="#" id="backToMap">Return to Cartogram</text>
+        <div id="line-chart-panel">
+          <h2 id="line-heading"></h2>
+          <form name="radios" id="lineChart-radioInputs">
+            <input type="radio" name="btn" id="Age Group" value="Age Group" checked />
+            <label for="Age Group">Age Group</label>
+
+            <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity" />
+            <label for="Race/Ethnicity">Race/Ethnicity</label>
+
+            <input type="radio" name="btn" id="Education Attained" value="Education Attained" />
+            <label for="Education Attained">Education Attained</label>
+
+            <input type="radio" name="btn" id="Gender" value="Gender" />
+            <label for="Gender">Gender</label>
+
+            <input type="radio" name="btn" id="Household Income" value="Household Income" />
+            <label for="Household Income">Household Income</label>
+          </form>
+        </div>
       </div>
-
-      <div>
-        <h2 id="line-heading"></h2>
-        <!-- <svg width=600 hight=400 id="d3-cartogram"></svg> -->
-        <form
-          name="radios"
-          id="lineChart-radioInputs"
-        >
-          <input type="radio" name="btn" id="Age Group" value="Age Group" checked />
-          <label for="Age Group">Age Group</label>
-
-          <input type="radio" name="btn" id="Race/Ethnicity" value="Race/Ethnicity" />
-          <label for="Race/Ethnicity">Race/Ethnicity</label>
-
-          <input type="radio" name="btn" id="Education Attained" value="Education Attained" />
-          <label for="Education Attained">Education Attained</label>
-
-          <input type="radio" name="btn" id="Gender" value="Gender" />
-          <label for="Gender">Gender</label>
-
-          <input type="radio" name="btn" id="Household Income" value="Household Income" />
-          <label for="Household Income">Household Income</label>
-        </form>
-      </div>
-    </div>
+    </aside>
 
     <script type="module" src="./src/cartogram.ts"></script>
   </body>
+
+  <svg display="none">
+    <symbol viewBox="0 0 20 20" id="github">
+      <path
+        d="M10,0C4.5,0,0,4.6,0,10.3c0,4.5,2.8,8.3,6.7,9.7c0.5,0.1,0.4-0.2,0.4-0.5v-1.8c-3,0.4-3.2-1.7-3.4-2 c-0.4-0.7-1.4-0.9-1.1-1.2c0.7-0.4,1.4,0.1,2.2,1.3c0.6,0.9,1.7,0.7,2.3,0.6c0.1-0.5,0.4-1,0.8-1.4c-3.1-0.6-4.5-2.5-4.5-4.9 c0-1.1,0.4-2.2,1.1-3c-0.5-1.4,0-2.6,0.1-2.8c1.3-0.1,2.6,1,2.8,1C8.2,5.1,9.1,5,10,5c0.9,0,1.8,0.1,2.5,0.3c0.3-0.2,1.5-1.1,2.7-1 c0.1,0.2,0.6,1.3,0.1,2.7c0.7,0.8,1.1,1.9,1.1,3c0,2.3-1.3,4.3-4.5,4.9c0.3,0.3,0.5,0.6,0.6,1c0.1,0.4,0.2,0.7,0.2,1.1v2.6 c0,0.2,0,0.4,0.3,0.4c4-1.4,6.8-5.2,6.8-9.7C20,4.6,15.5,0,10,0z"
+      />
+    </symbol>
+
+    <symbol viewBox="0 0 32 22.87" id="umich">
+      <path
+        d="M22.49,0h9.4A.15.15,0,0,1,32,.11V6.45H29.57v10H32v6.45H20V16.41H22.5V10L16,18.89,9.5,10v6.42h2.56v6.43H0V16.41H2.43v-10H0V0H9.51L16,9c.05-.07.1-.12.13-.17l3-4.19Z"
+      />
+    </symbol>
+
+    <symbol viewBox="0 0 50 89" id="obesity">
+      <path
+        d="M32.6002 17.4C34.1002 15.6 35.1002 13.3 35.1002 10.8C35.1002 5.30005 30.6002 0.800049 25.1002 0.800049C19.6002 0.800049 15.1002 5.30005 15.1002 10.8C15.1002 13.3 16.0002 15.6 17.6002 17.4C7.60016 20.9 0.500164 31.3 0.600164 44.8C0.600164 65.7 7.60016 62.2001 9.80016 60.4001C11.7002 72.2001 14.2002 85.2 14.2002 85.2C14.2002 85.2 14.8002 88.8 18.9002 88.8C24.3002 88.8 23.9002 84.8 23.9002 84.8C23.9002 84.8 23.8002 58.1 23.8002 58C23.8002 57.6 23.9002 56.6 25.1002 56.6H25.0002C26.2002 56.6 26.3002 57.7 26.3002 58C26.3002 58.1 26.2002 84.8 26.2002 84.8C26.2002 84.8 25.9002 88.8 31.2002 88.8C35.3002 88.8 35.9002 85.2 35.9002 85.2C35.9002 85.2 38.5002 72.2001 40.3002 60.4001C42.4002 62.2001 49.4002 65.7 49.5002 44.8C49.6002 31.4 42.6002 20.9 32.6002 17.4Z"
+      />
+    </symbol>
+  </svg>
 </html>

@@ -88,9 +88,7 @@ div.line-chart {
 }
 
 #cartogram-container {
-  width: 70%;
-  max-width: 700px;
-  margin: auto;
+  width: 100%;
 }
 
 #cartogram-svg {
