@@ -108,3 +108,16 @@ We see that Obesity is positivity corelated to poverty and negatively correlated
 
 ### source:
 [10 facts on Obesity, World Health Organization](https://www.who.int/features/factfiles/obesity/en/)
+
+
+### Dev Notes:
+Some work in progress was cleaned up but you can check out the repo at [this commit](https://github.com/supervanya/d3-obesity-usa/tree/d125512323d80a1218f9d951dd1e9be4366ced62) and explore `dorling-cartogram-circle-packs` and `d3times.html` to see some of the inspiration for cool D3 physics and animations.
+
+<details>
+ <summary>Screenshots</summary>
+
+
+<img width="1980" height="1442" alt="image" src="https://github.com/user-attachments/assets/49cef2df-641a-455c-aa5f-a28773a52af5" />
+<img width="1960" alt="127 0 0 1_5500_d3-playground_vanyas-tutorials_d3-cartogram_dorling-cartogram-circle-packs_index html" src="https://github.com/user-attachments/assets/367aedf5-0bda-495b-8e7c-a8dab449a931" />
+
+</details>
