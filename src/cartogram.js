@@ -20,7 +20,7 @@
 
 import * as d3 from 'd3'
 import * as topojson from 'topojson-client'
-import drawLineChart from '../../modules/line-chart/line-chart.js'
+import drawLineChart from './line-chart.js'
 
 const geoPath = d3.geoPath();
 let combined_data;
@@ -108,7 +108,7 @@ const applySimulation = (nodes) => {
 }
 
 const drawCartogram = async () => {
-  const us = await d3.json("d3-playground/resources/us-atlas@2.1.0-us-10m.json");
+  const us = await d3.json("us-atlas-10m.json");
   combined_data = await d3.json("data/scatter_cartogram.json");
   const stateBoundaries = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
   const nation = topojson.mesh(us, us.objects.nation);
