@@ -73,7 +73,7 @@ function drawLineChart(state, groupName) {
 
 
     // reading the CSV and after resolving the promise rendering the line chart
-    d3.csv('obesity_data.csv').then(_data => {
+    d3.csv('data/obesity_data.csv').then(_data => {
         const stateData = getGraphsForState(state, groupName, _data)
 
         let groupData = {}
