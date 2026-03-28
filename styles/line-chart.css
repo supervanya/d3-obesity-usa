@@ -1,33 +1,33 @@
 body {
-    font: 10px sans-serif;
-    /* font: 10px monospace; */
+  font: 10px sans-serif;
+  /* font: 10px monospace; */
 }
 
 .axis-l path,
 .axis-l line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
 
 .x-l.axis-l path {
-    display: none;
+  display: none;
 }
 
 .bar-header {
-    font-size: large;
+  font-size: large;
 }
 
 .line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1.5px;
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }
 
 p#chart-description {
-    height: 60px;
+  height: 60px;
 }
 
 h2#chart-description {
-    height: 60px;
+  height: 60px;
 }
