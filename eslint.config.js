@@ -5,10 +5,13 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ["**/*.{js,ts}"],
+    files: ["**/*.{js,ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
       globals: {
         window: "readonly",
         document: "readonly",
